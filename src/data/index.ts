@@ -3,13 +3,17 @@ import speciesJson from './generated/species.json'
 import movesJson from './generated/moves.json'
 import itemsJson from './generated/items.json'
 import customSpeciesJson from './custom-species.json'
+import customItemsJson from './custom-items.json'
 
-/** Items introduced by Champions that Showdown data doesn't know about. */
-const CUSTOM_ITEMS: ItemData[] = [
-  { id: 'staraptite', name: 'Staraptite', shortDesc: 'Mega-evolves Staraptor.' },
-  { id: 'raichunitex', name: 'Raichunite X', shortDesc: 'Mega-evolves Raichu into Mega Raichu X.' },
-  { id: 'raichunitey', name: 'Raichunite Y', shortDesc: 'Mega-evolves Raichu into Mega Raichu Y.' },
-]
+/**
+ * Items introduced by Legends: Z-A / Champions that Showdown data doesn't
+ * know about — the new Mega Stones. Each entry's `megaFor` names the custom
+ * Mega forme it enables (used by tests and future mega-resolution logic).
+ */
+export interface CustomItemData extends ItemData {
+  megaFor?: string
+}
+export const CUSTOM_ITEMS = customItemsJson as CustomItemData[]
 
 export const SPECIES = [
   ...(speciesJson as SpeciesData[]),

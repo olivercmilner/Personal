@@ -34,9 +34,16 @@ All data lives in your browser (localStorage). No accounts, no server.
 - Lv50, 66 stat points, 32 per stat, +1 stat per point, applied after the
   stat alignment multiplier (`src/engine/stats.ts`)
 - Stat alignments = natures minus the redundant neutrals (Serious only)
-- The 11 Champions-exclusive Mega Evolutions (Mega Staraptor, Mega Raichu X/Y,
-  Mega Falinks, …) are bundled as custom species with community-documented
-  stats (`src/data/custom-species.json`)
+- All 29 new-generation Mega Evolutions (the Legends: Z-A roster — Mega
+  Delphox, Chesnaught, Greninja, Dragonite, Starmie, … — plus the
+  Champions-exclusive Mega Staraptor and Mega Raichu X/Y) are bundled as
+  custom species with community-documented stats
+  (`src/data/custom-species.json`), and their Mega Stones as custom held
+  items (`src/data/custom-items.json`). A few stone names for the newest
+  Megas follow the standard "-ite" pattern where the official name hasn't
+  been documented yet — correct them in that file if the in-game name
+  differs. To use a Mega on your own team, add the Mega forme as the
+  species (e.g. "Delphox-Mega") holding its stone.
 - Meta sets for the top ~50 Reg M-B Pokemon live in
   `src/data/meta-sets.json` — edit this file (or add overrides in-app) as the
   meta shifts
