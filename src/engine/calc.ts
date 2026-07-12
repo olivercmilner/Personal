@@ -39,15 +39,27 @@ export function buildCalcPokemon(c: Combatant): Pokemon {
     ability: c.ability || undefined,
     item: c.item || undefined,
   }
-  try {
-    return new Pokemon(gen, c.species.name, { ...options, overrides: { baseStats } })
-  } catch {
-    // Species unknown to the calc dex: stand in with Mew + full overrides.
-    return new Pokemon(gen, 'Mew', {
-      ...options,
-      overrides: { baseStats, types: c.species.types as never },
-    })
+  // Fall back progressively: full build -> without the item (new Champions
+  // items the calc doesn't know) -> Mew stand-in with type/stat overrides
+  // (species the calc doesn't know, e.g. Champions-exclusive Megas).
+  const attempts: (() => Pokemon)[] = [
+    () => new Pokemon(gen, c.species.name, { ...options, overrides: { baseStats } }),
+    () => new Pokemon(gen, c.species.name, { ...options, item: undefined, overrides: { baseStats } }),
+    () =>
+      new Pokemon(gen, 'Mew', {
+        ...options,
+        item: undefined,
+        overrides: { baseStats, types: c.species.types as never },
+      }),
+  ]
+  for (const attempt of attempts.slice(0, -1)) {
+    try {
+      return attempt()
+    } catch {
+      /* try the next fallback */
+    }
   }
+  return attempts[attempts.length - 1]()
 }
 
 export function calcSpeed(c: Combatant): number {

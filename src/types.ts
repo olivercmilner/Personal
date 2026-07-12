@@ -70,6 +70,11 @@ export interface MetaSet {
   /** relative usage weight among this species' sets (any positive scale) */
   weight: number
   roles: string[] // e.g. "speed-control", "fake-out", "setup", "redirection"
+  /**
+   * Species id to use for battle math when the set transforms the Pokemon —
+   * e.g. a Mega set on the base species points at the Mega forme.
+   */
+  formeId?: string
 }
 
 export interface MetaEntry {

@@ -21,7 +21,8 @@ export function combatantFromBuild(build: PokemonBuild): Combatant {
 }
 
 export function combatantFromSet(speciesId: string, set: PredictedSet): Combatant {
-  const species = getSpecies(speciesId)
+  // Mega/transform sets point battle math at the transformed forme.
+  const species = getSpecies(set.formeId ?? speciesId) ?? getSpecies(speciesId)
   if (!species) throw new Error(`Unknown species: ${speciesId}`)
   return {
     species,

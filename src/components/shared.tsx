@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SpeciesData } from '../types'
+import { getSpecies, toId } from '../data'
 import { TYPE_COLORS } from '../data/typechart'
 import { artworkUrl, dexSpriteUrl, iconUrl } from '../data/sprites'
 
@@ -28,10 +29,14 @@ export function Sprite({
   kind?: 'icon' | 'art'
   className?: string
 }) {
-  const sources =
+  // Champions-exclusive formes have no public sprites yet — fall back to the
+  // base species' image so the UI never shows a blank.
+  const base = species.baseSpecies ? getSpecies(toId(species.baseSpecies)) : undefined
+  const sources = (
     kind === 'art'
       ? [artworkUrl(species), dexSpriteUrl(species), iconUrl(species)]
       : [iconUrl(species), dexSpriteUrl(species)]
+  ).concat(base ? [kind === 'art' ? artworkUrl(base) : iconUrl(base)] : [])
   const [idx, setIdx] = useState(0)
   useEffect(() => setIdx(0), [species.id])
   if (idx >= sources.length)

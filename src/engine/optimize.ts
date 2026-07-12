@@ -33,8 +33,7 @@ function combosOf<T>(arr: T[], k: number): T[][] {
   ]
 }
 
-const IDX6 = [0, 1, 2, 3, 4, 5]
-const BRING_COMBOS = combosOf(IDX6, 4)
+const range = (n: number) => Array.from({ length: n }, (_, i) => i)
 
 /**
  * Estimate which 4 the opponent brings, scored from their perspective
@@ -45,12 +44,13 @@ export function estimateOpponentBrings(
   opponents: OpponentMon[],
   calib: CalibrationWeights = EMPTY_CALIBRATION,
 ): OpponentBringEstimate[] {
+  const oppIdx = range(opponents.length)
   // Their per-mon value = how well it does against my team on average.
-  const monValue = IDX6.map((j) => {
+  const monValue = oppIdx.map((j) => {
     const avg = matrix.reduce((a, row) => a + row[j].score, 0) / matrix.length
     return -avg + 0.6 * bringPrior(opponents[j].speciesId, calib)
   })
-  const scored = BRING_COMBOS.map((combo) => ({
+  const scored = combosOf(oppIdx, Math.min(4, opponents.length)).map((combo) => ({
     combo,
     v: combo.reduce((a, j) => a + monValue[j], 0) + roleBalance(combo, opponents),
   }))
@@ -125,8 +125,9 @@ export function recommendBrings(
 ): { recommendations: BringRecommendation[]; oppEstimates: OpponentBringEstimate[] } {
   const oppEstimates = estimateOpponentBrings(matrix, opponents, calib)
   const results: BringRecommendation[] = []
+  const myIdx = range(myBuilds.length)
 
-  for (const bring of BRING_COMBOS) {
+  for (const bring of combosOf(myIdx, Math.min(4, myBuilds.length))) {
     const { bonus: roleBonus } = myRoleBonuses(bring, myBuilds)
     for (const leads of combosOf(bring, 2)) {
       let total = 0
@@ -158,7 +159,7 @@ export function recommendBrings(
         bring,
         leads,
         back: bring.filter((i) => !leads.includes(i)),
-        bench: IDX6.filter((i) => !bring.includes(i)),
+        bench: myIdx.filter((i) => !bring.includes(i)),
         score: total,
         reasons: [], // filled for the top N below
       })

@@ -298,8 +298,9 @@ function Analysis({
               {opponents.map((o) => {
                 const s = getSpecies(o.speciesId)!
                 return (
-                  <th key={o.speciesId} className="p-1">
+                  <th key={o.speciesId} className="p-1 text-center">
                     <Sprite species={s} size={36} className="mx-auto" />
+                    <div className="max-w-24 truncate text-[10px] font-normal text-ink-300">{s.name}</div>
                   </th>
                 )
               })}
@@ -308,8 +309,9 @@ function Analysis({
           <tbody>
             {matrix.map((row, i) => (
               <tr key={i}>
-                <td className="p-1">
-                  <Sprite species={mySpecies(i)} size={36} />
+                <td className="p-1 text-center">
+                  <Sprite species={mySpecies(i)} size={36} className="mx-auto" />
+                  <div className="max-w-24 truncate text-[10px] text-ink-300">{mySpecies(i).name}</div>
                 </td>
                 {row.map((cell, j) => (
                   <td

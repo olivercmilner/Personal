@@ -2,10 +2,21 @@ import type { ItemData, MoveData, SpeciesData } from '../types'
 import speciesJson from './generated/species.json'
 import movesJson from './generated/moves.json'
 import itemsJson from './generated/items.json'
+import customSpeciesJson from './custom-species.json'
 
-export const SPECIES = speciesJson as SpeciesData[]
+/** Items introduced by Champions that Showdown data doesn't know about. */
+const CUSTOM_ITEMS: ItemData[] = [
+  { id: 'staraptite', name: 'Staraptite', shortDesc: 'Mega-evolves Staraptor.' },
+  { id: 'raichunitex', name: 'Raichunite X', shortDesc: 'Mega-evolves Raichu into Mega Raichu X.' },
+  { id: 'raichunitey', name: 'Raichunite Y', shortDesc: 'Mega-evolves Raichu into Mega Raichu Y.' },
+]
+
+export const SPECIES = [
+  ...(speciesJson as SpeciesData[]),
+  ...(customSpeciesJson as SpeciesData[]),
+]
 export const MOVES = movesJson as MoveData[]
-export const ITEMS = itemsJson as ItemData[]
+export const ITEMS = [...(itemsJson as ItemData[]), ...CUSTOM_ITEMS]
 
 export const speciesById = new Map(SPECIES.map((s) => [s.id, s]))
 export const movesById = new Map(MOVES.map((m) => [m.id, m]))
@@ -51,6 +62,24 @@ export function searchNamed<T extends { id: string; name: string }>(
   return scored.slice(0, limit).map((s) => s.item)
 }
 
-export const searchSpecies = (q: string, limit = 12) => searchNamed(SPECIES, q, limit)
+// Meta usage is used as a search tiebreaker so that under time pressure
+// "sinist" surfaces Sinistcha above Sinistea, "bascul" Basculegion above
+// Basculin, etc.
+import metaJson from './meta-sets.json'
+const usageBySpecies = new Map<string, number>(
+  (metaJson as { entries: { speciesId: string; usage: number }[] }).entries.map((e) => [
+    e.speciesId,
+    e.usage,
+  ]),
+)
+
+export function searchSpecies(q: string, limit = 12): SpeciesData[] {
+  const hits = searchNamed(SPECIES, q, limit * 2)
+  return hits
+    .map((s, i) => ({ s, i, usage: usageBySpecies.get(s.id) ?? 0 }))
+    .sort((a, b) => b.usage - a.usage || a.i - b.i)
+    .slice(0, limit)
+    .map((x) => x.s)
+}
 export const searchMoves = (q: string, limit = 12) => searchNamed(MOVES, q, limit)
 export const searchItems = (q: string, limit = 12) => searchNamed(ITEMS, q, limit)
