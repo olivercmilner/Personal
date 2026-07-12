@@ -1,6 +1,6 @@
 import { calculate, Field, Generations, Move, Pokemon } from '@smogon/calc'
 import type { DuelResult, PointSpread, SpeciesData, StatTable } from '../types'
-import { getMove } from '../data'
+import { getMove, toId } from '../data'
 import { effectiveness } from '../data/typechart'
 import { championStats } from './stats'
 
@@ -39,27 +39,24 @@ export function buildCalcPokemon(c: Combatant): Pokemon {
     ability: c.ability || undefined,
     item: c.item || undefined,
   }
-  // Fall back progressively: full build -> without the item (new Champions
-  // items the calc doesn't know) -> Mew stand-in with type/stat overrides
-  // (species the calc doesn't know, e.g. Champions-exclusive Megas).
-  const attempts: (() => Pokemon)[] = [
-    () => new Pokemon(gen, c.species.name, { ...options, overrides: { baseStats } }),
-    () => new Pokemon(gen, c.species.name, { ...options, item: undefined, overrides: { baseStats } }),
-    () =>
-      new Pokemon(gen, 'Mew', {
-        ...options,
-        item: undefined,
-        overrides: { baseStats, types: c.species.types as never },
-      }),
-  ]
-  for (const attempt of attempts.slice(0, -1)) {
+  // The calc dex is LENIENT with unknown species names (it returns a hollow
+  // species with undefined types instead of throwing), so check for real
+  // membership; species it doesn't know (Champions-exclusive Megas) become
+  // a Mew stand-in with full type/stat overrides.
+  const knownToCalc = !!gen.species.get(toId(c.species.name) as never)?.types
+  if (knownToCalc) {
     try {
-      return attempt()
+      return new Pokemon(gen, c.species.name, { ...options, overrides: { baseStats } })
     } catch {
-      /* try the next fallback */
+      // e.g. an item string the calc rejects — retry without it
+      return new Pokemon(gen, c.species.name, { ...options, item: undefined, overrides: { baseStats } })
     }
   }
-  return attempts[attempts.length - 1]()
+  return new Pokemon(gen, 'Mew', {
+    ...options,
+    item: undefined,
+    overrides: { baseStats, types: c.species.types as never },
+  })
 }
 
 export function calcSpeed(c: Combatant): number {
@@ -77,6 +74,7 @@ export function moveDamagePct(
   attacker: Pokemon,
   aInfo: Combatant,
   defender: Pokemon,
+  dInfo: Combatant,
   moveId: string,
 ): [number, number] | null {
   const data = getMove(moveId)
@@ -87,7 +85,7 @@ export function moveDamagePct(
     const maxHP = defender.maxHP()
     return [(range[0] / maxHP) * 100, (range[1] / maxHP) * 100]
   } catch {
-    return approximateDamagePct(attacker, aInfo, defender, moveId)
+    return approximateDamagePct(attacker, aInfo, defender, dInfo, moveId)
   }
 }
 
@@ -96,6 +94,7 @@ function approximateDamagePct(
   attacker: Pokemon,
   aInfo: Combatant,
   defender: Pokemon,
+  dInfo: Combatant,
   moveId: string,
 ): [number, number] | null {
   const data = getMove(moveId)
@@ -103,7 +102,9 @@ function approximateDamagePct(
   const atk = data.category === 'Physical' ? attacker.stats.atk : attacker.stats.spa
   const def = data.category === 'Physical' ? defender.stats.def : defender.stats.spd
   const stab = aInfo.species.types.includes(data.type) ? 1.5 : 1
-  const eff = effectiveness(data.type, defender.types as unknown as string[])
+  // Use OUR species data for typing — calc Pokemon types are unreliable for
+  // custom species stand-ins.
+  const eff = effectiveness(data.type, dInfo.species.types)
   const spread = data.target === 'allAdjacentFoes' || data.target === 'allAdjacent' ? 0.75 : 1
   const base = Math.floor(Math.floor((Math.floor((2 * 50) / 5 + 2) * data.basePower * atk) / def) / 50) + 2
   const max = base * stab * eff * spread
@@ -113,11 +114,11 @@ function approximateDamagePct(
 }
 
 /** Best damaging move of `attacker` (a) into `defender` (d). */
-export function bestAttack(a: Combatant, aPoke: Pokemon, _d: Combatant, dPoke: Pokemon): DuelResult {
+export function bestAttack(a: Combatant, aPoke: Pokemon, d: Combatant, dPoke: Pokemon): DuelResult {
   let best: DuelResult = { bestMove: '—', ...NO_DAMAGE }
   let bestAvg = -1
   for (const moveId of a.moves) {
-    const pct = moveDamagePct(aPoke, a, dPoke, moveId)
+    const pct = moveDamagePct(aPoke, a, dPoke, d, moveId)
     if (!pct) continue
     const avg = (pct[0] + pct[1]) / 2
     if (avg > bestAvg) {
