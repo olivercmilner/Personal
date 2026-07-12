@@ -1,7 +1,26 @@
-import type { MetaEntry, PredictedSet, SpeciesData, StatName } from '../types'
-import { getSpecies, toId } from '../data'
+import type { MetaEntry, MetaSet, PokemonBuild, PredictedSet, SpeciesData, StatName } from '../types'
+import { CUSTOM_ITEMS, getSpecies, ITEMS, toId } from '../data'
 import metaJson from '../data/meta-sets.json'
 import { EMPTY_POINTS } from './stats'
+
+/** Every Mega Stone id: classic stones from Showdown data + Champions/Z-A customs. */
+export const MEGA_STONE_IDS: Set<string> = new Set([
+  ...ITEMS.filter((i) => /this item allows it to Mega Evolve/i.test(i.shortDesc ?? '')).map((i) => i.id),
+  ...CUSTOM_ITEMS.map((i) => i.id),
+])
+
+/** Does this predicted/curated set Mega Evolve? (stone, Mega forme, or role tag) */
+export function isMegaSet(set: Pick<MetaSet, 'item' | 'formeId' | 'roles'>): boolean {
+  if (set.formeId && getSpecies(set.formeId)?.forme?.includes('Mega')) return true
+  if (set.roles?.includes('mega')) return true
+  return MEGA_STONE_IDS.has(toId(set.item ?? ''))
+}
+
+/** Does this user build Mega Evolve? (Mega forme species or held stone) */
+export function isMegaBuild(build: PokemonBuild): boolean {
+  if (getSpecies(build.speciesId)?.forme?.includes('Mega')) return true
+  return MEGA_STONE_IDS.has(toId(build.item ?? ''))
+}
 
 export interface MetaFile {
   regulation: string
@@ -59,7 +78,7 @@ export function predictSets(
         probability: w / total,
         source: 'meta' as const,
       }))
-      .sort((a, b) => b.probability - a.probability)
+      .sort((a, b) => b.probability - a.probability || a.name.localeCompare(b.name))
   }
 
   return [archetypeSet(species)]

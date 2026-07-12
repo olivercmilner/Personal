@@ -164,10 +164,10 @@
     {
       "speciesId": "floetteeternal",
       "usage": 0.097,
-      "teammates": ["whimsicott", "gholdengo", "incineroar"],
+      "teammates": ["whimsicott", "charizard", "basculegion"],
       "sets": [
-        { "name": "Life Orb", "weight": 0.55, "item": "Life Orb", "ability": "Flower Veil", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["lightofruin", "moonblast", "energyball", "protect"], "roles": ["special-attacker"] },
-        { "name": "Focus Sash", "weight": 0.45, "item": "Focus Sash", "ability": "Flower Veil", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["lightofruin", "moonblast", "calmmind", "protect"], "roles": ["special-attacker", "setup"] }
+        { "name": "Mega Floette (Fairy Aura)", "weight": 0.8, "formeId": "floetteeternalmega", "item": "Floettite", "ability": "Fairy Aura", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["lightofruin", "moonblast", "dazzlinggleam", "protect"], "roles": ["special-attacker", "mega", "spread-damage"] },
+        { "name": "Focus Sash", "weight": 0.2, "item": "Focus Sash", "ability": "Flower Veil", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["lightofruin", "moonblast", "calmmind", "protect"], "roles": ["special-attacker", "setup"] }
       ]
     },
     {

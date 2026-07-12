@@ -5,7 +5,9 @@ import type {
   PokemonBuild,
 } from '../types'
 import { getSpecies } from '../data'
-import { bringPrior, EMPTY_CALIBRATION, type CalibrationWeights } from './predict'
+import { bringPrior, EMPTY_CALIBRATION, isMegaBuild, isMegaSet, type CalibrationWeights } from './predict'
+import { matchArchetype, type ArchetypeMatch } from './archetypes'
+import { statDropPenalties } from './insights'
 import type { OpponentMon } from './matrix'
 
 /** Tunable weights for the whole optimizer — calibrate from field practice here. */
@@ -13,15 +15,57 @@ export const WEIGHTS = {
   lead: 0.45,
   coverage: 0.45,
   unansweredPenalty: 0.35,
-  speedControlBonus: 0.12,
-  fakeOutBonus: 0.06,
   speedThreat: -0.15, // cell score below this = "no answer"
   oppTopK: 5,
   softmaxTemp: 0.6,
+  /** each Mega Stone beyond the first in a bring-4 costs this much */
+  doubleMegaPenalty: 0.3,
+  /** scale for archetype bring-rate priors in the opponent estimate */
+  archetypeBring: 1.1,
+  /** scale for archetype lead-rate priors in lead guessing */
+  archetypeLead: 1.6,
+  /** scale for support-role value in the opponent bring estimate */
+  oppSupportScale: 0.5,
+  /** scale for support-role value in my own bring scoring */
+  mySupportScale: 0.16,
+}
+
+/** Value of utility roles beyond raw damage — why Whimsicott always comes. */
+const SUPPORT_ROLE_VALUE: Record<string, number> = {
+  'speed-control': 0.5,
+  redirection: 0.35,
+  'fake-out': 0.3,
+  screens: 0.3,
+  disruption: 0.2,
+  support: 0.2,
 }
 
 const SPEED_CONTROL_MOVES = new Set(['tailwind', 'icywind', 'electroweb', 'trickroom', 'bleakwindstorm'])
+const SCREEN_MOVES = new Set(['lightscreen', 'reflect', 'auroraveil'])
+const REDIRECT_MOVES = new Set(['followme', 'ragepowder'])
+const DISRUPT_MOVES = new Set(['encore', 'taunt', 'faketears', 'charm', 'helpinghand', 'spore', 'thunderwave', 'willowisp'])
 const FAKE_OUT = 'fakeout'
+
+/**
+ * Which support categories a moveset/roleset provides. Categories are
+ * deduplicated so stacking two Tailwind users doesn't double-count.
+ */
+function supportCategories(moves: string[], roles: string[] = []): Set<string> {
+  const cats = new Set<string>()
+  for (const role of roles) if (role in SUPPORT_ROLE_VALUE) cats.add(role)
+  if (moves.some((m) => SPEED_CONTROL_MOVES.has(m))) cats.add('speed-control')
+  if (moves.some((m) => SCREEN_MOVES.has(m))) cats.add('screens')
+  if (moves.some((m) => REDIRECT_MOVES.has(m))) cats.add('redirection')
+  if (moves.includes(FAKE_OUT)) cats.add('fake-out')
+  if (moves.some((m) => DISRUPT_MOVES.has(m))) cats.add('disruption')
+  return cats
+}
+
+function supportValue(moves: string[], roles: string[] = []): number {
+  let v = 0
+  for (const cat of supportCategories(moves, roles)) v += SUPPORT_ROLE_VALUE[cat]
+  return v
+}
 
 function combosOf<T>(arr: T[], k: number): T[][] {
   if (k === 0) return [[]]
@@ -35,24 +79,52 @@ function combosOf<T>(arr: T[], k: number): T[][] {
 
 const range = (n: number) => Array.from({ length: n }, (_, i) => i)
 
+/** Stable key for an index set, independent of entry order. */
+const comboKey = (combo: number[], ids: string[]) =>
+  combo.map((i) => ids[i]).sort().join('|')
+
+function setOf(j: number, opponents: OpponentMon[]) {
+  return opponents[j].sets[0]
+}
+
+function oppMegaCount(combo: number[], opponents: OpponentMon[]): number {
+  return combo.filter((j) => setOf(j, opponents) && isMegaSet(setOf(j, opponents))).length
+}
+
 /**
- * Estimate which 4 the opponent brings, scored from their perspective
- * against my full 6 plus usage/calibration priors.
+ * Estimate which 4 the opponent brings: matchup value vs my six + usage and
+ * calibration priors + support-role value + recognized-archetype bring
+ * rates, with a penalty for stacking multiple Mega Stones. Fully
+ * deterministic in the face of ties (species-id keyed), so opponent entry
+ * order never changes the result.
  */
 export function estimateOpponentBrings(
   matrix: MatchupCell[][],
   opponents: OpponentMon[],
   calib: CalibrationWeights = EMPTY_CALIBRATION,
+  arch: ArchetypeMatch | null = null,
 ): OpponentBringEstimate[] {
-  const oppIdx = range(opponents.length)
-  // Their per-mon value = how well it does against my team on average.
-  const monValue = oppIdx.map((j) => {
+  const ids = opponents.map((o) => o.speciesId)
+  // Canonical enumeration order: species id, never entry order.
+  const oppIdx = range(opponents.length).sort((a, b) => ids[a].localeCompare(ids[b]))
+
+  const monValue = new Map<number, number>()
+  for (const j of oppIdx) {
     const avg = matrix.reduce((a, row) => a + row[j].score, 0) / matrix.length
-    return -avg + 0.6 * bringPrior(opponents[j].speciesId, calib)
-  })
+    const top = setOf(j, opponents)
+    const support = top ? WEIGHTS.oppSupportScale * supportValue(top.moves, top.roles) : 0
+    const archBoost = arch
+      ? WEIGHTS.archetypeBring * arch.confidence * ((arch.archetype.bringRates[ids[j]] ?? 4 / 6) - 4 / 6)
+      : 0
+    monValue.set(j, -avg + 0.6 * bringPrior(ids[j], calib) + support + archBoost)
+  }
+
   const scored = combosOf(oppIdx, Math.min(4, opponents.length)).map((combo) => ({
     combo,
-    v: combo.reduce((a, j) => a + monValue[j], 0) + roleBalance(combo, opponents),
+    v:
+      combo.reduce((a, j) => a + monValue.get(j)!, 0) +
+      roleBalance(combo, opponents) -
+      WEIGHTS.doubleMegaPenalty * Math.max(0, oppMegaCount(combo, opponents) - 1),
   }))
   const maxV = Math.max(...scored.map((s) => s.v))
   const exps = scored.map((s) => Math.exp((s.v - maxV) / WEIGHTS.softmaxTemp))
@@ -60,61 +132,71 @@ export function estimateOpponentBrings(
   return scored
     .map((s, i) => ({
       bring: s.combo,
-      leads: guessLeads(s.combo, opponents),
+      leads: guessLeads(s.combo, opponents, arch),
       probability: exps[i] / total,
     }))
-    .sort((a, b) => b.probability - a.probability)
+    .sort(
+      (a, b) =>
+        b.probability - a.probability || comboKey(a.bring, ids).localeCompare(comboKey(b.bring, ids)),
+    )
     .slice(0, WEIGHTS.oppTopK)
 }
 
-function setRoles(j: number, opponents: OpponentMon[]): string[] {
-  return opponents[j].sets[0]?.roles ?? []
-}
-function setMoves(j: number, opponents: OpponentMon[]): string[] {
-  return opponents[j].sets[0]?.moves ?? []
-}
-
 function roleBalance(combo: number[], opponents: OpponentMon[]): number {
-  const roles = combo.flatMap((j) => setRoles(j, opponents))
-  const moves = combo.flatMap((j) => setMoves(j, opponents))
+  const cats = new Set<string>()
+  for (const j of combo) {
+    const top = setOf(j, opponents)
+    if (top) for (const c of supportCategories(top.moves, top.roles)) cats.add(c)
+  }
   let bonus = 0
-  if (roles.includes('speed-control') || moves.some((m) => SPEED_CONTROL_MOVES.has(m))) bonus += 0.1
-  if (roles.includes('fake-out') || moves.includes(FAKE_OUT)) bonus += 0.05
+  if (cats.has('speed-control')) bonus += 0.1
+  if (cats.has('fake-out')) bonus += 0.05
   return bonus
 }
 
-function leadDesire(j: number, opponents: OpponentMon[]): number {
-  const roles = setRoles(j, opponents)
-  const moves = setMoves(j, opponents)
+function leadDesire(j: number, opponents: OpponentMon[], arch: ArchetypeMatch | null): number {
+  const top = setOf(j, opponents)
+  const roles = top?.roles ?? []
+  const moves = top?.moves ?? []
   let v = 0
   if (moves.includes(FAKE_OUT) || roles.includes('fake-out')) v += 1
   if (moves.some((m) => SPEED_CONTROL_MOVES.has(m)) || roles.includes('speed-control')) v += 0.7
   if (roles.includes('redirection')) v += 0.6
+  if (roles.includes('screens')) v += 0.6
   if (roles.includes('setup')) v -= 0.3 // setup mons usually sit in the back
+  if (arch) v += WEIGHTS.archetypeLead * arch.confidence * (arch.archetype.leadRates[opponents[j].speciesId] ?? 0)
   return v
 }
 
-function guessLeads(bring: number[], opponents: OpponentMon[]): number[] {
-  return [...bring].sort((a, b) => leadDesire(b, opponents) - leadDesire(a, opponents)).slice(0, 2)
+function guessLeads(bring: number[], opponents: OpponentMon[], arch: ArchetypeMatch | null): number[] {
+  return [...bring]
+    .sort(
+      (a, b) =>
+        leadDesire(b, opponents, arch) - leadDesire(a, opponents, arch) ||
+        opponents[a].speciesId.localeCompare(opponents[b].speciesId),
+    )
+    .slice(0, 2)
 }
 
-function myRoleBonuses(bring: number[], myBuilds: PokemonBuild[]): { bonus: number; notes: string[] } {
-  const moves = bring.flatMap((i) => myBuilds[i].moves)
+function mySupportBonus(bring: number[], myBuilds: PokemonBuild[]): { bonus: number; notes: string[] } {
+  const cats = new Set<string>()
+  for (const i of bring) for (const c of supportCategories(myBuilds[i].moves)) cats.add(c)
   let bonus = 0
   const notes: string[] = []
-  const sc = moves.find((m) => SPEED_CONTROL_MOVES.has(m))
-  if (sc) {
-    bonus += WEIGHTS.speedControlBonus
-    notes.push(`keeps speed control (${sc === 'trickroom' ? 'Trick Room' : sc === 'tailwind' ? 'Tailwind' : 'Icy Wind-style'})`)
-  }
-  if (moves.includes(FAKE_OUT)) {
-    bonus += WEIGHTS.fakeOutBonus
-    notes.push('keeps Fake Out pressure')
-  }
+  for (const cat of cats) bonus += WEIGHTS.mySupportScale * SUPPORT_ROLE_VALUE[cat]
+  if (cats.has('speed-control')) notes.push('keeps speed control')
+  if (cats.has('fake-out')) notes.push('keeps Fake Out pressure')
+  if (cats.has('redirection')) notes.push('keeps redirection support')
   return { bonus, notes }
 }
 
 const name = (id: string) => getSpecies(id)?.name ?? id
+
+export interface RecommendResult {
+  recommendations: BringRecommendation[]
+  oppEstimates: OpponentBringEstimate[]
+  archetype: ArchetypeMatch | null
+}
 
 export function recommendBrings(
   matrix: MatchupCell[][],
@@ -122,13 +204,20 @@ export function recommendBrings(
   opponents: OpponentMon[],
   calib: CalibrationWeights = EMPTY_CALIBRATION,
   topN = 3,
-): { recommendations: BringRecommendation[]; oppEstimates: OpponentBringEstimate[] } {
-  const oppEstimates = estimateOpponentBrings(matrix, opponents, calib)
+): RecommendResult {
+  const archetype = matchArchetype(opponents.map((o) => o.speciesId))
+  const oppEstimates = estimateOpponentBrings(matrix, opponents, calib, archetype)
+  const { penalties: dropPenalties, notes: dropNotes } = statDropPenalties(myBuilds, opponents)
+  const myIds = myBuilds.map((b) => b.speciesId)
   const results: BringRecommendation[] = []
   const myIdx = range(myBuilds.length)
 
   for (const bring of combosOf(myIdx, Math.min(4, myBuilds.length))) {
-    const { bonus: roleBonus } = myRoleBonuses(bring, myBuilds)
+    const { bonus: supportBonus } = mySupportBonus(bring, myBuilds)
+    const megaCount = bring.filter((i) => isMegaBuild(myBuilds[i])).length
+    const megaPenalty = WEIGHTS.doubleMegaPenalty * Math.max(0, megaCount - 1)
+    const statDropPenalty = bring.reduce((a, i) => a + dropPenalties[i], 0)
+
     for (const leads of combosOf(bring, 2)) {
       let total = 0
       for (const est of oppEstimates) {
@@ -153,7 +242,7 @@ export function recommendBrings(
             WEIGHTS.coverage * coverage -
             WEIGHTS.unansweredPenalty * unanswered)
       }
-      total += roleBonus
+      total += supportBonus - megaPenalty - statDropPenalty
 
       results.push({
         bring,
@@ -166,10 +255,22 @@ export function recommendBrings(
     }
   }
 
-  results.sort((a, b) => b.score - a.score)
+  results.sort(
+    (a, b) =>
+      b.score - a.score ||
+      comboKey(a.bring, myIds).localeCompare(comboKey(b.bring, myIds)) ||
+      comboKey(a.leads, myIds).localeCompare(comboKey(b.leads, myIds)),
+  )
   const top = results.slice(0, topN)
-  for (const rec of top) rec.reasons = explain(rec, matrix, myBuilds, opponents, oppEstimates, myRoleBonuses(rec.bring, myBuilds).notes)
-  return { recommendations: top, oppEstimates }
+  for (const rec of top) {
+    const megaCount = rec.bring.filter((i) => isMegaBuild(myBuilds[i])).length
+    rec.reasons = explain(
+      rec, matrix, myBuilds, opponents, oppEstimates,
+      mySupportBonus(rec.bring, myBuilds).notes, megaCount,
+      rec.bring.map((i) => dropNotes.get(i)).filter((n): n is string => !!n),
+    )
+  }
+  return { recommendations: top, oppEstimates, archetype }
 }
 
 function explain(
@@ -179,6 +280,8 @@ function explain(
   opponents: OpponentMon[],
   oppEstimates: OpponentBringEstimate[],
   roleNotes: string[],
+  megaCount: number,
+  dropNotes: string[],
 ): string[] {
   const reasons: string[] = []
   const topEst = oppEstimates[0]
@@ -197,10 +300,10 @@ function explain(
   }
 
   // Coverage highlights: my best answer to their two scariest mons.
-  const threats = [...topEst.bring].sort((a, b) => {
-    const danger = (j: number) => Math.max(...matrix.map((row) => 1 / row[j].defense.koTurns))
-    return danger(b) - danger(a)
-  })
+  const danger = (j: number) => Math.max(...matrix.map((row) => 1 / row[j].defense.koTurns))
+  const threats = [...topEst.bring].sort(
+    (a, b) => danger(b) - danger(a) || opponents[a].speciesId.localeCompare(opponents[b].speciesId),
+  )
   for (const j of threats.slice(0, 2)) {
     let bestI = rec.bring[0]
     for (const i of rec.bring) if (matrix[i][j].score > matrix[bestI][j].score) bestI = i
@@ -216,6 +319,13 @@ function explain(
     }
   }
 
+  if (megaCount > 1) {
+    reasons.push(
+      `Note: this four carries ${megaCount} Mega Stones but only one Pokemon can Mega Evolve per battle.`,
+    )
+  }
+  for (const n of dropNotes) reasons.push(n)
+
   // Why the bench sits.
   for (const i of rec.bench) {
     const worst = topEst.bring.reduce(
@@ -230,5 +340,5 @@ function explain(
   }
 
   for (const note of roleNotes) reasons.push(`This four ${note}.`)
-  return reasons.slice(0, 5)
+  return reasons.slice(0, 6)
 }

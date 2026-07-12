@@ -5,9 +5,11 @@ import { getMove } from '../data'
 import { useTeams } from '../store/teams'
 import { useMatchLogs, useUserMeta, deriveCalibration } from '../store/calibration'
 import { useStored } from '../store/storage'
-import { predictSets } from '../engine/predict'
+import { getMetaEntry, predictSets } from '../engine/predict'
 import { computeMatrix, type OpponentMon } from '../engine/matrix'
 import { recommendBrings } from '../engine/optimize'
+import { computeInsights } from '../engine/insights'
+import type { ArchetypeMatch } from '../engine/archetypes'
 import { Combobox, Modal, Sprite, SpeciesRow, TypeBadge } from '../components/shared'
 
 export interface LastMatchup {
@@ -16,11 +18,28 @@ export interface LastMatchup {
   myBring?: string[]
 }
 
-function scoreColor(score: number): string {
-  // -1..1 -> red..slate..green
-  const hue = 8 + ((score + 1) / 2) * 140
-  const sat = 25 + Math.abs(score) * 55
-  return `hsl(${hue} ${sat}% ${22 + Math.abs(score) * 8}%)`
+/**
+ * Cell background keyed to KO certainty, not just the aggregate score:
+ * guaranteed OHKO against you = vivid red; your guaranteed OHKO slides from
+ * green toward blue with overkill; mutual OHKO is decided by speed.
+ */
+function cellColor(cell: MatchupCell): string {
+  const theirOhko = cell.defense.dmgPct[0] >= 100
+  const myOhko = cell.offense.dmgPct[0] >= 100
+  const overkillBlue = () => {
+    const hue = 150 + Math.min((cell.offense.dmgPct[0] - 100) / 60, 1) * 55
+    return `hsl(${hue} 75% 34%)`
+  }
+  if (myOhko && theirOhko) {
+    if (cell.speed === 'faster') return overkillBlue()
+    if (cell.speed === 'slower') return 'hsl(0 85% 45%)'
+    return 'hsl(40 90% 40%)' // speed tie coin flip
+  }
+  if (theirOhko) return 'hsl(0 85% 45%)'
+  if (myOhko) return overkillBlue()
+  const hue = 8 + ((cell.score + 1) / 2) * 140
+  const sat = 40 + Math.abs(cell.score) * 55
+  return `hsl(${hue} ${sat}% ${22 + Math.abs(cell.score) * 10}%)`
 }
 
 export function MatchupPage({ teamId, onTeamChange }: { teamId: string | null; onTeamChange: (id: string | null) => void }) {
@@ -35,7 +54,15 @@ export function MatchupPage({ teamId, onTeamChange }: { teamId: string | null; o
   const calib = useMemo(() => deriveCalibration(logs, userMeta), [logs, userMeta])
 
   const opponents: OpponentMon[] = useMemo(
-    () => opponent.map((id) => ({ speciesId: id, sets: predictSets(id, calib, userMeta) })),
+    () =>
+      opponent
+        .map((id) => ({ speciesId: id, sets: predictSets(id, calib, userMeta) }))
+        // Canonical order (usage, then id): entry order carries no signal
+        // about the opponent's intentions and must not affect the analysis.
+        .sort((a, b) => {
+          const usage = (id: string) => getMetaEntry(id, userMeta)?.usage ?? 0
+          return usage(b.speciesId) - usage(a.speciesId) || a.speciesId.localeCompare(b.speciesId)
+        }),
     [opponent, calib, userMeta],
   )
 
@@ -43,8 +70,9 @@ export function MatchupPage({ teamId, onTeamChange }: { teamId: string | null; o
     if (!team || team.pokemon.length < 4 || opponents.length < 4) return null
     try {
       const matrix = computeMatrix(team.pokemon, opponents)
-      const { recommendations, oppEstimates } = recommendBrings(matrix, team.pokemon, opponents, calib)
-      return { matrix, recommendations, oppEstimates }
+      const { recommendations, oppEstimates, archetype } = recommendBrings(matrix, team.pokemon, opponents, calib)
+      const insights = computeInsights(team.pokemon, opponents, oppEstimates[0]?.bring ?? [])
+      return { matrix, recommendations, oppEstimates, archetype, insights }
     } catch (err) {
       console.error(err)
       return null
@@ -199,19 +227,59 @@ function Analysis({
     matrix: MatchupCell[][]
     recommendations: ReturnType<typeof recommendBrings>['recommendations']
     oppEstimates: ReturnType<typeof recommendBrings>['oppEstimates']
+    archetype: ArchetypeMatch | null
+    insights: ReturnType<typeof computeInsights>
   }
   team: { pokemon: { speciesId: string }[] }
   opponents: OpponentMon[]
   onLog: (myBring: string[]) => void
 }) {
   const [picked, setPicked] = useState(0)
-  const { matrix, recommendations, oppEstimates } = analysis
+  const { matrix, recommendations, oppEstimates, archetype, insights } = analysis
   const rec = recommendations[picked] ?? recommendations[0]
   const mySpecies = (i: number) => getSpecies(team.pokemon[i].speciesId)!
   const topOpp = oppEstimates[0]
 
   return (
     <>
+      {archetype && (
+        <div className="panel border-accent-500/40 bg-accent-500/5 p-4">
+          <div className="mb-1 flex items-center gap-2">
+            <span className="rounded bg-accent-500/20 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-accent-400">
+              Recognized team
+            </span>
+            <span className="font-semibold">{archetype.archetype.name}</span>
+            <span className="text-xs text-ink-500">
+              {archetype.overlap}/6 match — bring/lead predictions use this team's known patterns
+            </span>
+          </div>
+          <ul className="mt-2 space-y-1 text-sm text-ink-300">
+            {archetype.archetype.notes.slice(0, 4).map((n) => (
+              <li key={n} className="flex gap-2">
+                <span className="text-accent-400">▸</span>
+                <span>{n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {insights.length > 0 && (
+        <div className="panel p-4">
+          <h2 className="mb-2 font-semibold">Watch-outs</h2>
+          <ul className="space-y-1.5 text-sm">
+            {insights.map((ins) => (
+              <li key={ins.text} className="flex gap-2">
+                <span>{ins.severity === 'warn' ? '⚠️' : 'ℹ️'}</span>
+                <span className={ins.severity === 'warn' ? 'text-amber-200/90' : 'text-ink-300'}>
+                  {ins.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="grid gap-4 lg:grid-cols-3">
         {/* Recommendation card */}
         <div className="panel p-4 lg:col-span-2">
@@ -317,7 +385,7 @@ function Analysis({
                   <td
                     key={j}
                     className="min-w-24 rounded-lg p-1.5 align-top text-[10px] leading-tight"
-                    style={{ backgroundColor: scoreColor(cell.score) }}
+                    style={{ backgroundColor: cellColor(cell) }}
                     title={`${mySpecies(i).name} vs ${getSpecies(cell.theirs)?.name}\nYou: ${cell.offense.bestMove} ${cell.offense.dmgPct[0]}–${cell.offense.dmgPct[1]}%\nThem: ${cell.defense.bestMove} ${cell.defense.dmgPct[0]}–${cell.defense.dmgPct[1]}%\nSpeed: ${cell.speed}`}
                   >
                     <div className="flex items-center justify-between font-semibold">
@@ -333,8 +401,9 @@ function Analysis({
           </tbody>
         </table>
         <p className="mt-2 text-xs text-ink-500">
-          Cell = your best move damage (top) and their best answer (bottom), colored by overall
-          favorability. ⚡ you're faster · 🐢 slower.
+          Cell = your best move damage (top) and their best answer (bottom). Bright red = they
+          have a guaranteed OHKO on you; green→blue = your guaranteed OHKO (bluer = more
+          overkill); amber = mutual OHKO decided by a speed tie. ⚡ you're faster · 🐢 slower.
         </p>
       </div>
     </>

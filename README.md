@@ -27,6 +27,17 @@ opponent's likely sets and bring-four.
    (set-confirmation counts and bring/lead frequencies), so the tool gets
    sharper the more you play. Backup/restore everything as JSON.
 
+The engine goes beyond raw type matchups: it recognizes known ladder team
+archetypes (`src/data/team-archetypes.json` — The Big Six, Pelipper rain,
+Trick Room variants, Grimmsnarl screens, …) and applies their documented
+bring/lead patterns; it penalizes bring-fours that stack multiple Mega
+Stones (only one Pokemon can Mega Evolve); it values support roles (speed
+control, redirection, Fake Out, screens) alongside damage; and a
+"Watch-outs" panel surfaces ability interactions — immunity clusters
+against your attack types, Contrary/Defiant punishing your Intimidate and
+stat-drop moves, Fake Out blockers. Analysis is independent of the order
+you enter opponents in.
+
 All data lives in your browser (localStorage). No accounts, no server.
 
 ## Champions-specific modelling
