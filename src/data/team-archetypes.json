@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-12",
+  "updated": "2026-07-13",
   "archetypes": [
     {
       "id": "big-six",
@@ -96,6 +96,33 @@
         "Sneasler leads with Fake Out pressure into Dire Claw chaos; Unburden doubles its Speed after item use.",
         "Incineroar/Sinistcha give it pivot and redirection support; Kingambit and Basculegion clean up late.",
         "Psychic or Ground pressure on Sneasler early stops the Dire Claw flinch/status lottery."
+      ]
+    },
+    {
+      "id": "garchomp-sylveon-goodstuff",
+      "name": "Garchomp + Kingambit + Sylveon Goodstuff",
+      "members": ["garchomp", "kingambit", "sylveon", "incineroar", "whimsicott", "archaludon", "dragonite", "blastoise"],
+      "core": ["garchomp", "kingambit", "sylveon"],
+      "bringRates": { "garchomp": 0.75, "kingambit": 0.7, "sylveon": 0.7, "incineroar": 0.6, "whimsicott": 0.55, "archaludon": 0.45, "dragonite": 0.45, "blastoise": 0.45 },
+      "leadRates": { "incineroar": 0.55, "whimsicott": 0.5, "sylveon": 0.45, "garchomp": 0.4, "blastoise": 0.35, "archaludon": 0.3, "dragonite": 0.25, "kingambit": 0.1 },
+      "notes": [
+        "The season's most-played trio (7.1% of teams, 56.5% win rate): Garchomp spread pressure, Kingambit endgame, Pixilate Hyper Voice Sylveon.",
+        "No weather dependence — they win the neutral game with Intimidate cycling and Sucker Punch mind games.",
+        "Kingambit's Defiant punishes YOUR Intimidate; check the watch-outs before bringing stat-droppers."
+      ]
+    },
+    {
+      "id": "tyranitar-sand",
+      "name": "Mega Tyranitar Sand",
+      "members": ["tyranitar", "excadrill", "aerodactyl", "rotomwash", "incineroar", "sinistcha", "corviknight", "sneasler"],
+      "core": ["tyranitar", "excadrill"],
+      "bringRates": { "tyranitar": 0.9, "excadrill": 0.85, "rotomwash": 0.55, "incineroar": 0.55, "sinistcha": 0.45, "aerodactyl": 0.45, "corviknight": 0.4, "sneasler": 0.4 },
+      "leadRates": { "tyranitar": 0.7, "excadrill": 0.55, "incineroar": 0.45, "aerodactyl": 0.35, "rotomwash": 0.3, "sinistcha": 0.2, "corviknight": 0.25, "sneasler": 0.3 },
+      "notes": [
+        "Mega Tyranitar sets sand on entry; Sand Rush doubles Excadrill's Speed and sand chips your non-immune Pokemon every turn.",
+        "Excadrill nearly always carries Focus Sash — its Iron Head/Earthquake/Rock Slide sweep starts once your speed control is gone.",
+        "Rotom-Wash covers their rain matchup and burns physical attackers; Aerodactyl answers sun and sets Tailwind.",
+        "Knocking out Tyranitar (or overwriting the weather) turns Excadrill back into a slow, frail attacker."
       ]
     },
     {

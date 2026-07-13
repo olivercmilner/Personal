@@ -1,6 +1,6 @@
 {
   "regulation": "Reg M-B",
-  "updated": "2026-07-12",
+  "updated": "2026-07-13",
   "entries": [
     {
       "speciesId": "garchomp",
@@ -422,6 +422,50 @@
       "teammates": ["annihilape", "basculegion", "sinistcha"],
       "sets": [
         { "name": "Wide Lens Population Bomb", "weight": 0.8, "item": "Wide Lens", "ability": "Technician", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["populationbomb", "followme", "tidyup", "protect"], "roles": ["physical-attacker", "redirection", "support"] }
+      ]
+    },
+    {
+      "speciesId": "blastoise",
+      "usage": 0.06,
+      "teammates": ["whimsicott", "incineroar", "rillaboom"],
+      "sets": [
+        { "name": "Mega Launcher pulses", "weight": 0.85, "formeId": "blastoisemega", "item": "Blastoisinite", "ability": "Mega Launcher", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["waterpulse", "darkpulse", "aurasphere", "protect"], "roles": ["special-attacker", "mega"] },
+        { "name": "Eject Button pivot", "weight": 0.15, "item": "Eject Button", "ability": "Torrent", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["muddywater", "icebeam", "fakeout", "protect"], "roles": ["special-attacker", "fake-out"] }
+      ]
+    },
+    {
+      "speciesId": "tyranitar",
+      "usage": 0.055,
+      "teammates": ["excadrill", "sinistcha", "incineroar"],
+      "sets": [
+        { "name": "Mega sand setter", "weight": 0.75, "formeId": "tyranitarmega", "item": "Tyranitarite", "ability": "Sand Stream", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["rockslide", "crunch", "lowkick", "protect"], "roles": ["physical-attacker", "weather", "mega", "spread-damage"] },
+        { "name": "Clear Amulet bulky", "weight": 0.25, "item": "Clear Amulet", "ability": "Sand Stream", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["rockslide", "crunch", "dragondance", "protect"], "roles": ["physical-attacker", "weather", "setup"] }
+      ]
+    },
+    {
+      "speciesId": "excadrill",
+      "usage": 0.05,
+      "teammates": ["tyranitar", "corviknight", "rotomwash"],
+      "sets": [
+        { "name": "Focus Sash Sand Rush", "weight": 0.85, "item": "Focus Sash", "ability": "Sand Rush", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["ironhead", "earthquake", "rockslide", "protect"], "roles": ["physical-attacker", "weather-abuser", "spread-damage"] },
+        { "name": "Life Orb", "weight": 0.15, "item": "Life Orb", "ability": "Sand Rush", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["ironhead", "earthquake", "rockslide", "swordsdance"], "roles": ["physical-attacker", "weather-abuser", "setup"] }
+      ]
+    },
+    {
+      "speciesId": "rotomwash",
+      "usage": 0.04,
+      "teammates": ["excadrill", "tyranitar", "corviknight"],
+      "sets": [
+        { "name": "Sitrus pivot", "weight": 0.5, "item": "Sitrus Berry", "ability": "Levitate", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["hydropump", "willowisp", "thunderbolt", "protect"], "roles": ["special-attacker", "support", "disruption"] },
+        { "name": "Choice Scarf", "weight": 0.25, "item": "Choice Scarf", "ability": "Levitate", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["hydropump", "thunderbolt", "voltswitch", "trick"], "roles": ["special-attacker"] }
+      ]
+    },
+    {
+      "speciesId": "corviknight",
+      "usage": 0.035,
+      "teammates": ["excadrill", "rotomwash", "tyranitar"],
+      "sets": [
+        { "name": "Leftovers Bulk Up", "weight": 0.8, "item": "Leftovers", "ability": "Mirror Armor", "nature": "Careful", "points": { "hp": 32, "spd": 32, "atk": 2 }, "moves": ["bravebird", "tailwind", "roost", "bulkup"], "roles": ["speed-control", "bulky", "setup"] }
       ]
     },
     {

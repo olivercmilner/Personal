@@ -22,6 +22,33 @@ export function isMegaBuild(build: PokemonBuild): boolean {
   return MEGA_STONE_IDS.has(toId(build.item ?? ''))
 }
 
+/** Mega Stone item id -> the Mega forme species id it produces. */
+export const STONE_TO_MEGA: Map<string, string> = (() => {
+  const map = new Map<string, string>()
+  for (const item of CUSTOM_ITEMS) if (item.megaFor) map.set(item.id, item.megaFor)
+  for (const item of ITEMS) {
+    const m = item.shortDesc?.match(/^If held by an? (.+?), this item allows it to Mega Evolve/)
+    if (!m) continue
+    const suffix = / X$/.test(item.name) ? 'x' : / Y$/.test(item.name) ? 'y' : ''
+    const megaId = toId(m[1]) + 'mega' + suffix
+    if (getSpecies(megaId)) map.set(item.id, megaId)
+  }
+  return map
+})()
+
+/**
+ * The Mega forme a build transforms into in battle: base species holding
+ * its matching stone. Null when not applicable (wrong stone, already Mega).
+ */
+export function megaTargetForBuild(build: Pick<PokemonBuild, 'speciesId' | 'item'>): SpeciesData | null {
+  const megaId = STONE_TO_MEGA.get(toId(build.item ?? ''))
+  if (!megaId || megaId === build.speciesId) return null
+  const mega = getSpecies(megaId)
+  const base = getSpecies(build.speciesId)
+  if (!mega || !base || toId(mega.baseSpecies ?? '') !== base.id) return null
+  return mega
+}
+
 export interface MetaFile {
   regulation: string
   updated: string

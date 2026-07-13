@@ -9,6 +9,7 @@ import { getMetaEntry, predictSets } from '../engine/predict'
 import { computeMatrix, type OpponentMon } from '../engine/matrix'
 import { recommendBrings } from '../engine/optimize'
 import { computeInsights } from '../engine/insights'
+import { inferContext, type BattleContext } from '../engine/field'
 import type { ArchetypeMatch } from '../engine/archetypes'
 import { Combobox, Modal, Sprite, SpeciesRow, TypeBadge } from '../components/shared'
 
@@ -19,27 +20,44 @@ export interface LastMatchup {
 }
 
 /**
- * Cell background keyed to KO certainty, not just the aggregate score:
- * guaranteed OHKO against you = vivid red; your guaranteed OHKO slides from
- * green toward blue with overkill; mutual OHKO is decided by speed.
+ * Diverging rose↔blue scale keyed to KO certainty (colorblind-safe pole
+ * pair, neutral dark midpoint, every anchor ≥4.5:1 against the cell text):
+ * vivid rose = their guaranteed OHKO; teal→blue = your guaranteed OHKO
+ * (bluer = more overkill); amber = mutual OHKO on a speed tie; everything
+ * else interpolates through the neutral midpoint by cell score.
  */
+const CELL_COLORS = {
+  danger: '#be123c', // their guaranteed OHKO
+  dangerArm: '#9f1239', // worst non-OHKO scores blend toward this
+  neutral: '#283048',
+  advantageArm: '#115e59', // best non-OHKO scores blend toward this
+  ohko: '#0d6e68', // my clean guaranteed OHKO
+  overkill: '#1d4ed8', // my guaranteed OHKO with heavy overkill
+  speedTie: '#92400e', // mutual OHKO coin flip
+}
+
+function mixHex(a: string, b: string, t: number): string {
+  const ch = (h: string, i: number) => parseInt(h.slice(i, i + 2), 16)
+  const lerp = (x: number, y: number) => Math.round(x + (y - x) * t)
+  return `rgb(${lerp(ch(a, 1), ch(b, 1))} ${lerp(ch(a, 3), ch(b, 3))} ${lerp(ch(a, 5), ch(b, 5))})`
+}
+
 function cellColor(cell: MatchupCell): string {
   const theirOhko = cell.defense.dmgPct[0] >= 100
   const myOhko = cell.offense.dmgPct[0] >= 100
-  const overkillBlue = () => {
-    const hue = 150 + Math.min((cell.offense.dmgPct[0] - 100) / 60, 1) * 55
-    return `hsl(${hue} 75% 34%)`
-  }
+  const overkillBlue = () =>
+    mixHex(CELL_COLORS.ohko, CELL_COLORS.overkill, Math.min((cell.offense.dmgPct[0] - 100) / 60, 1))
   if (myOhko && theirOhko) {
     if (cell.speed === 'faster') return overkillBlue()
-    if (cell.speed === 'slower') return 'hsl(0 85% 45%)'
-    return 'hsl(40 90% 40%)' // speed tie coin flip
+    if (cell.speed === 'slower') return CELL_COLORS.danger
+    return CELL_COLORS.speedTie
   }
-  if (theirOhko) return 'hsl(0 85% 45%)'
+  if (theirOhko) return CELL_COLORS.danger
   if (myOhko) return overkillBlue()
-  const hue = 8 + ((cell.score + 1) / 2) * 140
-  const sat = 40 + Math.abs(cell.score) * 55
-  return `hsl(${hue} ${sat}% ${22 + Math.abs(cell.score) * 10}%)`
+  const s = cell.score
+  return s >= 0
+    ? mixHex(CELL_COLORS.neutral, CELL_COLORS.advantageArm, Math.min(s, 1))
+    : mixHex(CELL_COLORS.neutral, CELL_COLORS.dangerArm, Math.min(-s, 1))
 }
 
 export function MatchupPage({ teamId, onTeamChange }: { teamId: string | null; onTeamChange: (id: string | null) => void }) {
@@ -69,10 +87,11 @@ export function MatchupPage({ teamId, onTeamChange }: { teamId: string | null; o
   const analysis = useMemo(() => {
     if (!team || team.pokemon.length < 4 || opponents.length < 4) return null
     try {
-      const matrix = computeMatrix(team.pokemon, opponents)
-      const { recommendations, oppEstimates, archetype } = recommendBrings(matrix, team.pokemon, opponents, calib)
-      const insights = computeInsights(team.pokemon, opponents, oppEstimates[0]?.bring ?? [])
-      return { matrix, recommendations, oppEstimates, archetype, insights }
+      const ctx = inferContext(team.pokemon, opponents)
+      const matrix = computeMatrix(team.pokemon, opponents, ctx)
+      const { recommendations, oppEstimates, archetype } = recommendBrings(matrix, team.pokemon, opponents, calib, 3, ctx)
+      const insights = computeInsights(team.pokemon, opponents, oppEstimates[0]?.bring ?? [], ctx)
+      return { matrix, recommendations, oppEstimates, archetype, insights, ctx }
     } catch (err) {
       console.error(err)
       return null
@@ -229,13 +248,14 @@ function Analysis({
     oppEstimates: ReturnType<typeof recommendBrings>['oppEstimates']
     archetype: ArchetypeMatch | null
     insights: ReturnType<typeof computeInsights>
+    ctx: BattleContext
   }
   team: { pokemon: { speciesId: string }[] }
   opponents: OpponentMon[]
   onLog: (myBring: string[]) => void
 }) {
   const [picked, setPicked] = useState(0)
-  const { matrix, recommendations, oppEstimates, archetype, insights } = analysis
+  const { matrix, recommendations, oppEstimates, archetype, insights, ctx } = analysis
   const rec = recommendations[picked] ?? recommendations[0]
   const mySpecies = (i: number) => getSpecies(team.pokemon[i].speciesId)!
   const topOpp = oppEstimates[0]
@@ -261,6 +281,26 @@ function Analysis({
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {(ctx.weather || ctx.terrain || ctx.trickRoomLikely) && (
+        <div className="flex flex-wrap gap-2">
+          {ctx.weather && (
+            <span className="rounded-full border border-ink-700 bg-ink-850 px-3 py-1 text-xs text-ink-300">
+              {ctx.weather === 'Rain' ? '🌧 Rain' : ctx.weather === 'Sun' ? '☀️ Sun' : '🌪 Sand'} assumed
+            </span>
+          )}
+          {ctx.terrain && (
+            <span className="rounded-full border border-ink-700 bg-ink-850 px-3 py-1 text-xs text-ink-300">
+              ⬢ {ctx.terrain} Terrain assumed
+            </span>
+          )}
+          {ctx.trickRoomLikely && (
+            <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs text-amber-200/90">
+              ⏳ Trick Room likely
+            </span>
+          )}
         </div>
       )}
 
@@ -386,11 +426,22 @@ function Analysis({
                     key={j}
                     className="min-w-24 rounded-lg p-1.5 align-top text-[10px] leading-tight"
                     style={{ backgroundColor: cellColor(cell) }}
-                    title={`${mySpecies(i).name} vs ${getSpecies(cell.theirs)?.name}\nYou: ${cell.offense.bestMove} ${cell.offense.dmgPct[0]}–${cell.offense.dmgPct[1]}%\nThem: ${cell.defense.bestMove} ${cell.defense.dmgPct[0]}–${cell.defense.dmgPct[1]}%\nSpeed: ${cell.speed}`}
+                    title={[
+                      `${mySpecies(i).name} vs ${getSpecies(cell.theirs)?.name}`,
+                      `You: ${cell.offense.bestMove} ${cell.offense.dmgPct[0]}–${cell.offense.dmgPct[1]}%${cell.offense.scaledNote ? ` (${cell.offense.scaledNote})` : ''}`,
+                      `Them: ${cell.defense.bestMove} ${cell.defense.dmgPct[0]}–${cell.defense.dmgPct[1]}%${cell.defense.scaledNote ? ` (${cell.defense.scaledNote})` : ''}`,
+                      `Speed: ${cell.speed}${cell.flags?.myPriority ? ' · your best move is priority' : ''}${cell.flags?.theirPriority ? ' · their best move is priority' : ''}`,
+                      cell.flags?.sash ? 'Likely Focus Sash/Sturdy: survives your OHKO at 1 HP' : '',
+                    ].filter(Boolean).join('\n')}
                   >
                     <div className="flex items-center justify-between font-semibold">
                       <span>{cell.offense.dmgPct[1]}%</span>
-                      <span>{cell.speed === 'faster' ? '⚡' : cell.speed === 'slower' ? '🐢' : '='}</span>
+                      <span>
+                        {cell.flags?.sash && <span title="survives at 1 HP (Sash/Sturdy)">🛡</span>}
+                        {cell.flags?.myPriority && '↟'}
+                        {cell.flags?.theirPriority && '↡'}
+                        {cell.speed === 'faster' ? '⚡' : cell.speed === 'slower' ? '🐢' : '='}
+                      </span>
                     </div>
                     <div className="truncate opacity-80">{cell.offense.bestMove}</div>
                     <div className="mt-0.5 truncate opacity-60">↩ {cell.defense.dmgPct[1]}% {cell.defense.bestMove}</div>
@@ -402,8 +453,10 @@ function Analysis({
         </table>
         <p className="mt-2 text-xs text-ink-500">
           Cell = your best move damage (top) and their best answer (bottom). Bright red = they
-          have a guaranteed OHKO on you; green→blue = your guaranteed OHKO (bluer = more
-          overkill); amber = mutual OHKO decided by a speed tie. ⚡ you're faster · 🐢 slower.
+          have a guaranteed OHKO on you; teal→blue = your guaranteed OHKO (bluer = more
+          overkill); amber = mutual OHKO decided by a speed tie. ⚡ you're faster · 🐢 slower ·
+          ↟ your priority move · ↡ their priority move · 🛡 survives at 1 HP (Sash/Sturdy). Speed
+          includes Choice Scarf and weather abilities.
         </p>
       </div>
     </>

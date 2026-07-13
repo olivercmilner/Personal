@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import type { PokemonBuild } from '../types'
 import { getSpecies } from '../data'
 import { championStat, championStats, EMPTY_POINTS, validateSpread } from './stats'
-import { buildCalcPokemon, bestAttack, koTurns } from './calc'
+import { buildCalcPokemon, buildField, bestAttack, koTurns } from './calc'
+import { NEUTRAL_CONTEXT } from './field'
 import { archetypeSet, predictSets } from './predict'
 import { combatantFromBuild, computeMatrix, type OpponentMon } from './matrix'
 import { recommendBrings } from './optimize'
@@ -61,7 +62,7 @@ describe('damage calc integration', () => {
       nature: 'Modest',
       points: { ...EMPTY_POINTS, hp: 32, spa: 32 },
     })
-    const result = bestAttack(atk, buildCalcPokemon(atk), def, buildCalcPokemon(def))
+    const result = bestAttack(atk, buildCalcPokemon(atk), def, buildCalcPokemon(def), buildField(NEUTRAL_CONTEXT))
     // Ground vs Fire/Steel is 4x: EQ should be the pick and OHKO territory.
     expect(result.bestMove).toBe('Earthquake')
     expect(result.dmgPct[1]).toBeGreaterThan(100)
