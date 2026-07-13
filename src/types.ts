@@ -96,6 +96,9 @@ export interface DuelResult {
   bestMove: string
   dmgPct: [number, number]
   koTurns: number // 1 = OHKO, 2 = 2HKO ... 9 = no meaningful damage
+  category?: 'Physical' | 'Special'
+  /** e.g. "scaled for mid-game (2 faints); turn 1: 30–36%" */
+  scaledNote?: string
 }
 
 export interface MatchupCell {
@@ -106,6 +109,20 @@ export interface MatchupCell {
   speed: 'faster' | 'slower' | 'tie'
   /** -1..1, positive = favorable for me */
   score: number
+  flags?: {
+    /** their likely set survives my OHKO at 1 HP (Focus Sash / Sturdy) */
+    sash?: boolean
+    /** my best move has priority */
+    myPriority?: boolean
+    /** their best move has priority */
+    theirPriority?: boolean
+  }
+}
+
+/** An opposing Pokemon as fed to the engine: species + predicted sets. */
+export interface OpponentMon {
+  speciesId: string
+  sets: PredictedSet[]
 }
 
 export interface BringRecommendation {

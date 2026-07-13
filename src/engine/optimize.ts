@@ -8,6 +8,7 @@ import { getSpecies } from '../data'
 import { bringPrior, EMPTY_CALIBRATION, isMegaBuild, isMegaSet, type CalibrationWeights } from './predict'
 import { matchArchetype, type ArchetypeMatch } from './archetypes'
 import { statDropPenalties } from './insights'
+import { NEUTRAL_CONTEXT, type BattleContext } from './field'
 import type { OpponentMon } from './matrix'
 
 /** Tunable weights for the whole optimizer — calibrate from field practice here. */
@@ -28,6 +29,8 @@ export const WEIGHTS = {
   oppSupportScale: 0.5,
   /** scale for support-role value in my own bring scoring */
   mySupportScale: 0.16,
+  /** my physical leads' positive matchup value into a likely Intimidate lead */
+  intimidateLeadFactor: 0.75,
 }
 
 /** Value of utility roles beyond raw damage — why Whimsicott always comes. */
@@ -198,13 +201,20 @@ export interface RecommendResult {
   archetype: ArchetypeMatch | null
 }
 
+/** Does this opponent's most likely set carry Intimidate? */
+function likelyIntimidate(j: number, opponents: OpponentMon[]): boolean {
+  return setOf(j, opponents)?.ability === 'Intimidate'
+}
+
 export function recommendBrings(
   matrix: MatchupCell[][],
   myBuilds: PokemonBuild[],
   opponents: OpponentMon[],
   calib: CalibrationWeights = EMPTY_CALIBRATION,
   topN = 3,
+  ctx: BattleContext = NEUTRAL_CONTEXT,
 ): RecommendResult {
+  void ctx // trick-room/screens effects live in matrix scoring + insights
   const archetype = matchArchetype(opponents.map((o) => o.speciesId))
   const oppEstimates = estimateOpponentBrings(matrix, opponents, calib, archetype)
   const { penalties: dropPenalties, notes: dropNotes } = statDropPenalties(myBuilds, opponents)
@@ -221,9 +231,16 @@ export function recommendBrings(
     for (const leads of combosOf(bring, 2)) {
       let total = 0
       for (const est of oppEstimates) {
-        // Lead matchup: my leads vs their likely leads.
+        // Lead matchup: my leads vs their likely leads. A likely Intimidate
+        // lead devalues my physical leads' positive matchups.
         let lead = 0
-        for (const i of leads) for (const j of est.leads) lead += matrix[i][j].score
+        for (const i of leads)
+          for (const j of est.leads) {
+            const cell = matrix[i][j]
+            const intimidated =
+              likelyIntimidate(j, opponents) && cell.offense.category === 'Physical'
+            lead += intimidated && cell.score > 0 ? cell.score * WEIGHTS.intimidateLeadFactor : cell.score
+          }
         lead /= leads.length * est.leads.length
 
         // Coverage: my best answer to each of their brought mons.

@@ -3,9 +3,9 @@ import type { DuelResult, PointSpread, SpeciesData, StatTable } from '../types'
 import { getMove, toId } from '../data'
 import { effectiveness } from '../data/typechart'
 import { championStats } from './stats'
+import { NEUTRAL_CONTEXT, type BattleContext } from './field'
 
 const gen = Generations.get(9)
-const DOUBLES = new Field({ gameType: 'Doubles' })
 
 export interface Combatant {
   species: SpeciesData
@@ -14,6 +14,14 @@ export interface Combatant {
   item: string
   nature: string
   points: PointSpread
+}
+
+export function buildField(ctx: BattleContext): Field {
+  return new Field({
+    gameType: 'Doubles',
+    weather: ctx.weather ?? undefined,
+    terrain: ctx.terrain ?? undefined,
+  })
 }
 
 /**
@@ -63,12 +71,45 @@ export function calcSpeed(c: Combatant): number {
   return championStats(c.species.baseStats, c.points, c.nature).spe
 }
 
+/** Weather-activated speed-doubling abilities. */
+const SPEED_ABILITY: Record<string, BattleContext['weather']> = {
+  'Swift Swim': 'Rain',
+  'Chlorophyll': 'Sun',
+  'Sand Rush': 'Sand',
+}
+
+/** Speed after items/abilities under the inferred conditions. */
+export function effectiveSpeed(c: Combatant, ctx: BattleContext = NEUTRAL_CONTEXT): number {
+  let spe = calcSpeed(c)
+  if (toId(c.item) === 'choicescarf') spe = Math.floor(spe * 1.5)
+  if (ctx.weather && SPEED_ABILITY[c.ability] === ctx.weather) spe *= 2
+  return spe
+}
+
+/**
+ * Champions-exclusive abilities no calc library knows about, applied as
+ * post-multipliers on the damage result.
+ */
+function championsAbilityMod(aInfo: Combatant, dInfo: Combatant, moveType: string): number {
+  let mod = 1
+  if (aInfo.ability === 'Fire Mane' && moveType === 'Fire') mod *= 1.5
+  if (dInfo.ability === 'Eelevate' && moveType === 'Ground') mod = 0
+  return mod
+}
+
+/** Moves whose power scales during the game; scored at a mid-game state. */
+const SCALING_MOVES: Record<string, { bp: number; note: string }> = {
+  lastrespects: { bp: 150, note: 'scaled for 2 fainted allies' },
+  ragefist: { bp: 150, note: 'scaled for 2 hits taken' },
+}
+
 const NO_DAMAGE: Omit<DuelResult, 'bestMove'> = { dmgPct: [0, 0], koTurns: 9 }
 
 /**
  * Damage % range of `attacker` using move `moveId` against `defender`,
- * in doubles. Returns null for status moves. Falls back to a plain
- * damage-formula estimate when the calc rejects a move it doesn't know.
+ * in doubles under `field` conditions. Returns null for status moves.
+ * Falls back to a plain damage-formula estimate when the calc rejects a
+ * move it doesn't know.
  */
 export function moveDamagePct(
   attacker: Pokemon,
@@ -76,16 +117,21 @@ export function moveDamagePct(
   defender: Pokemon,
   dInfo: Combatant,
   moveId: string,
+  field: Field,
+  bpOverride?: number,
 ): [number, number] | null {
   const data = getMove(moveId)
   if (!data || data.category === 'Status' || data.basePower === 0) return null
+  const mod = championsAbilityMod(aInfo, dInfo, data.type)
+  if (mod === 0) return [0, 0]
   try {
-    const result = calculate(gen, attacker, defender, new Move(gen, data.name), DOUBLES)
+    const move = new Move(gen, data.name, bpOverride ? { overrides: { basePower: bpOverride } } : undefined)
+    const result = calculate(gen, attacker, defender, move, field)
     const range = result.range()
     const maxHP = defender.maxHP()
-    return [(range[0] / maxHP) * 100, (range[1] / maxHP) * 100]
+    return [(range[0] / maxHP) * 100 * mod, (range[1] / maxHP) * 100 * mod]
   } catch {
-    return approximateDamagePct(attacker, aInfo, defender, dInfo, moveId)
+    return approximateDamagePct(attacker, aInfo, defender, dInfo, moveId, mod, bpOverride)
   }
 }
 
@@ -96,9 +142,12 @@ function approximateDamagePct(
   defender: Pokemon,
   dInfo: Combatant,
   moveId: string,
+  mod: number,
+  bpOverride?: number,
 ): [number, number] | null {
   const data = getMove(moveId)
   if (!data || data.category === 'Status' || data.basePower === 0) return null
+  const bp = bpOverride ?? data.basePower
   const atk = data.category === 'Physical' ? attacker.stats.atk : attacker.stats.spa
   const def = data.category === 'Physical' ? defender.stats.def : defender.stats.spd
   const stab = aInfo.species.types.includes(data.type) ? 1.5 : 1
@@ -106,27 +155,43 @@ function approximateDamagePct(
   // custom species stand-ins.
   const eff = effectiveness(data.type, dInfo.species.types)
   const spread = data.target === 'allAdjacentFoes' || data.target === 'allAdjacent' ? 0.75 : 1
-  const base = Math.floor(Math.floor((Math.floor((2 * 50) / 5 + 2) * data.basePower * atk) / def) / 50) + 2
-  const max = base * stab * eff * spread
+  const base = Math.floor(Math.floor((Math.floor((2 * 50) / 5 + 2) * bp * atk) / def) / 50) + 2
+  const max = base * stab * eff * spread * mod
   const min = max * 0.85
   const maxHP = defender.maxHP()
   return [(min / maxHP) * 100, (max / maxHP) * 100]
 }
 
-/** Best damaging move of `attacker` (a) into `defender` (d). */
-export function bestAttack(a: Combatant, aPoke: Pokemon, d: Combatant, dPoke: Pokemon): DuelResult {
+const round1 = (n: number) => Math.round(n * 10) / 10
+
+/** Best damaging move of `attacker` (a) into `defender` (d) under `field`. */
+export function bestAttack(
+  a: Combatant,
+  aPoke: Pokemon,
+  d: Combatant,
+  dPoke: Pokemon,
+  field: Field,
+): DuelResult {
   let best: DuelResult = { bestMove: '—', ...NO_DAMAGE }
   let bestAvg = -1
   for (const moveId of a.moves) {
-    const pct = moveDamagePct(aPoke, a, dPoke, d, moveId)
+    const scaling = SCALING_MOVES[moveId]
+    const pct = moveDamagePct(aPoke, a, dPoke, d, moveId, field, scaling?.bp)
     if (!pct) continue
     const avg = (pct[0] + pct[1]) / 2
     if (avg > bestAvg) {
       bestAvg = avg
+      let scaledNote: string | undefined
+      if (scaling) {
+        const turn1 = moveDamagePct(aPoke, a, dPoke, d, moveId, field)
+        if (turn1) scaledNote = `${scaling.note}; turn 1: ${round1(turn1[0])}–${round1(turn1[1])}%`
+      }
       best = {
         bestMove: getMove(moveId)?.name ?? moveId,
-        dmgPct: [Math.round(pct[0] * 10) / 10, Math.round(pct[1] * 10) / 10],
+        dmgPct: [round1(pct[0]), round1(pct[1])],
         koTurns: koTurns(pct),
+        category: getMove(moveId)?.category as DuelResult['category'],
+        scaledNote,
       }
     }
   }

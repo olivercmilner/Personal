@@ -1,7 +1,7 @@
-import type { PokemonBuild, PredictedSet } from '../types'
+import type { OpponentMon, PokemonBuild, PredictedSet } from '../types'
 import { getMove, getSpecies } from '../data'
 import { effectiveness } from '../data/typechart'
-import type { OpponentMon } from './matrix'
+import { NEUTRAL_CONTEXT, type BattleContext } from './field'
 
 export interface Insight {
   severity: 'warn' | 'info'
@@ -108,9 +108,30 @@ export function computeInsights(
   myBuilds: PokemonBuild[],
   opponents: OpponentMon[],
   theirLikelyBring: number[],
+  ctx: BattleContext = NEUTRAL_CONTEXT,
 ): Insight[] {
   const insights: Insight[] = []
   const likely = theirLikelyBring.map((j) => opponents[j])
+
+  // 0. Battle-condition headlines.
+  if (ctx.weather) {
+    insights.push({
+      severity: 'info',
+      text: `Damage and speed are calculated assuming ${ctx.weather === 'Sun' ? 'harsh sunlight' : ctx.weather.toLowerCase()} (weather-setter detected).`,
+    })
+  }
+  if (ctx.trickRoomLikely) {
+    insights.push({
+      severity: 'warn',
+      text: 'Expect Trick Room — speed advantages can invert; slow bulky picks gain value (speed scoring is discounted accordingly).',
+    })
+  }
+  if (ctx.screensLikely) {
+    insights.push({
+      severity: 'warn',
+      text: 'They likely set screens (Reflect/Light Screen ~halve damage for 8 turns with Light Clay) — Taunt or strong spread damage on the setter breaks the plan.',
+    })
+  }
 
   // 1. Immunity clusters: my damaging move types that much of their four ignores.
   const myAttackTypes = new Map<string, string[]>() // type -> my species using it

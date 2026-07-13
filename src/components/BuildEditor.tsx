@@ -3,6 +3,7 @@ import { MAX_POINTS_PER_STAT, TOTAL_POINTS } from '../types'
 import { getMove, getSpecies, searchItems, searchMoves, searchSpecies } from '../data'
 import { NATURES, getNature } from '../data/natures'
 import { championStats, totalPoints } from '../engine/stats'
+import { megaTargetForBuild } from '../engine/predict'
 import { Combobox, Sprite, SpeciesRow, TypeBadge } from './shared'
 
 const STAT_LABELS: Record<StatName, string> = {
@@ -89,6 +90,11 @@ export function BuildEditor({
                   onClear={() => onChange({ ...build, item: '' })}
                 />
               </div>
+              {megaTargetForBuild(build) && (
+                <span className="mt-1 block text-[10px] text-accent-400">
+                  ⇒ battles as {megaTargetForBuild(build)!.name}
+                </span>
+              )}
             </label>
           </div>
 
