@@ -25,7 +25,7 @@ const myTeam = [
   mk('kingambit', ['kowtowcleave', 'suckerpunch', 'ironhead', 'protect'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Defiant'),
   mk('incineroar', ['fakeout', 'flareblitz', 'partingshot', 'knockoff'], 'Impish', { hp: 32, def: 16, spd: 16, atk: 2 }, 'Intimidate', 'Sitrus Berry'),
   mk('heatran', ['heatwave', 'earthpower', 'flashcannon', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }, 'Flash Fire'),
-  mk('dragonite', ['extremespeed', 'outrage', 'icespinner', 'protect'], 'Adamant', { atk: 32, spe: 32, hp: 2 }, 'Multiscale', 'Choice Band'),
+  mk('dragonite', ['extremespeed', 'outrage', 'icespinner', 'protect'], 'Adamant', { atk: 32, spe: 32, hp: 2 }, 'Multiscale', 'Life Orb'),
 ]
 
 const oppFor = (ids: string[]): OpponentMon[] => ids.map((id) => ({ speciesId: id, sets: predictSets(id) }))

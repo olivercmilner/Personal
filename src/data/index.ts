@@ -15,12 +15,24 @@ export interface CustomItemData extends ItemData {
 }
 export const CUSTOM_ITEMS = customItemsJson as CustomItemData[]
 
+/**
+ * Items confirmed NOT (yet) purchasable in Champions — they never appear in
+ * recorded ladder usage and community item lists mark them absent. Excluded
+ * from the item pool entirely; revisit as the game's item shop grows.
+ */
+export const UNAVAILABLE_ITEM_IDS = new Set([
+  'loadeddice', 'choiceband', 'choicespecs', 'assaultvest', 'safetygoggles',
+  'covertcloak', 'clearamulet', 'powerherb', 'eviolite',
+])
+
 export const SPECIES = [
   ...(speciesJson as SpeciesData[]),
   ...(customSpeciesJson as SpeciesData[]),
 ]
 export const MOVES = movesJson as MoveData[]
-export const ITEMS = [...(itemsJson as ItemData[]), ...CUSTOM_ITEMS]
+export const ITEMS = [...(itemsJson as ItemData[]), ...CUSTOM_ITEMS].filter(
+  (i) => !UNAVAILABLE_ITEM_IDS.has(i.id),
+)
 
 export const speciesById = new Map(SPECIES.map((s) => [s.id, s]))
 export const movesById = new Map(MOVES.map((m) => [m.id, m]))

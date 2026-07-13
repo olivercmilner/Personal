@@ -1,4 +1,4 @@
-# Champ Call — Pokemon Champions Matchup Assistant
+# Champ Check — Pokemon Champions Matchup Assistant
 
 A static web app that helps you win the **90-second team preview** in Pokemon
 Champions ranked doubles. Store your teams ahead of time, punch in the

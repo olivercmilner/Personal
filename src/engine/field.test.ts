@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import type { PokemonBuild } from '../types'
-import { getSpecies } from '../data'
+import { getSpecies, itemsById, searchItems, toId, UNAVAILABLE_ITEM_IDS } from '../data'
 import { EMPTY_POINTS } from './stats'
-import { predictSets, megaTargetForBuild, STONE_TO_MEGA } from './predict'
+import { applyItemClause, predictSets, megaTargetForBuild, STONE_TO_MEGA } from './predict'
+import { recommendBrings } from './optimize'
 import { inferContext, NEUTRAL_CONTEXT } from './field'
 import { buildCalcPokemon, buildField, bestAttack, effectiveSpeed } from './calc'
 import { combatantFromBuild, computeMatrix, type OpponentMon } from './matrix'
@@ -119,5 +120,53 @@ describe('auto-Mega and sash mechanics', () => {
     expect(cell.offense.dmgPct[0]).toBeGreaterThan(100)
     expect(cell.flags?.sash).toBe(true)
     expect(cell.offense.koTurns).toBeGreaterThanOrEqual(1.7)
+  })
+})
+
+describe('v3.1 fixes', () => {
+  it('unavailable items are gone from the item pool and search', () => {
+    for (const id of UNAVAILABLE_ITEM_IDS) expect(itemsById.get(id), id).toBeUndefined()
+    expect(searchItems('loaded')).toHaveLength(0)
+    expect(searchItems('choice').map((i) => i.name)).toContain('Choice Scarf')
+    expect(searchItems('choice').map((i) => i.name)).not.toContain('Choice Band')
+  })
+
+  it('item clause: no duplicate items across predicted top sets', () => {
+    // Pelipper and Sneasler both top-predict Focus Sash
+    const opponents = applyItemClause(
+      oppFor(['pelipper', 'sneasler', 'whimsicott', 'kingambit', 'basculegion', 'charizard']),
+    )
+    const topItems = opponents.map((o) => toId(o.sets[0]?.item ?? '')).filter(Boolean)
+    expect(new Set(topItems).size).toBe(topItems.length)
+    // The higher-confidence sash user keeps it
+    const sashOwners = opponents.filter((o) => toId(o.sets[0]?.item ?? '') === 'focussash')
+    expect(sashOwners).toHaveLength(1)
+  })
+
+  it('item clause is order-independent', () => {
+    const a = applyItemClause(oppFor(['pelipper', 'sneasler', 'whimsicott']))
+    const b = applyItemClause(oppFor(['whimsicott', 'sneasler', 'pelipper']))
+    const key = (os: ReturnType<typeof oppFor>) =>
+      os.map((o) => `${o.speciesId}:${toId(o.sets[0]?.item ?? '')}`).sort().join('|')
+    expect(key(b)).toBe(key(a))
+  })
+
+  it('never claims nothing beats a threat my Mega Blastoise OHKOs', () => {
+    const myTeam = [
+      mk('blastoise', ['waterpulse', 'darkpulse', 'aurasphere', 'protect'], 'Modest', { hp: 32, spa: 32, spd: 2 }, 'Torrent', 'Blastoisinite'),
+      mk('whimsicott', ['tailwind', 'moonblast', 'encore', 'protect'], 'Timid', { spa: 32, spe: 32, hp: 2 }, 'Prankster', 'Focus Sash'),
+      mk('kingambit', ['kowtowcleave', 'suckerpunch', 'ironhead', 'protect'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Defiant'),
+      mk('rillaboom', ['fakeout', 'woodhammer', 'grassyglide', 'uturn'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Grassy Surge', 'Miracle Seed'),
+      mk('incineroar', ['fakeout', 'flareblitz', 'partingshot', 'knockoff'], 'Impish', { hp: 32, def: 16, spd: 16, atk: 2 }, 'Intimidate', 'Sitrus Berry'),
+      mk('dragonite', ['extremespeed', 'dragonclaw', 'icespinner', 'firepunch'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Multiscale', 'Life Orb'),
+    ]
+    const opponents = applyItemClause(oppFor(['pelipper', 'swampert', 'basculegion', 'raichu', 'archaludon', 'sinistcha']))
+    const ctx = inferContext(myTeam, opponents)
+    const matrix = computeMatrix(myTeam, opponents, ctx)
+    const { recommendations } = recommendBrings(matrix, myTeam, opponents)
+    for (const rec of recommendations) {
+      const bad = rec.reasons.find((r) => r.includes('nothing on the team beats it cleanly') && r.includes('Basculegion'))
+      expect(bad, rec.reasons.join(' | ')).toBeUndefined()
+    }
   })
 })

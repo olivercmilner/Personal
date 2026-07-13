@@ -17,7 +17,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="text-xl">⚔️</span>
             <span className="bg-gradient-to-r from-accent-400 to-fuchsia-400 bg-clip-text text-lg font-black tracking-tight text-transparent">
-              Champ Call
+              Champ Check
             </span>
           </div>
           <nav className="flex gap-1">

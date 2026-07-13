@@ -31,7 +31,7 @@ export function LogPage() {
     const blob = new Blob([JSON.stringify(exportAll(), null, 2)], { type: 'application/json' })
     const a = document.createElement('a')
     a.href = URL.createObjectURL(blob)
-    a.download = `champ-call-backup-${new Date().toISOString().slice(0, 10)}.json`
+    a.download = `champ-check-backup-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(a.href)
   }

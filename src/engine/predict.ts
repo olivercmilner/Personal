@@ -176,6 +176,42 @@ export function archetypeSet(species: SpeciesData): PredictedSet {
   }
 }
 
+/**
+ * Champions enforces item clause: no two team members can hold the same
+ * item. Predicted top sets are chosen greedily (most confident first) so
+ * that no item repeats across the opponent's six — a mon whose preferred
+ * item is already claimed is re-predicted on its next-best set, inheriting
+ * the displaced set's probability so the display stays ordered.
+ */
+export function applyItemClause<T extends { speciesId: string; sets: PredictedSet[] }>(
+  opponents: T[],
+): T[] {
+  const claimed = new Set<string>()
+  const resolved = new Map<string, PredictedSet[]>()
+  const order = [...opponents].sort(
+    (a, b) =>
+      (b.sets[0]?.probability ?? 0) - (a.sets[0]?.probability ?? 0) ||
+      a.speciesId.localeCompare(b.speciesId),
+  )
+  for (const o of order) {
+    const sets = [...o.sets]
+    const freeIdx = sets.findIndex((s) => !s.item || !claimed.has(toId(s.item)))
+    if (freeIdx > 0) {
+      const [promoted] = sets.splice(freeIdx, 1)
+      // The clause genuinely shifts likelihood mass onto the promoted set.
+      const displaced = sets[0]
+      sets.unshift({ ...promoted, probability: displaced.probability })
+      sets[1] = { ...displaced, probability: promoted.probability }
+    } else if (freeIdx === -1 && sets.length > 0) {
+      sets[0] = { ...sets[0], item: '', name: `${sets[0].name} (item claimed by teammate)` }
+    }
+    const top = sets[0]
+    if (top?.item) claimed.add(toId(top.item))
+    resolved.set(o.speciesId, sets)
+  }
+  return opponents.map((o) => ({ ...o, sets: resolved.get(o.speciesId) ?? o.sets }))
+}
+
 /** Prior probability that this species is brought to a given game. */
 export function bringPrior(speciesId: string, calib: CalibrationWeights): number {
   const b = calib.brought[speciesId]
