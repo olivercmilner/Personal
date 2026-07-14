@@ -4,14 +4,38 @@
     {
       "id": "big-six",
       "name": "The Big Six",
-      "members": ["charizard", "floetteeternal", "kingambit", "basculegion", "garchomp", "whimsicott"],
-      "core": ["whimsicott", "basculegion"],
-      "bringRates": { "whimsicott": 0.92, "basculegion": 0.85, "garchomp": 0.62, "kingambit": 0.6, "charizard": 0.52, "floetteeternal": 0.49 },
-      "leadRates": { "whimsicott": 0.85, "charizard": 0.45, "floetteeternal": 0.4, "garchomp": 0.35, "basculegion": 0.2, "kingambit": 0.08 },
+      "members": [
+        "charizard",
+        "floetteeternal",
+        "kingambit",
+        "basculegion",
+        "garchomp",
+        "whimsicott"
+      ],
+      "core": [
+        "whimsicott",
+        "basculegion"
+      ],
+      "bringRates": {
+        "whimsicott": 0.92,
+        "basculegion": 0.85,
+        "garchomp": 0.62,
+        "kingambit": 0.6,
+        "charizard": 0.52,
+        "floetteeternal": 0.49
+      },
+      "leadRates": {
+        "whimsicott": 0.85,
+        "charizard": 0.45,
+        "floetteeternal": 0.4,
+        "garchomp": 0.35,
+        "basculegion": 0.2,
+        "kingambit": 0.08
+      },
       "notes": [
         "Whimsicott almost always comes and leads: Prankster Tailwind + Encore/utility enables the whole team.",
         "Standard lead is Whimsicott + the Mega of choice (Charizard-Y or Mega Floette) for Tailwind into spread damage.",
-        "Only ONE of Charizard / Floette-Eternal comes — both carry Mega Stones and only one can Mega Evolve.",
+        "Only ONE of Charizard / Floette-Eternal comes \u2014 both carry Mega Stones and only one can Mega Evolve.",
         "Basculegion is the endgame: Choice Scarf Last Respects snowballs after its teammates faint. Expect it in the back.",
         "Garchomp pairs with Charizard: Earthquake is free because Charizard is airborne.",
         "Kingambit cleans weakened boards with Sucker Punch and punishes Intimidate via Defiant."
@@ -20,78 +44,240 @@
     {
       "id": "pelipper-rain",
       "name": "Pelipper Rain",
-      "members": ["pelipper", "swampert", "basculegion", "raichu", "archaludon", "amoonguss", "sinistcha", "kingambit"],
-      "core": ["pelipper", "swampert"],
-      "bringRates": { "pelipper": 0.9, "swampert": 0.85, "basculegion": 0.6, "raichu": 0.5, "archaludon": 0.55, "amoonguss": 0.45, "sinistcha": 0.45, "kingambit": 0.4 },
-      "leadRates": { "pelipper": 0.8, "swampert": 0.55, "basculegion": 0.4, "raichu": 0.35, "archaludon": 0.25, "amoonguss": 0.15, "sinistcha": 0.15, "kingambit": 0.05 },
+      "members": [
+        "pelipper",
+        "swampert",
+        "basculegion",
+        "raichu",
+        "archaludon",
+        "sinistcha",
+        "kingambit"
+      ],
+      "core": [
+        "pelipper",
+        "swampert"
+      ],
+      "bringRates": {
+        "pelipper": 0.9,
+        "swampert": 0.85,
+        "basculegion": 0.6,
+        "raichu": 0.5,
+        "archaludon": 0.55,
+        "sinistcha": 0.45,
+        "kingambit": 0.4
+      },
+      "leadRates": {
+        "pelipper": 0.8,
+        "swampert": 0.55,
+        "basculegion": 0.4,
+        "raichu": 0.35,
+        "archaludon": 0.25,
+        "sinistcha": 0.15,
+        "kingambit": 0.05
+      },
       "notes": [
         "Pelipper leads to set rain; Mega Swampert doubles its Speed with Swift Swim and threatens Wave Crash OHKOs.",
         "Basculegion is a strong co-lead: immune to Fake Out (Ghost) and KOs Incineroar with rain-boosted Wave Crash.",
         "Archaludon's Electro Shot charges instantly in rain; Raichu leans on 100%-accurate Thunder.",
-        "Grass coverage (Grass Knot, Energy Ball) is their biggest fear — expect them to play around your Grass users."
+        "Grass coverage (Grass Knot, Energy Ball) is their biggest fear \u2014 expect them to play around your Grass users."
       ]
     },
     {
       "id": "sun-offense",
       "name": "Charizard Sun",
-      "members": ["charizard", "venusaur", "garchomp", "torkoal", "whimsicott", "incineroar", "kingambit"],
-      "core": ["charizard", "venusaur"],
-      "bringRates": { "charizard": 0.9, "venusaur": 0.75, "garchomp": 0.6, "torkoal": 0.45, "whimsicott": 0.5, "incineroar": 0.5, "kingambit": 0.4 },
-      "leadRates": { "charizard": 0.7, "venusaur": 0.6, "whimsicott": 0.4, "torkoal": 0.3, "garchomp": 0.25, "incineroar": 0.25, "kingambit": 0.05 },
+      "members": [
+        "charizard",
+        "venusaur",
+        "garchomp",
+        "torkoal",
+        "whimsicott",
+        "incineroar",
+        "kingambit"
+      ],
+      "core": [
+        "charizard",
+        "venusaur"
+      ],
+      "bringRates": {
+        "charizard": 0.9,
+        "venusaur": 0.75,
+        "garchomp": 0.6,
+        "torkoal": 0.45,
+        "whimsicott": 0.5,
+        "incineroar": 0.5,
+        "kingambit": 0.4
+      },
+      "leadRates": {
+        "charizard": 0.7,
+        "venusaur": 0.6,
+        "whimsicott": 0.4,
+        "torkoal": 0.3,
+        "garchomp": 0.25,
+        "incineroar": 0.25,
+        "kingambit": 0.05
+      },
       "notes": [
         "Charizard-Y Drought powers Heat Wave and instant Solar Beam; Chlorophyll Venusaur doubles Speed and spams Sleep Powder.",
         "Garchomp rides along: Earthquake is free next to airborne Charizard.",
-        "KO or pressure Charizard early — without sun the team loses most of its speed and power."
+        "KO or pressure Charizard early \u2014 without sun the team loses most of its speed and power."
       ]
     },
     {
       "id": "torkoal-tr-sun",
       "name": "Torkoal Trick Room Sun",
-      "members": ["torkoal", "farigiraf", "mawile", "hatterene", "incineroar", "gastrodon", "sinistcha", "ursaluna"],
-      "core": ["torkoal", "farigiraf"],
-      "bringRates": { "torkoal": 0.85, "farigiraf": 0.8, "mawile": 0.6, "hatterene": 0.5, "incineroar": 0.5, "gastrodon": 0.45, "sinistcha": 0.4, "ursaluna": 0.45 },
-      "leadRates": { "farigiraf": 0.7, "torkoal": 0.55, "hatterene": 0.4, "incineroar": 0.3, "mawile": 0.2, "gastrodon": 0.15, "sinistcha": 0.2, "ursaluna": 0.1 },
+      "members": [
+        "torkoal",
+        "farigiraf",
+        "mawile",
+        "hatterene",
+        "incineroar",
+        "sinistcha"
+      ],
+      "core": [
+        "torkoal",
+        "farigiraf"
+      ],
+      "bringRates": {
+        "torkoal": 0.85,
+        "farigiraf": 0.8,
+        "mawile": 0.6,
+        "hatterene": 0.5,
+        "incineroar": 0.5,
+        "sinistcha": 0.4
+      },
+      "leadRates": {
+        "farigiraf": 0.7,
+        "torkoal": 0.55,
+        "hatterene": 0.4,
+        "incineroar": 0.3,
+        "mawile": 0.2,
+        "sinistcha": 0.2
+      },
       "notes": [
         "Farigiraf (Armor Tail blocks Fake Out) sets Trick Room, then Helping Hand boosts Torkoal's Eruption and Mega Mawile's Play Rough.",
-        "Under Trick Room your fast Pokemon move LAST — consider slower, bulkier picks or your own speed control.",
+        "Under Trick Room your fast Pokemon move LAST \u2014 consider slower, bulkier picks or your own speed control.",
         "Torkoal's Eruption is a spread nuke at full HP; chip it early or Protect through the big turns."
       ]
     },
     {
       "id": "sinistcha-tr",
       "name": "Sinistcha Trick Room",
-      "members": ["sinistcha", "ursaluna", "farigiraf", "kingambit", "amoonguss", "porygon2", "hatterene", "metagross"],
-      "core": ["sinistcha", "ursaluna"],
-      "bringRates": { "sinistcha": 0.85, "ursaluna": 0.8, "farigiraf": 0.6, "kingambit": 0.55, "amoonguss": 0.45, "porygon2": 0.45, "hatterene": 0.4, "metagross": 0.4 },
-      "leadRates": { "sinistcha": 0.7, "farigiraf": 0.6, "porygon2": 0.35, "hatterene": 0.35, "kingambit": 0.15, "ursaluna": 0.15, "amoonguss": 0.2, "metagross": 0.15 },
+      "members": [
+        "sinistcha",
+        "farigiraf",
+        "kingambit",
+        "hatterene",
+        "metagross",
+        "conkeldurr",
+        "golurk"
+      ],
+      "core": [
+        "sinistcha",
+        "farigiraf"
+      ],
+      "bringRates": {
+        "sinistcha": 0.85,
+        "farigiraf": 0.6,
+        "kingambit": 0.55,
+        "hatterene": 0.4,
+        "metagross": 0.4,
+        "conkeldurr": 0.6,
+        "golurk": 0.45
+      },
+      "leadRates": {
+        "sinistcha": 0.7,
+        "farigiraf": 0.6,
+        "hatterene": 0.35,
+        "kingambit": 0.15,
+        "metagross": 0.15,
+        "conkeldurr": 0.15,
+        "golurk": 0.15
+      },
       "notes": [
         "Sinistcha leads with a Trick Room setter: Rage Powder redirection guarantees the Room goes up.",
-        "Flame Orb Ursaluna in the back is the payoff — Guts Facade under Trick Room deletes almost anything.",
-        "Rage Powder redirects your single-target disruption — Dark/Ghost SPREAD damage into Sinistcha breaks the setup turn.",
+        "Slow nukes in the back are the payoff \u2014 Conkeldurr, Mega Metagross and Kingambit outspeed everything once the Room is up.",
+        "Rage Powder redirects your single-target disruption \u2014 Dark/Ghost SPREAD damage into Sinistcha breaks the setup turn.",
         "Kingambit fits either mode: it cleans up after Trick Room ends."
       ]
     },
     {
       "id": "screens-staraptor",
       "name": "Grimmsnarl Screens + Mega Staraptor",
-      "members": ["grimmsnarl", "staraptor", "archaludon", "sylveon", "sneasler", "gastrodon", "kingambit", "milotic"],
-      "core": ["grimmsnarl", "staraptor"],
-      "bringRates": { "grimmsnarl": 0.85, "staraptor": 0.8, "archaludon": 0.55, "sylveon": 0.5, "sneasler": 0.5, "gastrodon": 0.45, "kingambit": 0.4, "milotic": 0.35 },
-      "leadRates": { "grimmsnarl": 0.8, "sneasler": 0.45, "staraptor": 0.4, "sylveon": 0.3, "archaludon": 0.25, "gastrodon": 0.15, "kingambit": 0.1, "milotic": 0.15 },
+      "members": [
+        "grimmsnarl",
+        "staraptor",
+        "archaludon",
+        "sylveon",
+        "sneasler",
+        "kingambit",
+        "milotic"
+      ],
+      "core": [
+        "grimmsnarl",
+        "staraptor"
+      ],
+      "bringRates": {
+        "grimmsnarl": 0.85,
+        "staraptor": 0.8,
+        "archaludon": 0.55,
+        "sylveon": 0.5,
+        "sneasler": 0.5,
+        "kingambit": 0.4,
+        "milotic": 0.35
+      },
+      "leadRates": {
+        "grimmsnarl": 0.8,
+        "sneasler": 0.45,
+        "staraptor": 0.4,
+        "sylveon": 0.3,
+        "archaludon": 0.25,
+        "kingambit": 0.1,
+        "milotic": 0.15
+      },
       "notes": [
         "Grimmsnarl leads for Prankster screens (Light Clay = 8 turns), then pivots the Mega Staraptor in safely.",
         "Mega Staraptor is CONTRARY: Intimidate, Parting Shot, Icy Wind, Charm etc. RAISE its stats. Leave stat-droppers home.",
-        "Behind screens its Close Combat defense drops become defense BOOSTS — it only gets harder to kill.",
+        "Behind screens its Close Combat defense drops become defense BOOSTS \u2014 it only gets harder to kill.",
         "Taunt or strong spread damage on Grimmsnarl before screens go up beats the whole plan."
       ]
     },
     {
       "id": "sneasler-balance",
       "name": "Sneasler Balance",
-      "members": ["sneasler", "sinistcha", "incineroar", "kingambit", "basculegion", "gholdengo", "grimmsnarl", "whimsicott"],
-      "core": ["sneasler", "sinistcha"],
-      "bringRates": { "sneasler": 0.85, "sinistcha": 0.7, "incineroar": 0.6, "kingambit": 0.55, "basculegion": 0.5, "gholdengo": 0.5, "grimmsnarl": 0.45, "whimsicott": 0.45 },
-      "leadRates": { "sneasler": 0.7, "sinistcha": 0.5, "incineroar": 0.45, "grimmsnarl": 0.4, "whimsicott": 0.35, "gholdengo": 0.25, "basculegion": 0.25, "kingambit": 0.1 },
+      "members": [
+        "sneasler",
+        "sinistcha",
+        "incineroar",
+        "kingambit",
+        "basculegion",
+        "gholdengo",
+        "grimmsnarl",
+        "whimsicott"
+      ],
+      "core": [
+        "sneasler",
+        "sinistcha"
+      ],
+      "bringRates": {
+        "sneasler": 0.85,
+        "sinistcha": 0.7,
+        "incineroar": 0.6,
+        "kingambit": 0.55,
+        "basculegion": 0.5,
+        "gholdengo": 0.5,
+        "grimmsnarl": 0.45,
+        "whimsicott": 0.45
+      },
+      "leadRates": {
+        "sneasler": 0.7,
+        "sinistcha": 0.5,
+        "incineroar": 0.45,
+        "grimmsnarl": 0.4,
+        "whimsicott": 0.35,
+        "gholdengo": 0.25,
+        "basculegion": 0.25,
+        "kingambit": 0.1
+      },
       "notes": [
         "Sneasler leads with Fake Out pressure into Dire Claw chaos; Unburden doubles its Speed after item use.",
         "Incineroar/Sinistcha give it pivot and redirection support; Kingambit and Basculegion clean up late.",
@@ -101,26 +287,87 @@
     {
       "id": "garchomp-sylveon-goodstuff",
       "name": "Garchomp + Kingambit + Sylveon Goodstuff",
-      "members": ["garchomp", "kingambit", "sylveon", "incineroar", "whimsicott", "archaludon", "dragonite", "blastoise"],
-      "core": ["garchomp", "kingambit", "sylveon"],
-      "bringRates": { "garchomp": 0.75, "kingambit": 0.7, "sylveon": 0.7, "incineroar": 0.6, "whimsicott": 0.55, "archaludon": 0.45, "dragonite": 0.45, "blastoise": 0.45 },
-      "leadRates": { "incineroar": 0.55, "whimsicott": 0.5, "sylveon": 0.45, "garchomp": 0.4, "blastoise": 0.35, "archaludon": 0.3, "dragonite": 0.25, "kingambit": 0.1 },
+      "members": [
+        "garchomp",
+        "kingambit",
+        "sylveon",
+        "incineroar",
+        "whimsicott",
+        "archaludon",
+        "dragonite",
+        "blastoise"
+      ],
+      "core": [
+        "garchomp",
+        "kingambit",
+        "sylveon"
+      ],
+      "bringRates": {
+        "garchomp": 0.75,
+        "kingambit": 0.7,
+        "sylveon": 0.7,
+        "incineroar": 0.6,
+        "whimsicott": 0.55,
+        "archaludon": 0.45,
+        "dragonite": 0.45,
+        "blastoise": 0.45
+      },
+      "leadRates": {
+        "incineroar": 0.55,
+        "whimsicott": 0.5,
+        "sylveon": 0.45,
+        "garchomp": 0.4,
+        "blastoise": 0.35,
+        "archaludon": 0.3,
+        "dragonite": 0.25,
+        "kingambit": 0.1
+      },
       "notes": [
         "The season's most-played trio (7.1% of teams, 56.5% win rate): Garchomp spread pressure, Kingambit endgame, Pixilate Hyper Voice Sylveon.",
-        "No weather dependence — they win the neutral game with Intimidate cycling and Sucker Punch mind games.",
+        "No weather dependence \u2014 they win the neutral game with Intimidate cycling and Sucker Punch mind games.",
         "Kingambit's Defiant punishes YOUR Intimidate; check the watch-outs before bringing stat-droppers."
       ]
     },
     {
       "id": "tyranitar-sand",
       "name": "Mega Tyranitar Sand",
-      "members": ["tyranitar", "excadrill", "aerodactyl", "rotomwash", "incineroar", "sinistcha", "corviknight", "sneasler"],
-      "core": ["tyranitar", "excadrill"],
-      "bringRates": { "tyranitar": 0.9, "excadrill": 0.85, "rotomwash": 0.55, "incineroar": 0.55, "sinistcha": 0.45, "aerodactyl": 0.45, "corviknight": 0.4, "sneasler": 0.4 },
-      "leadRates": { "tyranitar": 0.7, "excadrill": 0.55, "incineroar": 0.45, "aerodactyl": 0.35, "rotomwash": 0.3, "sinistcha": 0.2, "corviknight": 0.25, "sneasler": 0.3 },
+      "members": [
+        "tyranitar",
+        "excadrill",
+        "aerodactyl",
+        "rotomwash",
+        "incineroar",
+        "sinistcha",
+        "corviknight",
+        "sneasler"
+      ],
+      "core": [
+        "tyranitar",
+        "excadrill"
+      ],
+      "bringRates": {
+        "tyranitar": 0.9,
+        "excadrill": 0.85,
+        "rotomwash": 0.55,
+        "incineroar": 0.55,
+        "sinistcha": 0.45,
+        "aerodactyl": 0.45,
+        "corviknight": 0.4,
+        "sneasler": 0.4
+      },
+      "leadRates": {
+        "tyranitar": 0.7,
+        "excadrill": 0.55,
+        "incineroar": 0.45,
+        "aerodactyl": 0.35,
+        "rotomwash": 0.3,
+        "sinistcha": 0.2,
+        "corviknight": 0.25,
+        "sneasler": 0.3
+      },
       "notes": [
         "Mega Tyranitar sets sand on entry; Sand Rush doubles Excadrill's Speed and sand chips your non-immune Pokemon every turn.",
-        "Excadrill nearly always carries Focus Sash — its Iron Head/Earthquake/Rock Slide sweep starts once your speed control is gone.",
+        "Excadrill nearly always carries Focus Sash \u2014 its Iron Head/Earthquake/Rock Slide sweep starts once your speed control is gone.",
         "Rotom-Wash covers their rain matchup and burns physical attackers; Aerodactyl answers sun and sets Tailwind.",
         "Knocking out Tyranitar (or overwriting the weather) turns Excadrill back into a slow, frail attacker."
       ]
@@ -128,10 +375,34 @@
     {
       "id": "incineroar-goodstuff",
       "name": "Incineroar Balance",
-      "members": ["incineroar", "sylveon", "archaludon", "landorustherian", "garchomp", "amoonguss", "dragonite", "milotic"],
-      "core": ["incineroar", "sylveon"],
-      "bringRates": { "incineroar": 0.85, "sylveon": 0.7, "archaludon": 0.6, "landorustherian": 0.55, "garchomp": 0.5, "amoonguss": 0.45, "dragonite": 0.45, "milotic": 0.4 },
-      "leadRates": { "incineroar": 0.7, "sylveon": 0.45, "landorustherian": 0.4, "archaludon": 0.35, "garchomp": 0.3, "amoonguss": 0.25, "dragonite": 0.25, "milotic": 0.2 },
+      "members": [
+        "incineroar",
+        "sylveon",
+        "archaludon",
+        "garchomp",
+        "dragonite",
+        "milotic"
+      ],
+      "core": [
+        "incineroar",
+        "sylveon"
+      ],
+      "bringRates": {
+        "incineroar": 0.85,
+        "sylveon": 0.7,
+        "archaludon": 0.6,
+        "garchomp": 0.5,
+        "dragonite": 0.45,
+        "milotic": 0.4
+      },
+      "leadRates": {
+        "incineroar": 0.7,
+        "sylveon": 0.45,
+        "archaludon": 0.35,
+        "garchomp": 0.3,
+        "dragonite": 0.25,
+        "milotic": 0.2
+      },
       "notes": [
         "Fake Out + Intimidate + Parting Shot cycle from Incineroar keeps their frail attackers safe.",
         "Pixilate Hyper Voice Sylveon provides consistent spread damage through the pivots.",

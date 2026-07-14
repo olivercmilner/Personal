@@ -5,7 +5,7 @@ import { getMove } from '../data'
 import { useTeams } from '../store/teams'
 import { useMatchLogs, useUserMeta, deriveCalibration } from '../store/calibration'
 import { useStored } from '../store/storage'
-import { getMetaEntry, predictSets } from '../engine/predict'
+import { applyItemClause, getMetaEntry, predictSets } from '../engine/predict'
 import { computeMatrix, type OpponentMon } from '../engine/matrix'
 import { recommendBrings } from '../engine/optimize'
 import { computeInsights } from '../engine/insights'
@@ -20,19 +20,20 @@ export interface LastMatchup {
 }
 
 /**
- * Diverging rose↔blue scale keyed to KO certainty (colorblind-safe pole
- * pair, neutral dark midpoint, every anchor ≥4.5:1 against the cell text):
- * vivid rose = their guaranteed OHKO; teal→blue = your guaranteed OHKO
- * (bluer = more overkill); amber = mutual OHKO on a speed tie; everything
- * else interpolates through the neutral midpoint by cell score.
+ * Classic red↔green diverging scale keyed to KO certainty (neutral dark
+ * midpoint; anchors chosen for ≥4.8:1 contrast with the cell text; red is
+ * darker and green brighter so the poles also separate by luminance for
+ * colorblind readers, and every cell carries its number regardless):
+ * vivid red = their guaranteed OHKO; green = your guaranteed OHKO,
+ * deepening toward emerald with overkill; amber = mutual OHKO speed tie.
  */
 const CELL_COLORS = {
-  danger: '#be123c', // their guaranteed OHKO
-  dangerArm: '#9f1239', // worst non-OHKO scores blend toward this
+  danger: '#b91c1c', // their guaranteed OHKO
+  dangerArm: '#7f1d1d', // worst non-OHKO scores blend toward this
   neutral: '#283048',
-  advantageArm: '#115e59', // best non-OHKO scores blend toward this
-  ohko: '#0d6e68', // my clean guaranteed OHKO
-  overkill: '#1d4ed8', // my guaranteed OHKO with heavy overkill
+  advantageArm: '#166534', // best non-OHKO scores blend toward this
+  ohko: '#166534', // my clean guaranteed OHKO
+  overkill: '#0c6b60', // my guaranteed OHKO with heavy overkill
   speedTie: '#92400e', // mutual OHKO coin flip
 }
 
@@ -73,8 +74,9 @@ export function MatchupPage({ teamId, onTeamChange }: { teamId: string | null; o
 
   const opponents: OpponentMon[] = useMemo(
     () =>
-      opponent
-        .map((id) => ({ speciesId: id, sets: predictSets(id, calib, userMeta) }))
+      applyItemClause(
+        opponent.map((id) => ({ speciesId: id, sets: predictSets(id, calib, userMeta) })),
+      )
         // Canonical order (usage, then id): entry order carries no signal
         // about the opponent's intentions and must not affect the analysis.
         .sort((a, b) => {
@@ -452,9 +454,9 @@ function Analysis({
           </tbody>
         </table>
         <p className="mt-2 text-xs text-ink-500">
-          Cell = your best move damage (top) and their best answer (bottom). Bright red = they
-          have a guaranteed OHKO on you; teal→blue = your guaranteed OHKO (bluer = more
-          overkill); amber = mutual OHKO decided by a speed tie. ⚡ you're faster · 🐢 slower ·
+          Cell = your best move damage (top) and their best answer (bottom). Red = they have a
+          guaranteed OHKO on you; green = your guaranteed OHKO (deeper emerald = more overkill);
+          amber = mutual OHKO decided by a speed tie. ⚡ you're faster · 🐢 slower ·
           ↟ your priority move · ↡ their priority move · 🛡 survives at 1 HP (Sash/Sturdy). Speed
           includes Choice Scarf and weather abilities.
         </p>

@@ -4,484 +4,2267 @@
   "entries": [
     {
       "speciesId": "garchomp",
-      "usage": 0.40,
-      "teammates": ["whimsicott", "kingambit", "sinistcha"],
+      "usage": 0.4,
+      "teammates": [
+        "whimsicott",
+        "kingambit",
+        "sinistcha"
+      ],
       "sets": [
-        { "name": "Life Orb attacker", "weight": 0.55, "item": "Life Orb", "ability": "Rough Skin", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["earthquake", "dragonclaw", "rockslide", "protect"], "roles": ["physical-attacker", "spread-damage"] },
-        { "name": "Choice Scarf", "weight": 0.15, "item": "Choice Scarf", "ability": "Rough Skin", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["earthquake", "rockslide", "dragonclaw", "stompingtantrum"], "roles": ["physical-attacker"] },
-        { "name": "Sitrus Swords Dance", "weight": 0.15, "item": "Sitrus Berry", "ability": "Rough Skin", "nature": "Jolly", "points": { "hp": 32, "spe": 32, "atk": 2 }, "moves": ["swordsdance", "scaleshot", "earthquake", "protect"], "roles": ["setup", "physical-attacker"] }
+        {
+          "name": "Life Orb attacker",
+          "weight": 0.55,
+          "item": "Life Orb",
+          "ability": "Rough Skin",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "earthquake",
+            "dragonclaw",
+            "rockslide",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Choice Scarf",
+          "weight": 0.15,
+          "item": "Choice Scarf",
+          "ability": "Rough Skin",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "earthquake",
+            "rockslide",
+            "dragonclaw",
+            "stompingtantrum"
+          ],
+          "roles": [
+            "physical-attacker"
+          ]
+        },
+        {
+          "name": "Sitrus Swords Dance",
+          "weight": 0.15,
+          "item": "Sitrus Berry",
+          "ability": "Rough Skin",
+          "nature": "Jolly",
+          "points": {
+            "hp": 32,
+            "spe": 32,
+            "atk": 2
+          },
+          "moves": [
+            "swordsdance",
+            "scaleshot",
+            "earthquake",
+            "protect"
+          ],
+          "roles": [
+            "setup",
+            "physical-attacker"
+          ]
+        }
       ]
     },
     {
       "speciesId": "sinistcha",
       "usage": 0.35,
-      "teammates": ["ursaluna", "kingambit", "farigiraf"],
+      "teammates": [
+        "kingambit",
+        "farigiraf"
+      ],
       "sets": [
-        { "name": "Rage Powder redirect", "weight": 0.6, "item": "Sitrus Berry", "ability": "Hospitality", "nature": "Bold", "points": { "hp": 32, "def": 32, "spd": 2 }, "moves": ["ragepowder", "matchagotcha", "trickroom", "protect"], "roles": ["redirection", "speed-control", "support"] },
-        { "name": "Colbur Strength Sap", "weight": 0.4, "item": "Colbur Berry", "ability": "Heatproof", "nature": "Calm", "points": { "hp": 32, "spd": 32, "def": 2 }, "moves": ["ragepowder", "matchagotcha", "strengthsap", "trickroom"], "roles": ["redirection", "speed-control", "support"] }
+        {
+          "name": "Rage Powder redirect",
+          "weight": 0.6,
+          "item": "Sitrus Berry",
+          "ability": "Hospitality",
+          "nature": "Bold",
+          "points": {
+            "hp": 32,
+            "def": 32,
+            "spd": 2
+          },
+          "moves": [
+            "ragepowder",
+            "matchagotcha",
+            "trickroom",
+            "protect"
+          ],
+          "roles": [
+            "redirection",
+            "speed-control",
+            "support"
+          ]
+        },
+        {
+          "name": "Colbur Strength Sap",
+          "weight": 0.4,
+          "item": "Colbur Berry",
+          "ability": "Heatproof",
+          "nature": "Calm",
+          "points": {
+            "hp": 32,
+            "spd": 32,
+            "def": 2
+          },
+          "moves": [
+            "ragepowder",
+            "matchagotcha",
+            "strengthsap",
+            "trickroom"
+          ],
+          "roles": [
+            "redirection",
+            "speed-control",
+            "support"
+          ]
+        }
       ]
     },
     {
       "speciesId": "basculegion",
       "usage": 0.32,
-      "teammates": ["whimsicott", "pelipper", "annihilape"],
+      "teammates": [
+        "whimsicott",
+        "pelipper",
+        "annihilape"
+      ],
       "sets": [
-        { "name": "Choice Scarf Last Respects", "weight": 0.45, "item": "Choice Scarf", "ability": "Adaptability", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["lastrespects", "wavecrash", "flipturn", "aquajet"], "roles": ["physical-attacker"] },
-        { "name": "Mystic Water", "weight": 0.2, "item": "Mystic Water", "ability": "Adaptability", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["lastrespects", "wavecrash", "aquajet", "protect"], "roles": ["physical-attacker", "priority"] },
-        { "name": "Focus Sash", "weight": 0.18, "item": "Focus Sash", "ability": "Adaptability", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["lastrespects", "liquidation", "aquajet", "protect"], "roles": ["physical-attacker", "priority"] }
+        {
+          "name": "Choice Scarf Last Respects",
+          "weight": 0.45,
+          "item": "Choice Scarf",
+          "ability": "Adaptability",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "lastrespects",
+            "wavecrash",
+            "flipturn",
+            "aquajet"
+          ],
+          "roles": [
+            "physical-attacker"
+          ]
+        },
+        {
+          "name": "Mystic Water",
+          "weight": 0.2,
+          "item": "Mystic Water",
+          "ability": "Adaptability",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "lastrespects",
+            "wavecrash",
+            "aquajet",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority"
+          ]
+        },
+        {
+          "name": "Focus Sash",
+          "weight": 0.18,
+          "item": "Focus Sash",
+          "ability": "Adaptability",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "lastrespects",
+            "liquidation",
+            "aquajet",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority"
+          ]
+        }
       ]
     },
     {
       "speciesId": "whimsicott",
-      "usage": 0.30,
-      "teammates": ["garchomp", "basculegion", "chienpao"],
+      "usage": 0.3,
+      "teammates": [
+        "garchomp",
+        "basculegion"
+      ],
       "sets": [
-        { "name": "Focus Sash Tailwind", "weight": 0.75, "item": "Focus Sash", "ability": "Prankster", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["tailwind", "moonblast", "encore", "protect"], "roles": ["speed-control", "disruption"] },
-        { "name": "Fairy Feather", "weight": 0.15, "item": "Fairy Feather", "ability": "Prankster", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["tailwind", "moonblast", "faketears", "protect"], "roles": ["speed-control", "disruption"] }
+        {
+          "name": "Focus Sash Tailwind",
+          "weight": 0.75,
+          "item": "Focus Sash",
+          "ability": "Prankster",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "tailwind",
+            "moonblast",
+            "encore",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "disruption"
+          ]
+        },
+        {
+          "name": "Fairy Feather",
+          "weight": 0.15,
+          "item": "Fairy Feather",
+          "ability": "Prankster",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "tailwind",
+            "moonblast",
+            "faketears",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "disruption"
+          ]
+        }
       ]
     },
     {
       "speciesId": "kingambit",
       "usage": 0.28,
-      "teammates": ["sinistcha", "whimsicott", "farigiraf"],
+      "teammates": [
+        "sinistcha",
+        "whimsicott",
+        "farigiraf"
+      ],
       "sets": [
-        { "name": "Chople bulky", "weight": 0.45, "item": "Chople Berry", "ability": "Defiant", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["kowtowcleave", "suckerpunch", "ironhead", "protect"], "roles": ["physical-attacker", "priority"] },
-        { "name": "Black Glasses Swords Dance", "weight": 0.32, "item": "Black Glasses", "ability": "Defiant", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["kowtowcleave", "suckerpunch", "swordsdance", "protect"], "roles": ["physical-attacker", "setup", "priority"] },
-        { "name": "Focus Sash", "weight": 0.13, "item": "Focus Sash", "ability": "Defiant", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["kowtowcleave", "suckerpunch", "lowkick", "protect"], "roles": ["physical-attacker", "priority"] }
+        {
+          "name": "Chople bulky",
+          "weight": 0.45,
+          "item": "Chople Berry",
+          "ability": "Defiant",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "kowtowcleave",
+            "suckerpunch",
+            "ironhead",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority"
+          ]
+        },
+        {
+          "name": "Black Glasses Swords Dance",
+          "weight": 0.32,
+          "item": "Black Glasses",
+          "ability": "Defiant",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "kowtowcleave",
+            "suckerpunch",
+            "swordsdance",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "setup",
+            "priority"
+          ]
+        },
+        {
+          "name": "Focus Sash",
+          "weight": 0.13,
+          "item": "Focus Sash",
+          "ability": "Defiant",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "kowtowcleave",
+            "suckerpunch",
+            "lowkick",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority"
+          ]
+        }
       ]
     },
     {
       "speciesId": "staraptor",
       "usage": 0.26,
-      "teammates": ["grimmsnarl", "gastrodon", "archaludon"],
+      "teammates": [
+        "grimmsnarl",
+        "archaludon"
+      ],
       "sets": [
-        { "name": "Mega Contrary", "weight": 0.9, "formeId": "staraptormega", "item": "Staraptite", "ability": "Contrary", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["closecombat", "bravebird", "roost", "protect"], "roles": ["physical-attacker", "mega"] },
-        { "name": "Choice Scarf", "weight": 0.1, "item": "Choice Scarf", "ability": "Intimidate", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["closecombat", "bravebird", "uturn", "doubleedge"], "roles": ["physical-attacker", "intimidate"] }
+        {
+          "name": "Mega Contrary",
+          "weight": 0.9,
+          "formeId": "staraptormega",
+          "item": "Staraptite",
+          "ability": "Contrary",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "closecombat",
+            "bravebird",
+            "roost",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "mega"
+          ]
+        },
+        {
+          "name": "Choice Scarf",
+          "weight": 0.1,
+          "item": "Choice Scarf",
+          "ability": "Intimidate",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "closecombat",
+            "bravebird",
+            "uturn",
+            "doubleedge"
+          ],
+          "roles": [
+            "physical-attacker",
+            "intimidate"
+          ]
+        }
       ]
     },
     {
       "speciesId": "incineroar",
       "usage": 0.25,
-      "teammates": ["basculegion", "sylveon", "archaludon"],
+      "teammates": [
+        "basculegion",
+        "sylveon",
+        "archaludon"
+      ],
       "sets": [
-        { "name": "Sitrus pivot", "weight": 0.7, "item": "Sitrus Berry", "ability": "Intimidate", "nature": "Impish", "points": { "hp": 32, "def": 16, "spd": 16, "atk": 2 }, "moves": ["fakeout", "flareblitz", "partingshot", "knockoff"], "roles": ["fake-out", "support", "intimidate"] },
-        { "name": "Chople attacker", "weight": 0.3, "item": "Chople Berry", "ability": "Intimidate", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["fakeout", "flareblitz", "knockoff", "uturn"], "roles": ["fake-out", "physical-attacker", "intimidate"] }
+        {
+          "name": "Sitrus pivot",
+          "weight": 0.7,
+          "item": "Sitrus Berry",
+          "ability": "Intimidate",
+          "nature": "Impish",
+          "points": {
+            "hp": 32,
+            "def": 16,
+            "spd": 16,
+            "atk": 2
+          },
+          "moves": [
+            "fakeout",
+            "flareblitz",
+            "partingshot",
+            "knockoff"
+          ],
+          "roles": [
+            "fake-out",
+            "support",
+            "intimidate"
+          ]
+        },
+        {
+          "name": "Chople attacker",
+          "weight": 0.3,
+          "item": "Chople Berry",
+          "ability": "Intimidate",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "fakeout",
+            "flareblitz",
+            "knockoff",
+            "uturn"
+          ],
+          "roles": [
+            "fake-out",
+            "physical-attacker",
+            "intimidate"
+          ]
+        }
       ]
     },
     {
       "speciesId": "charizard",
       "usage": 0.24,
-      "teammates": ["torkoal", "whimsicott", "gholdengo"],
+      "teammates": [
+        "torkoal",
+        "whimsicott",
+        "gholdengo"
+      ],
       "sets": [
-        { "name": "Mega Y sun", "weight": 0.55, "formeId": "charizardmegay", "item": "Charizardite Y", "ability": "Drought", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["heatwave", "solarbeam", "airslash", "protect"], "roles": ["special-attacker", "weather", "mega", "spread-damage"] },
-        { "name": "Mega X Dragon Dance", "weight": 0.25, "formeId": "charizardmegax", "item": "Charizardite X", "ability": "Tough Claws", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["dragondance", "flareblitz", "dragonclaw", "protect"], "roles": ["setup", "physical-attacker", "mega"] },
-        { "name": "Focus Sash", "weight": 0.2, "item": "Focus Sash", "ability": "Blaze", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["heatwave", "airslash", "overheat", "protect"], "roles": ["special-attacker", "spread-damage"] }
+        {
+          "name": "Mega Y sun",
+          "weight": 0.55,
+          "formeId": "charizardmegay",
+          "item": "Charizardite Y",
+          "ability": "Drought",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "heatwave",
+            "solarbeam",
+            "airslash",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "weather",
+            "mega",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Mega X Dragon Dance",
+          "weight": 0.25,
+          "formeId": "charizardmegax",
+          "item": "Charizardite X",
+          "ability": "Tough Claws",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "dragondance",
+            "flareblitz",
+            "dragonclaw",
+            "protect"
+          ],
+          "roles": [
+            "setup",
+            "physical-attacker",
+            "mega"
+          ]
+        },
+        {
+          "name": "Focus Sash",
+          "weight": 0.2,
+          "item": "Focus Sash",
+          "ability": "Blaze",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "heatwave",
+            "airslash",
+            "overheat",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "raichu",
       "usage": 0.22,
-      "teammates": ["pelipper", "swampert", "whimsicott"],
+      "teammates": [
+        "pelipper",
+        "swampert",
+        "whimsicott"
+      ],
       "sets": [
-        { "name": "Mega Y No Guard", "weight": 0.6, "formeId": "raichumegay", "item": "Raichunite Y", "ability": "No Guard", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["thunder", "grassknot", "fakeout", "protect"], "roles": ["special-attacker", "fake-out", "mega"] },
-        { "name": "Mega X Electric Surge", "weight": 0.2, "formeId": "raichumegax", "item": "Raichunite X", "ability": "Electric Surge", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["volttackle", "fakeout", "knockoff", "protect"], "roles": ["physical-attacker", "fake-out", "mega"] },
-        { "name": "Focus Sash Lightning Rod", "weight": 0.2, "item": "Focus Sash", "ability": "Lightning Rod", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["fakeout", "thunderbolt", "encore", "protect"], "roles": ["redirection", "fake-out"] }
+        {
+          "name": "Mega Y No Guard",
+          "weight": 0.6,
+          "formeId": "raichumegay",
+          "item": "Raichunite Y",
+          "ability": "No Guard",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "thunder",
+            "grassknot",
+            "fakeout",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "fake-out",
+            "mega"
+          ]
+        },
+        {
+          "name": "Mega X Electric Surge",
+          "weight": 0.2,
+          "formeId": "raichumegax",
+          "item": "Raichunite X",
+          "ability": "Electric Surge",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "volttackle",
+            "fakeout",
+            "knockoff",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "fake-out",
+            "mega"
+          ]
+        },
+        {
+          "name": "Focus Sash Lightning Rod",
+          "weight": 0.2,
+          "item": "Focus Sash",
+          "ability": "Lightning Rod",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "fakeout",
+            "thunderbolt",
+            "encore",
+            "protect"
+          ],
+          "roles": [
+            "redirection",
+            "fake-out"
+          ]
+        }
       ]
     },
     {
       "speciesId": "pelipper",
       "usage": 0.21,
-      "teammates": ["basculegion", "swampert", "raichu"],
+      "teammates": [
+        "basculegion",
+        "swampert",
+        "raichu"
+      ],
       "sets": [
-        { "name": "Focus Sash rain", "weight": 0.5, "item": "Focus Sash", "ability": "Drizzle", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["hurricane", "weatherball", "tailwind", "wideguard"], "roles": ["weather", "speed-control", "special-attacker"] },
-        { "name": "Sitrus bulky", "weight": 0.35, "item": "Sitrus Berry", "ability": "Drizzle", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["hurricane", "weatherball", "tailwind", "protect"], "roles": ["weather", "speed-control", "special-attacker"] },
-        { "name": "Damp Rock", "weight": 0.15, "item": "Damp Rock", "ability": "Drizzle", "nature": "Bold", "points": { "hp": 32, "def": 32, "spd": 2 }, "moves": ["hurricane", "weatherball", "tailwind", "wideguard"], "roles": ["weather", "speed-control"] }
+        {
+          "name": "Focus Sash rain",
+          "weight": 0.5,
+          "item": "Focus Sash",
+          "ability": "Drizzle",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "hurricane",
+            "weatherball",
+            "tailwind",
+            "wideguard"
+          ],
+          "roles": [
+            "weather",
+            "speed-control",
+            "special-attacker"
+          ]
+        },
+        {
+          "name": "Sitrus bulky",
+          "weight": 0.35,
+          "item": "Sitrus Berry",
+          "ability": "Drizzle",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "hurricane",
+            "weatherball",
+            "tailwind",
+            "protect"
+          ],
+          "roles": [
+            "weather",
+            "speed-control",
+            "special-attacker"
+          ]
+        },
+        {
+          "name": "Damp Rock",
+          "weight": 0.15,
+          "item": "Damp Rock",
+          "ability": "Drizzle",
+          "nature": "Bold",
+          "points": {
+            "hp": 32,
+            "def": 32,
+            "spd": 2
+          },
+          "moves": [
+            "hurricane",
+            "weatherball",
+            "tailwind",
+            "wideguard"
+          ],
+          "roles": [
+            "weather",
+            "speed-control"
+          ]
+        }
       ]
     },
     {
       "speciesId": "sneasler",
       "usage": 0.174,
-      "teammates": ["grimmsnarl", "whimsicott", "gholdengo"],
+      "teammates": [
+        "grimmsnarl",
+        "whimsicott",
+        "gholdengo"
+      ],
       "sets": [
-        { "name": "Focus Sash Unburden", "weight": 0.7, "item": "Focus Sash", "ability": "Unburden", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["direclaw", "closecombat", "fakeout", "protect"], "roles": ["physical-attacker", "fake-out"] },
-        { "name": "Poison Touch pivot", "weight": 0.3, "item": "Loaded Dice", "ability": "Poison Touch", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["direclaw", "closecombat", "fakeout", "uturn"], "roles": ["physical-attacker", "fake-out"] }
+        {
+          "name": "Focus Sash Unburden",
+          "weight": 0.7,
+          "item": "Focus Sash",
+          "ability": "Unburden",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "direclaw",
+            "closecombat",
+            "fakeout",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "fake-out"
+          ]
+        },
+        {
+          "name": "Poison Touch pivot",
+          "weight": 0.3,
+          "item": "Sitrus Berry",
+          "ability": "Poison Touch",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "direclaw",
+            "closecombat",
+            "fakeout",
+            "uturn"
+          ],
+          "roles": [
+            "physical-attacker",
+            "fake-out"
+          ]
+        }
       ]
     },
     {
       "speciesId": "archaludon",
       "usage": 0.16,
-      "teammates": ["pelipper", "incineroar", "sylveon"],
+      "teammates": [
+        "pelipper",
+        "incineroar",
+        "sylveon"
+      ],
       "sets": [
-        { "name": "Leftovers Stamina", "weight": 0.9, "item": "Leftovers", "ability": "Stamina", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["electroshot", "flashcannon", "dragonpulse", "protect"], "roles": ["special-attacker", "bulky"] },
-        { "name": "Choice Scarf", "weight": 0.1, "item": "Choice Scarf", "ability": "Stalwart", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["electroshot", "flashcannon", "dracometeor", "thunderbolt"], "roles": ["special-attacker"] }
+        {
+          "name": "Leftovers Stamina",
+          "weight": 0.9,
+          "item": "Leftovers",
+          "ability": "Stamina",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "electroshot",
+            "flashcannon",
+            "dragonpulse",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "bulky"
+          ]
+        },
+        {
+          "name": "Choice Scarf",
+          "weight": 0.1,
+          "item": "Choice Scarf",
+          "ability": "Stalwart",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "electroshot",
+            "flashcannon",
+            "dracometeor",
+            "thunderbolt"
+          ],
+          "roles": [
+            "special-attacker"
+          ]
+        }
       ]
     },
     {
       "speciesId": "grimmsnarl",
       "usage": 0.147,
-      "teammates": ["sneasler", "archaludon", "kingambit"],
+      "teammates": [
+        "sneasler",
+        "archaludon",
+        "kingambit"
+      ],
       "sets": [
-        { "name": "Light Clay screens", "weight": 0.8, "item": "Light Clay", "ability": "Prankster", "nature": "Careful", "points": { "hp": 32, "def": 16, "spd": 16, "atk": 2 }, "moves": ["spiritbreak", "lightscreen", "reflect", "thunderwave"], "roles": ["screens", "support", "disruption"] },
-        { "name": "Mental Herb control", "weight": 0.2, "item": "Mental Herb", "ability": "Prankster", "nature": "Careful", "points": { "hp": 32, "def": 16, "spd": 16, "atk": 2 }, "moves": ["spiritbreak", "scaryface", "taunt", "thunderwave"], "roles": ["support", "disruption"] }
+        {
+          "name": "Light Clay screens",
+          "weight": 0.8,
+          "item": "Light Clay",
+          "ability": "Prankster",
+          "nature": "Careful",
+          "points": {
+            "hp": 32,
+            "def": 16,
+            "spd": 16,
+            "atk": 2
+          },
+          "moves": [
+            "spiritbreak",
+            "lightscreen",
+            "reflect",
+            "thunderwave"
+          ],
+          "roles": [
+            "screens",
+            "support",
+            "disruption"
+          ]
+        },
+        {
+          "name": "Mental Herb control",
+          "weight": 0.2,
+          "item": "Mental Herb",
+          "ability": "Prankster",
+          "nature": "Careful",
+          "points": {
+            "hp": 32,
+            "def": 16,
+            "spd": 16,
+            "atk": 2
+          },
+          "moves": [
+            "spiritbreak",
+            "scaryface",
+            "taunt",
+            "thunderwave"
+          ],
+          "roles": [
+            "support",
+            "disruption"
+          ]
+        }
       ]
     },
     {
       "speciesId": "sylveon",
       "usage": 0.135,
-      "teammates": ["incineroar", "archaludon", "gholdengo"],
+      "teammates": [
+        "incineroar",
+        "archaludon",
+        "gholdengo"
+      ],
       "sets": [
-        { "name": "Choice Specs", "weight": 0.55, "item": "Choice Specs", "ability": "Pixilate", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["hypervoice", "moonblast", "psyshock", "shadowball"], "roles": ["special-attacker", "spread-damage"] },
-        { "name": "Throat Spray", "weight": 0.3, "item": "Throat Spray", "ability": "Pixilate", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["hypervoice", "mysticalfire", "calmmind", "protect"], "roles": ["special-attacker", "setup", "spread-damage"] }
+        {
+          "name": "Life Orb Hyper Voice",
+          "weight": 0.55,
+          "item": "Life Orb",
+          "ability": "Pixilate",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "hypervoice",
+            "moonblast",
+            "psyshock",
+            "shadowball"
+          ],
+          "roles": [
+            "special-attacker",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Lum Berry",
+          "weight": 0.3,
+          "item": "Lum Berry",
+          "ability": "Pixilate",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "hypervoice",
+            "mysticalfire",
+            "calmmind",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "setup",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "swampert",
       "usage": 0.12,
-      "teammates": ["pelipper", "raichu", "whimsicott"],
+      "teammates": [
+        "pelipper",
+        "raichu",
+        "whimsicott"
+      ],
       "sets": [
-        { "name": "Mega Swift Swim", "weight": 0.7, "formeId": "swampertmega", "item": "Swampertite", "ability": "Swift Swim", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["waterfall", "earthquake", "icepunch", "protect"], "roles": ["physical-attacker", "weather-abuser", "mega"] },
-        { "name": "Sitrus bulky", "weight": 0.3, "item": "Sitrus Berry", "ability": "Torrent", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["liquidation", "highhorsepower", "icepunch", "wideguard"], "roles": ["physical-attacker", "bulky"] }
+        {
+          "name": "Mega Swift Swim",
+          "weight": 0.7,
+          "formeId": "swampertmega",
+          "item": "Swampertite",
+          "ability": "Swift Swim",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "waterfall",
+            "earthquake",
+            "icepunch",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "weather-abuser",
+            "mega"
+          ]
+        },
+        {
+          "name": "Sitrus bulky",
+          "weight": 0.3,
+          "item": "Sitrus Berry",
+          "ability": "Torrent",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "liquidation",
+            "highhorsepower",
+            "icepunch",
+            "wideguard"
+          ],
+          "roles": [
+            "physical-attacker",
+            "bulky"
+          ]
+        }
       ]
     },
     {
       "speciesId": "metagross",
       "usage": 0.115,
-      "teammates": ["whimsicott", "incineroar", "torkoal"],
+      "teammates": [
+        "whimsicott",
+        "incineroar",
+        "torkoal"
+      ],
       "sets": [
-        { "name": "Mega Tough Claws", "weight": 0.85, "formeId": "metagrossmega", "item": "Metagrossite", "ability": "Tough Claws", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["meteormash", "zenheadbutt", "bulletpunch", "protect"], "roles": ["physical-attacker", "priority", "mega"] },
-        { "name": "Assault Vest", "weight": 0.15, "item": "Assault Vest", "ability": "Clear Body", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["meteormash", "zenheadbutt", "bulletpunch", "stompingtantrum"], "roles": ["physical-attacker", "bulky"] }
+        {
+          "name": "Mega Tough Claws",
+          "weight": 0.85,
+          "formeId": "metagrossmega",
+          "item": "Metagrossite",
+          "ability": "Tough Claws",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "meteormash",
+            "zenheadbutt",
+            "bulletpunch",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority",
+            "mega"
+          ]
+        },
+        {
+          "name": "Sitrus bulky",
+          "weight": 0.15,
+          "item": "Sitrus Berry",
+          "ability": "Clear Body",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "meteormash",
+            "zenheadbutt",
+            "bulletpunch",
+            "stompingtantrum"
+          ],
+          "roles": [
+            "physical-attacker",
+            "bulky"
+          ]
+        }
       ]
     },
     {
       "speciesId": "farigiraf",
       "usage": 0.105,
-      "teammates": ["sinistcha", "ursaluna", "kingambit"],
+      "teammates": [
+        "sinistcha",
+        "kingambit"
+      ],
       "sets": [
-        { "name": "Sitrus Trick Room", "weight": 0.8, "item": "Sitrus Berry", "ability": "Armor Tail", "nature": "Relaxed", "points": { "hp": 32, "def": 16, "spd": 18 }, "moves": ["trickroom", "psychic", "helpinghand", "protect"], "roles": ["speed-control", "support"] },
-        { "name": "Mental Herb", "weight": 0.2, "item": "Mental Herb", "ability": "Armor Tail", "nature": "Sassy", "points": { "hp": 32, "def": 16, "spd": 18 }, "moves": ["trickroom", "foulplay", "helpinghand", "protect"], "roles": ["speed-control", "support"] }
+        {
+          "name": "Sitrus Trick Room",
+          "weight": 0.8,
+          "item": "Sitrus Berry",
+          "ability": "Armor Tail",
+          "nature": "Relaxed",
+          "points": {
+            "hp": 32,
+            "def": 16,
+            "spd": 18
+          },
+          "moves": [
+            "trickroom",
+            "psychic",
+            "helpinghand",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "support"
+          ]
+        },
+        {
+          "name": "Mental Herb",
+          "weight": 0.2,
+          "item": "Mental Herb",
+          "ability": "Armor Tail",
+          "nature": "Sassy",
+          "points": {
+            "hp": 32,
+            "def": 16,
+            "spd": 18
+          },
+          "moves": [
+            "trickroom",
+            "foulplay",
+            "helpinghand",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "support"
+          ]
+        }
       ]
     },
     {
       "speciesId": "floetteeternal",
       "usage": 0.097,
-      "teammates": ["whimsicott", "charizard", "basculegion"],
+      "teammates": [
+        "whimsicott",
+        "charizard",
+        "basculegion"
+      ],
       "sets": [
-        { "name": "Mega Floette (Fairy Aura)", "weight": 0.8, "formeId": "floetteeternalmega", "item": "Floettite", "ability": "Fairy Aura", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["lightofruin", "moonblast", "dazzlinggleam", "protect"], "roles": ["special-attacker", "mega", "spread-damage"] },
-        { "name": "Focus Sash", "weight": 0.2, "item": "Focus Sash", "ability": "Flower Veil", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["lightofruin", "moonblast", "calmmind", "protect"], "roles": ["special-attacker", "setup"] }
+        {
+          "name": "Mega Floette (Fairy Aura)",
+          "weight": 0.8,
+          "formeId": "floettemega",
+          "item": "Floettite",
+          "ability": "Fairy Aura",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "lightofruin",
+            "moonblast",
+            "dazzlinggleam",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "mega",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Focus Sash",
+          "weight": 0.2,
+          "item": "Focus Sash",
+          "ability": "Flower Veil",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "lightofruin",
+            "moonblast",
+            "calmmind",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "setup"
+          ]
+        }
       ]
     },
     {
       "speciesId": "gholdengo",
       "usage": 0.089,
-      "teammates": ["sneasler", "whimsicott", "charizard"],
+      "teammates": [
+        "sneasler",
+        "whimsicott",
+        "charizard"
+      ],
       "sets": [
-        { "name": "Life Orb", "weight": 0.45, "item": "Life Orb", "ability": "Good as Gold", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["makeitrain", "shadowball", "nastyplot", "protect"], "roles": ["special-attacker", "setup", "spread-damage"] },
-        { "name": "Choice Scarf", "weight": 0.35, "item": "Choice Scarf", "ability": "Good as Gold", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["makeitrain", "shadowball", "thunderbolt", "focusblast"], "roles": ["special-attacker", "spread-damage"] },
-        { "name": "Metal Coat bulky", "weight": 0.2, "item": "Metal Coat", "ability": "Good as Gold", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["makeitrain", "shadowball", "nastyplot", "protect"], "roles": ["special-attacker", "setup", "spread-damage"] }
+        {
+          "name": "Life Orb",
+          "weight": 0.45,
+          "item": "Life Orb",
+          "ability": "Good as Gold",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "makeitrain",
+            "shadowball",
+            "nastyplot",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "setup",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Choice Scarf",
+          "weight": 0.35,
+          "item": "Choice Scarf",
+          "ability": "Good as Gold",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "makeitrain",
+            "shadowball",
+            "thunderbolt",
+            "focusblast"
+          ],
+          "roles": [
+            "special-attacker",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Metal Coat bulky",
+          "weight": 0.2,
+          "item": "Metal Coat",
+          "ability": "Good as Gold",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "makeitrain",
+            "shadowball",
+            "nastyplot",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "setup",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "aerodactyl",
       "usage": 0.085,
-      "teammates": ["kingambit", "garchomp", "sylveon"],
+      "teammates": [
+        "kingambit",
+        "garchomp",
+        "sylveon"
+      ],
       "sets": [
-        { "name": "Focus Sash Tailwind", "weight": 0.7, "item": "Focus Sash", "ability": "Unnerve", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["rockslide", "tailwind", "wideguard", "protect"], "roles": ["speed-control", "spread-damage"] },
-        { "name": "Mega Tough Claws", "weight": 0.3, "formeId": "aerodactylmega", "item": "Aerodactylite", "ability": "Tough Claws", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["rockslide", "icefang", "tailwind", "protect"], "roles": ["physical-attacker", "speed-control", "mega"] }
-      ]
-    },
-    {
-      "speciesId": "amoonguss",
-      "usage": 0.08,
-      "teammates": ["archaludon", "basculegion", "farigiraf"],
-      "sets": [
-        { "name": "Sitrus redirect", "weight": 0.7, "item": "Sitrus Berry", "ability": "Regenerator", "nature": "Calm", "points": { "hp": 32, "def": 16, "spd": 18 }, "moves": ["spore", "ragepowder", "pollenpuff", "protect"], "roles": ["redirection", "support", "disruption"] },
-        { "name": "Rocky Helmet", "weight": 0.3, "item": "Rocky Helmet", "ability": "Regenerator", "nature": "Bold", "points": { "hp": 32, "def": 32, "spd": 2 }, "moves": ["spore", "ragepowder", "clearsmog", "protect"], "roles": ["redirection", "support", "disruption"] }
-      ]
-    },
-    {
-      "speciesId": "rillaboom",
-      "usage": 0.075,
-      "teammates": ["charizard", "basculegion", "incineroar"],
-      "sets": [
-        { "name": "Assault Vest", "weight": 0.6, "item": "Assault Vest", "ability": "Grassy Surge", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["fakeout", "woodhammer", "grassyglide", "uturn"], "roles": ["fake-out", "physical-attacker", "priority"] },
-        { "name": "Miracle Seed", "weight": 0.4, "item": "Miracle Seed", "ability": "Grassy Surge", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["fakeout", "woodhammer", "grassyglide", "protect"], "roles": ["fake-out", "physical-attacker", "priority"] }
+        {
+          "name": "Focus Sash Tailwind",
+          "weight": 0.7,
+          "item": "Focus Sash",
+          "ability": "Unnerve",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "rockslide",
+            "tailwind",
+            "wideguard",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Mega Tough Claws",
+          "weight": 0.3,
+          "formeId": "aerodactylmega",
+          "item": "Aerodactylite",
+          "ability": "Tough Claws",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "rockslide",
+            "icefang",
+            "tailwind",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "speed-control",
+            "mega"
+          ]
+        }
       ]
     },
     {
       "speciesId": "dragonite",
       "usage": 0.07,
-      "teammates": ["pelipper", "grimmsnarl", "sylveon"],
+      "teammates": [
+        "pelipper",
+        "grimmsnarl",
+        "sylveon"
+      ],
       "sets": [
-        { "name": "Choice Band Extreme Speed", "weight": 0.55, "item": "Choice Band", "ability": "Multiscale", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["extremespeed", "dragonclaw", "icespinner", "firepunch"], "roles": ["physical-attacker", "priority"] },
-        { "name": "Lum Dragon Dance", "weight": 0.45, "item": "Lum Berry", "ability": "Multiscale", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["dragondance", "extremespeed", "icespinner", "protect"], "roles": ["setup", "physical-attacker", "priority"] }
+        {
+          "name": "Life Orb Extreme Speed",
+          "weight": 0.55,
+          "item": "Life Orb",
+          "ability": "Multiscale",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "extremespeed",
+            "dragonclaw",
+            "icespinner",
+            "firepunch"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority"
+          ]
+        },
+        {
+          "name": "Lum Dragon Dance",
+          "weight": 0.45,
+          "item": "Lum Berry",
+          "ability": "Multiscale",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "dragondance",
+            "extremespeed",
+            "icespinner",
+            "protect"
+          ],
+          "roles": [
+            "setup",
+            "physical-attacker",
+            "priority"
+          ]
+        }
       ]
     },
     {
       "speciesId": "annihilape",
       "usage": 0.09,
-      "teammates": ["basculegion", "grimmsnarl", "pelipper"],
+      "teammates": [
+        "basculegion",
+        "grimmsnarl",
+        "pelipper"
+      ],
       "sets": [
-        { "name": "Sitrus Bulk Up", "weight": 0.6, "item": "Sitrus Berry", "ability": "Defiant", "nature": "Jolly", "points": { "hp": 32, "spe": 32, "atk": 2 }, "moves": ["ragefist", "drainpunch", "bulkup", "protect"], "roles": ["setup", "physical-attacker"] },
-        { "name": "Focus Sash Final Gambit", "weight": 0.4, "item": "Focus Sash", "ability": "Defiant", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["ragefist", "closecombat", "finalgambit", "protect"], "roles": ["physical-attacker"] }
+        {
+          "name": "Sitrus Bulk Up",
+          "weight": 0.6,
+          "item": "Sitrus Berry",
+          "ability": "Defiant",
+          "nature": "Jolly",
+          "points": {
+            "hp": 32,
+            "spe": 32,
+            "atk": 2
+          },
+          "moves": [
+            "ragefist",
+            "drainpunch",
+            "bulkup",
+            "protect"
+          ],
+          "roles": [
+            "setup",
+            "physical-attacker"
+          ]
+        },
+        {
+          "name": "Focus Sash Final Gambit",
+          "weight": 0.4,
+          "item": "Focus Sash",
+          "ability": "Defiant",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "ragefist",
+            "closecombat",
+            "finalgambit",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker"
+          ]
+        }
       ]
     },
     {
       "speciesId": "torkoal",
       "usage": 0.06,
-      "teammates": ["charizard", "sinistcha", "farigiraf"],
+      "teammates": [
+        "charizard",
+        "sinistcha",
+        "farigiraf"
+      ],
       "sets": [
-        { "name": "Charcoal Eruption", "weight": 0.8, "item": "Charcoal", "ability": "Drought", "nature": "Quiet", "points": { "hp": 32, "spa": 32, "def": 2 }, "moves": ["eruption", "heatwave", "solarbeam", "protect"], "roles": ["weather", "special-attacker", "spread-damage", "trick-room-abuser"] },
-        { "name": "Eject Pack", "weight": 0.2, "item": "Eject Pack", "ability": "Drought", "nature": "Quiet", "points": { "hp": 32, "spa": 32, "def": 2 }, "moves": ["overheat", "heatwave", "bodypress", "protect"], "roles": ["weather", "special-attacker"] }
+        {
+          "name": "Charcoal Eruption",
+          "weight": 0.8,
+          "item": "Charcoal",
+          "ability": "Drought",
+          "nature": "Quiet",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "def": 2
+          },
+          "moves": [
+            "eruption",
+            "heatwave",
+            "solarbeam",
+            "protect"
+          ],
+          "roles": [
+            "weather",
+            "special-attacker",
+            "spread-damage",
+            "trick-room-abuser"
+          ]
+        },
+        {
+          "name": "Sitrus Berry",
+          "weight": 0.2,
+          "item": "Sitrus Berry",
+          "ability": "Drought",
+          "nature": "Quiet",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "def": 2
+          },
+          "moves": [
+            "overheat",
+            "heatwave",
+            "bodypress",
+            "protect"
+          ],
+          "roles": [
+            "weather",
+            "special-attacker"
+          ]
+        }
       ]
     },
     {
       "speciesId": "talonflame",
       "usage": 0.055,
-      "teammates": ["garchomp", "kingambit", "gastrodon"],
+      "teammates": [
+        "garchomp",
+        "kingambit"
+      ],
       "sets": [
-        { "name": "Sharp Beak Gale Wings", "weight": 0.8, "item": "Sharp Beak", "ability": "Gale Wings", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["bravebird", "flareblitz", "tailwind", "protect"], "roles": ["speed-control", "physical-attacker", "priority"] },
-        { "name": "Covert Cloak", "weight": 0.2, "item": "Covert Cloak", "ability": "Gale Wings", "nature": "Jolly", "points": { "hp": 32, "spe": 32, "atk": 2 }, "moves": ["bravebird", "willowisp", "tailwind", "roost"], "roles": ["speed-control", "support"] }
-      ]
-    },
-    {
-      "speciesId": "gastrodon",
-      "usage": 0.05,
-      "teammates": ["staraptor", "talonflame", "sylveon"],
-      "sets": [
-        { "name": "Leftovers Storm Drain", "weight": 0.85, "item": "Leftovers", "ability": "Storm Drain", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["earthpower", "muddywater", "icebeam", "protect"], "roles": ["redirection", "special-attacker", "bulky"] },
-        { "name": "Yawn disruption", "weight": 0.15, "item": "Sitrus Berry", "ability": "Storm Drain", "nature": "Calm", "points": { "hp": 32, "spd": 32, "def": 2 }, "moves": ["earthpower", "yawn", "icebeam", "protect"], "roles": ["redirection", "disruption", "bulky"] }
-      ]
-    },
-    {
-      "speciesId": "ursaluna",
-      "usage": 0.05,
-      "teammates": ["sinistcha", "farigiraf", "amoonguss"],
-      "sets": [
-        { "name": "Flame Orb Guts", "weight": 0.9, "item": "Flame Orb", "ability": "Guts", "nature": "Brave", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["facade", "headlongrush", "crunch", "protect"], "roles": ["physical-attacker", "trick-room-abuser"] }
+        {
+          "name": "Sharp Beak Gale Wings",
+          "weight": 0.8,
+          "item": "Sharp Beak",
+          "ability": "Gale Wings",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "bravebird",
+            "flareblitz",
+            "tailwind",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "physical-attacker",
+            "priority"
+          ]
+        },
+        {
+          "name": "Sitrus support",
+          "weight": 0.2,
+          "item": "Sitrus Berry",
+          "ability": "Gale Wings",
+          "nature": "Jolly",
+          "points": {
+            "hp": 32,
+            "spe": 32,
+            "atk": 2
+          },
+          "moves": [
+            "bravebird",
+            "willowisp",
+            "tailwind",
+            "roost"
+          ],
+          "roles": [
+            "speed-control",
+            "support"
+          ]
+        }
       ]
     },
     {
       "speciesId": "mawile",
       "usage": 0.045,
-      "teammates": ["sinistcha", "farigiraf", "incineroar"],
+      "teammates": [
+        "sinistcha",
+        "farigiraf",
+        "incineroar"
+      ],
       "sets": [
-        { "name": "Mega Huge Power", "weight": 0.95, "formeId": "mawilemega", "item": "Mawilite", "ability": "Huge Power", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["playrough", "ironhead", "suckerpunch", "protect"], "roles": ["physical-attacker", "priority", "mega", "trick-room-abuser"] }
+        {
+          "name": "Mega Huge Power",
+          "weight": 0.95,
+          "formeId": "mawilemega",
+          "item": "Mawilite",
+          "ability": "Huge Power",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "playrough",
+            "ironhead",
+            "suckerpunch",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority",
+            "mega",
+            "trick-room-abuser"
+          ]
+        }
       ]
     },
     {
       "speciesId": "blaziken",
       "usage": 0.045,
-      "teammates": ["gholdengo", "whimsicott", "basculegion"],
+      "teammates": [
+        "gholdengo",
+        "whimsicott",
+        "basculegion"
+      ],
       "sets": [
-        { "name": "Mega Speed Boost", "weight": 0.9, "formeId": "blazikenmega", "item": "Blazikenite", "ability": "Speed Boost", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["flareblitz", "closecombat", "protect", "swordsdance"], "roles": ["physical-attacker", "setup", "mega"] }
+        {
+          "name": "Mega Speed Boost",
+          "weight": 0.9,
+          "formeId": "blazikenmega",
+          "item": "Blazikenite",
+          "ability": "Speed Boost",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "flareblitz",
+            "closecombat",
+            "protect",
+            "swordsdance"
+          ],
+          "roles": [
+            "physical-attacker",
+            "setup",
+            "mega"
+          ]
+        }
       ]
     },
     {
       "speciesId": "sceptile",
       "usage": 0.04,
-      "teammates": ["pelipper", "gastrodon", "talonflame"],
+      "teammates": [
+        "pelipper",
+        "talonflame"
+      ],
       "sets": [
-        { "name": "Mega Lightning Rod", "weight": 0.9, "formeId": "sceptilemega", "item": "Sceptilite", "ability": "Lightning Rod", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["leafstorm", "dragonpulse", "energyball", "protect"], "roles": ["special-attacker", "redirection", "mega"] }
+        {
+          "name": "Mega Lightning Rod",
+          "weight": 0.9,
+          "formeId": "sceptilemega",
+          "item": "Sceptilite",
+          "ability": "Lightning Rod",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "leafstorm",
+            "dragonpulse",
+            "energyball",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "redirection",
+            "mega"
+          ]
+        }
       ]
     },
     {
       "speciesId": "alakazam",
       "usage": 0.04,
-      "teammates": ["whimsicott", "incineroar", "rillaboom"],
+      "teammates": [
+        "whimsicott",
+        "incineroar"
+      ],
       "sets": [
-        { "name": "Mega Trace", "weight": 0.9, "formeId": "alakazammega", "item": "Alakazite", "ability": "Trace", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["psychic", "dazzlinggleam", "focusblast", "protect"], "roles": ["special-attacker", "mega", "spread-damage"] }
-      ]
-    },
-    {
-      "speciesId": "chienpao",
-      "usage": 0.04,
-      "teammates": ["whimsicott", "gholdengo", "urshifurapidstrike"],
-      "sets": [
-        { "name": "Focus Sash", "weight": 0.8, "item": "Focus Sash", "ability": "Sword of Ruin", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["iciclecrash", "suckerpunch", "sacredsword", "protect"], "roles": ["physical-attacker", "priority", "spread-damage"] },
-        { "name": "Icy Wind support", "weight": 0.2, "item": "Focus Sash", "ability": "Sword of Ruin", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["iciclecrash", "icywind", "suckerpunch", "protect"], "roles": ["physical-attacker", "speed-control", "priority"] }
-      ]
-    },
-    {
-      "speciesId": "landorustherian",
-      "usage": 0.04,
-      "teammates": ["sylveon", "incineroar", "archaludon"],
-      "sets": [
-        { "name": "Assault Vest", "weight": 0.6, "item": "Assault Vest", "ability": "Intimidate", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["stompingtantrum", "uturn", "rockslide", "superpower"], "roles": ["physical-attacker", "intimidate", "bulky"] },
-        { "name": "Choice Scarf", "weight": 0.4, "item": "Choice Scarf", "ability": "Intimidate", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["stompingtantrum", "uturn", "rockslide", "crunch"], "roles": ["physical-attacker", "intimidate"] }
-      ]
-    },
-    {
-      "speciesId": "urshifurapidstrike",
-      "usage": 0.038,
-      "teammates": ["whimsicott", "tornadus", "rillaboom"],
-      "sets": [
-        { "name": "Focus Sash", "weight": 0.7, "item": "Focus Sash", "ability": "Unseen Fist", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["surgingstrikes", "closecombat", "aquajet", "protect"], "roles": ["physical-attacker", "priority"] },
-        { "name": "Mystic Water", "weight": 0.3, "item": "Mystic Water", "ability": "Unseen Fist", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["surgingstrikes", "closecombat", "aquajet", "detect"], "roles": ["physical-attacker", "priority"] }
-      ]
-    },
-    {
-      "speciesId": "urshifu",
-      "usage": 0.03,
-      "teammates": ["whimsicott", "tornadus", "incineroar"],
-      "sets": [
-        { "name": "Focus Sash", "weight": 0.9, "item": "Focus Sash", "ability": "Unseen Fist", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["wickedblow", "closecombat", "suckerpunch", "protect"], "roles": ["physical-attacker", "priority"] }
-      ]
-    },
-    {
-      "speciesId": "tornadus",
-      "usage": 0.035,
-      "teammates": ["urshifurapidstrike", "basculegion", "kingambit"],
-      "sets": [
-        { "name": "Focus Sash Prankster", "weight": 0.7, "item": "Focus Sash", "ability": "Prankster", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["tailwind", "bleakwindstorm", "raindance", "protect"], "roles": ["speed-control", "support"] },
-        { "name": "Covert Cloak", "weight": 0.3, "item": "Covert Cloak", "ability": "Prankster", "nature": "Timid", "points": { "hp": 32, "spe": 32, "spa": 2 }, "moves": ["tailwind", "bleakwindstorm", "taunt", "protect"], "roles": ["speed-control", "disruption"] }
-      ]
-    },
-    {
-      "speciesId": "porygon2",
-      "usage": 0.035,
-      "teammates": ["ursaluna", "sinistcha", "kingambit"],
-      "sets": [
-        { "name": "Eviolite Trick Room", "weight": 0.9, "item": "Eviolite", "ability": "Download", "nature": "Quiet", "points": { "hp": 32, "spa": 32, "def": 2 }, "moves": ["trickroom", "icebeam", "recover", "protect"], "roles": ["speed-control", "bulky", "special-attacker"] }
+        {
+          "name": "Mega Trace",
+          "weight": 0.9,
+          "formeId": "alakazammega",
+          "item": "Alakazite",
+          "ability": "Trace",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "psychic",
+            "dazzlinggleam",
+            "focusblast",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "mega",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "hatterene",
       "usage": 0.03,
-      "teammates": ["indeedeef", "torkoal", "ursaluna"],
+      "teammates": [
+        "torkoal"
+      ],
       "sets": [
-        { "name": "Life Orb Trick Room", "weight": 0.7, "item": "Life Orb", "ability": "Magic Bounce", "nature": "Quiet", "points": { "hp": 32, "spa": 32, "def": 2 }, "moves": ["expandingforce", "dazzlinggleam", "trickroom", "protect"], "roles": ["speed-control", "special-attacker", "trick-room-abuser", "spread-damage"] }
-      ]
-    },
-    {
-      "speciesId": "indeedeef",
-      "usage": 0.028,
-      "teammates": ["hatterene", "torkoal", "armarouge"],
-      "sets": [
-        { "name": "Psychic Seed Follow Me", "weight": 0.9, "item": "Psychic Seed", "ability": "Psychic Surge", "nature": "Bold", "points": { "hp": 32, "def": 32, "spd": 2 }, "moves": ["followme", "helpinghand", "psychic", "protect"], "roles": ["redirection", "support"] }
+        {
+          "name": "Life Orb Trick Room",
+          "weight": 0.7,
+          "item": "Life Orb",
+          "ability": "Magic Bounce",
+          "nature": "Quiet",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "def": 2
+          },
+          "moves": [
+            "expandingforce",
+            "dazzlinggleam",
+            "trickroom",
+            "protect"
+          ],
+          "roles": [
+            "speed-control",
+            "special-attacker",
+            "trick-room-abuser",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "gyarados",
       "usage": 0.028,
-      "teammates": ["kingambit", "raichu", "grimmsnarl"],
+      "teammates": [
+        "kingambit",
+        "raichu",
+        "grimmsnarl"
+      ],
       "sets": [
-        { "name": "Sitrus Dragon Dance", "weight": 0.8, "item": "Sitrus Berry", "ability": "Intimidate", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["waterfall", "dragondance", "icefang", "protect"], "roles": ["setup", "physical-attacker", "intimidate"] }
+        {
+          "name": "Sitrus Dragon Dance",
+          "weight": 0.8,
+          "item": "Sitrus Berry",
+          "ability": "Intimidate",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "waterfall",
+            "dragondance",
+            "icefang",
+            "protect"
+          ],
+          "roles": [
+            "setup",
+            "physical-attacker",
+            "intimidate"
+          ]
+        }
       ]
     },
     {
       "speciesId": "arcanine",
       "usage": 0.027,
-      "teammates": ["gastrodon", "sylveon", "garchomp"],
+      "teammates": [
+        "sylveon",
+        "garchomp"
+      ],
       "sets": [
-        { "name": "Safety Goggles support", "weight": 0.8, "item": "Safety Goggles", "ability": "Intimidate", "nature": "Jolly", "points": { "hp": 32, "spe": 32, "atk": 2 }, "moves": ["flareblitz", "extremespeed", "willowisp", "protect"], "roles": ["support", "intimidate", "priority"] }
+        {
+          "name": "Sitrus support",
+          "weight": 0.8,
+          "item": "Sitrus Berry",
+          "ability": "Intimidate",
+          "nature": "Jolly",
+          "points": {
+            "hp": 32,
+            "spe": 32,
+            "atk": 2
+          },
+          "moves": [
+            "flareblitz",
+            "extremespeed",
+            "willowisp",
+            "protect"
+          ],
+          "roles": [
+            "support",
+            "intimidate",
+            "priority"
+          ]
+        }
       ]
     },
     {
       "speciesId": "glimmora",
       "usage": 0.027,
-      "teammates": ["gholdengo", "garchomp", "kingambit"],
+      "teammates": [
+        "gholdengo",
+        "garchomp",
+        "kingambit"
+      ],
       "sets": [
-        { "name": "Focus Sash", "weight": 0.9, "item": "Focus Sash", "ability": "Toxic Debris", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["powergem", "sludgebomb", "earthpower", "spikyshield"], "roles": ["special-attacker", "disruption"] }
+        {
+          "name": "Focus Sash",
+          "weight": 0.9,
+          "item": "Focus Sash",
+          "ability": "Toxic Debris",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "powergem",
+            "sludgebomb",
+            "earthpower",
+            "spikyshield"
+          ],
+          "roles": [
+            "special-attacker",
+            "disruption"
+          ]
+        }
       ]
     },
     {
       "speciesId": "kommoo",
       "usage": 0.026,
-      "teammates": ["sylveon", "incineroar", "torkoal"],
+      "teammates": [
+        "sylveon",
+        "incineroar",
+        "torkoal"
+      ],
       "sets": [
-        { "name": "Throat Spray", "weight": 0.8, "item": "Throat Spray", "ability": "Soundproof", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["clangingscales", "aurasphere", "flamethrower", "protect"], "roles": ["special-attacker", "spread-damage"] }
+        {
+          "name": "Lum Berry",
+          "weight": 0.8,
+          "item": "Lum Berry",
+          "ability": "Soundproof",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "clangingscales",
+            "aurasphere",
+            "flamethrower",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "milotic",
       "usage": 0.026,
-      "teammates": ["staraptor", "incineroar", "grimmsnarl"],
+      "teammates": [
+        "staraptor",
+        "incineroar",
+        "grimmsnarl"
+      ],
       "sets": [
-        { "name": "Leftovers Competitive", "weight": 0.9, "item": "Leftovers", "ability": "Competitive", "nature": "Bold", "points": { "hp": 32, "def": 32, "spd": 2 }, "moves": ["muddywater", "icebeam", "recover", "protect"], "roles": ["special-attacker", "bulky"] }
+        {
+          "name": "Leftovers Competitive",
+          "weight": 0.9,
+          "item": "Leftovers",
+          "ability": "Competitive",
+          "nature": "Bold",
+          "points": {
+            "hp": 32,
+            "def": 32,
+            "spd": 2
+          },
+          "moves": [
+            "muddywater",
+            "icebeam",
+            "recover",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "bulky"
+          ]
+        }
       ]
     },
     {
       "speciesId": "volcarona",
       "usage": 0.025,
-      "teammates": ["garchomp", "gastrodon", "whimsicott"],
+      "teammates": [
+        "garchomp",
+        "whimsicott"
+      ],
       "sets": [
-        { "name": "Leftovers Quiver Dance", "weight": 0.8, "item": "Leftovers", "ability": "Flame Body", "nature": "Timid", "points": { "hp": 32, "spe": 32, "spa": 2 }, "moves": ["quiverdance", "heatwave", "bugbuzz", "protect"], "roles": ["setup", "special-attacker", "spread-damage"] }
+        {
+          "name": "Leftovers Quiver Dance",
+          "weight": 0.8,
+          "item": "Leftovers",
+          "ability": "Flame Body",
+          "nature": "Timid",
+          "points": {
+            "hp": 32,
+            "spe": 32,
+            "spa": 2
+          },
+          "moves": [
+            "quiverdance",
+            "heatwave",
+            "bugbuzz",
+            "protect"
+          ],
+          "roles": [
+            "setup",
+            "special-attacker",
+            "spread-damage"
+          ]
+        }
       ]
     },
     {
       "speciesId": "garganacl",
       "usage": 0.025,
-      "teammates": ["sylveon", "archaludon", "farigiraf"],
+      "teammates": [
+        "sylveon",
+        "archaludon",
+        "farigiraf"
+      ],
       "sets": [
-        { "name": "Leftovers Salt Cure", "weight": 0.9, "item": "Leftovers", "ability": "Purifying Salt", "nature": "Careful", "points": { "hp": 32, "spd": 32, "def": 2 }, "moves": ["saltcure", "recover", "wideguard", "protect"], "roles": ["bulky", "support", "disruption"] }
+        {
+          "name": "Leftovers Salt Cure",
+          "weight": 0.9,
+          "item": "Leftovers",
+          "ability": "Purifying Salt",
+          "nature": "Careful",
+          "points": {
+            "hp": 32,
+            "spd": 32,
+            "def": 2
+          },
+          "moves": [
+            "saltcure",
+            "recover",
+            "wideguard",
+            "protect"
+          ],
+          "roles": [
+            "bulky",
+            "support",
+            "disruption"
+          ]
+        }
       ]
     },
     {
       "speciesId": "maushold",
       "usage": 0.024,
-      "teammates": ["annihilape", "basculegion", "sinistcha"],
+      "teammates": [
+        "annihilape",
+        "basculegion",
+        "sinistcha"
+      ],
       "sets": [
-        { "name": "Wide Lens Population Bomb", "weight": 0.8, "item": "Wide Lens", "ability": "Technician", "nature": "Jolly", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["populationbomb", "followme", "tidyup", "protect"], "roles": ["physical-attacker", "redirection", "support"] }
+        {
+          "name": "Wide Lens Population Bomb",
+          "weight": 0.8,
+          "item": "Wide Lens",
+          "ability": "Technician",
+          "nature": "Jolly",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "populationbomb",
+            "followme",
+            "tidyup",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "redirection",
+            "support"
+          ]
+        }
       ]
     },
     {
       "speciesId": "blastoise",
       "usage": 0.06,
-      "teammates": ["whimsicott", "incineroar", "rillaboom"],
+      "teammates": [
+        "whimsicott",
+        "incineroar"
+      ],
       "sets": [
-        { "name": "Mega Launcher pulses", "weight": 0.85, "formeId": "blastoisemega", "item": "Blastoisinite", "ability": "Mega Launcher", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["waterpulse", "darkpulse", "aurasphere", "protect"], "roles": ["special-attacker", "mega"] },
-        { "name": "Eject Button pivot", "weight": 0.15, "item": "Eject Button", "ability": "Torrent", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["muddywater", "icebeam", "fakeout", "protect"], "roles": ["special-attacker", "fake-out"] }
+        {
+          "name": "Mega Launcher pulses",
+          "weight": 0.85,
+          "formeId": "blastoisemega",
+          "item": "Blastoisinite",
+          "ability": "Mega Launcher",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "waterpulse",
+            "darkpulse",
+            "aurasphere",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "mega"
+          ]
+        },
+        {
+          "name": "Sitrus Berry pivot",
+          "weight": 0.15,
+          "item": "Sitrus Berry",
+          "ability": "Torrent",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "muddywater",
+            "icebeam",
+            "fakeout",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "fake-out"
+          ]
+        }
       ]
     },
     {
       "speciesId": "tyranitar",
       "usage": 0.055,
-      "teammates": ["excadrill", "sinistcha", "incineroar"],
+      "teammates": [
+        "excadrill",
+        "sinistcha",
+        "incineroar"
+      ],
       "sets": [
-        { "name": "Mega sand setter", "weight": 0.75, "formeId": "tyranitarmega", "item": "Tyranitarite", "ability": "Sand Stream", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["rockslide", "crunch", "lowkick", "protect"], "roles": ["physical-attacker", "weather", "mega", "spread-damage"] },
-        { "name": "Clear Amulet bulky", "weight": 0.25, "item": "Clear Amulet", "ability": "Sand Stream", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["rockslide", "crunch", "dragondance", "protect"], "roles": ["physical-attacker", "weather", "setup"] }
+        {
+          "name": "Mega sand setter",
+          "weight": 0.75,
+          "formeId": "tyranitarmega",
+          "item": "Tyranitarite",
+          "ability": "Sand Stream",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "rockslide",
+            "crunch",
+            "lowkick",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "weather",
+            "mega",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Chople Berry bulky",
+          "weight": 0.25,
+          "item": "Chople Berry",
+          "ability": "Sand Stream",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "rockslide",
+            "crunch",
+            "dragondance",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "weather",
+            "setup"
+          ]
+        }
       ]
     },
     {
       "speciesId": "excadrill",
       "usage": 0.05,
-      "teammates": ["tyranitar", "corviknight", "rotomwash"],
+      "teammates": [
+        "tyranitar",
+        "corviknight",
+        "rotomwash"
+      ],
       "sets": [
-        { "name": "Focus Sash Sand Rush", "weight": 0.85, "item": "Focus Sash", "ability": "Sand Rush", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["ironhead", "earthquake", "rockslide", "protect"], "roles": ["physical-attacker", "weather-abuser", "spread-damage"] },
-        { "name": "Life Orb", "weight": 0.15, "item": "Life Orb", "ability": "Sand Rush", "nature": "Adamant", "points": { "atk": 32, "spe": 32, "hp": 2 }, "moves": ["ironhead", "earthquake", "rockslide", "swordsdance"], "roles": ["physical-attacker", "weather-abuser", "setup"] }
+        {
+          "name": "Focus Sash Sand Rush",
+          "weight": 0.85,
+          "item": "Focus Sash",
+          "ability": "Sand Rush",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "ironhead",
+            "earthquake",
+            "rockslide",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "weather-abuser",
+            "spread-damage"
+          ]
+        },
+        {
+          "name": "Life Orb",
+          "weight": 0.15,
+          "item": "Life Orb",
+          "ability": "Sand Rush",
+          "nature": "Adamant",
+          "points": {
+            "atk": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "ironhead",
+            "earthquake",
+            "rockslide",
+            "swordsdance"
+          ],
+          "roles": [
+            "physical-attacker",
+            "weather-abuser",
+            "setup"
+          ]
+        }
       ]
     },
     {
       "speciesId": "rotomwash",
       "usage": 0.04,
-      "teammates": ["excadrill", "tyranitar", "corviknight"],
+      "teammates": [
+        "excadrill",
+        "tyranitar",
+        "corviknight"
+      ],
       "sets": [
-        { "name": "Sitrus pivot", "weight": 0.5, "item": "Sitrus Berry", "ability": "Levitate", "nature": "Modest", "points": { "hp": 32, "spa": 32, "spd": 2 }, "moves": ["hydropump", "willowisp", "thunderbolt", "protect"], "roles": ["special-attacker", "support", "disruption"] },
-        { "name": "Choice Scarf", "weight": 0.25, "item": "Choice Scarf", "ability": "Levitate", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["hydropump", "thunderbolt", "voltswitch", "trick"], "roles": ["special-attacker"] }
+        {
+          "name": "Sitrus pivot",
+          "weight": 0.5,
+          "item": "Sitrus Berry",
+          "ability": "Levitate",
+          "nature": "Modest",
+          "points": {
+            "hp": 32,
+            "spa": 32,
+            "spd": 2
+          },
+          "moves": [
+            "hydropump",
+            "willowisp",
+            "thunderbolt",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "support",
+            "disruption"
+          ]
+        },
+        {
+          "name": "Choice Scarf",
+          "weight": 0.25,
+          "item": "Choice Scarf",
+          "ability": "Levitate",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "hydropump",
+            "thunderbolt",
+            "voltswitch",
+            "trick"
+          ],
+          "roles": [
+            "special-attacker"
+          ]
+        }
       ]
     },
     {
       "speciesId": "corviknight",
       "usage": 0.035,
-      "teammates": ["excadrill", "rotomwash", "tyranitar"],
+      "teammates": [
+        "excadrill",
+        "rotomwash",
+        "tyranitar"
+      ],
       "sets": [
-        { "name": "Leftovers Bulk Up", "weight": 0.8, "item": "Leftovers", "ability": "Mirror Armor", "nature": "Careful", "points": { "hp": 32, "spd": 32, "atk": 2 }, "moves": ["bravebird", "tailwind", "roost", "bulkup"], "roles": ["speed-control", "bulky", "setup"] }
+        {
+          "name": "Leftovers Bulk Up",
+          "weight": 0.8,
+          "item": "Leftovers",
+          "ability": "Mirror Armor",
+          "nature": "Careful",
+          "points": {
+            "hp": 32,
+            "spd": 32,
+            "atk": 2
+          },
+          "moves": [
+            "bravebird",
+            "tailwind",
+            "roost",
+            "bulkup"
+          ],
+          "roles": [
+            "speed-control",
+            "bulky",
+            "setup"
+          ]
+        }
       ]
     },
     {
       "speciesId": "pikachu",
       "usage": 0.022,
-      "teammates": ["pelipper", "rillaboom", "whimsicott"],
+      "teammates": [
+        "pelipper",
+        "whimsicott"
+      ],
       "sets": [
-        { "name": "Light Ball", "weight": 0.9, "item": "Light Ball", "ability": "Static", "nature": "Timid", "points": { "spa": 32, "spe": 32, "hp": 2 }, "moves": ["fakeout", "thunderbolt", "grassknot", "protect"], "roles": ["special-attacker", "fake-out"] }
+        {
+          "name": "Light Ball",
+          "weight": 0.9,
+          "item": "Light Ball",
+          "ability": "Static",
+          "nature": "Timid",
+          "points": {
+            "spa": 32,
+            "spe": 32,
+            "hp": 2
+          },
+          "moves": [
+            "fakeout",
+            "thunderbolt",
+            "grassknot",
+            "protect"
+          ],
+          "roles": [
+            "special-attacker",
+            "fake-out"
+          ]
+        }
       ]
     },
     {
       "speciesId": "decidueye",
       "usage": 0.022,
-      "teammates": ["torkoal", "farigiraf", "incineroar"],
+      "teammates": [
+        "torkoal",
+        "farigiraf",
+        "incineroar"
+      ],
       "sets": [
-        { "name": "Scope Lens Spirit Shackle", "weight": 0.8, "item": "Scope Lens", "ability": "Long Reach", "nature": "Adamant", "points": { "hp": 32, "atk": 32, "spd": 2 }, "moves": ["spiritshackle", "leafblade", "shadowsneak", "protect"], "roles": ["physical-attacker", "priority"] }
+        {
+          "name": "Scope Lens Spirit Shackle",
+          "weight": 0.8,
+          "item": "Scope Lens",
+          "ability": "Long Reach",
+          "nature": "Adamant",
+          "points": {
+            "hp": 32,
+            "atk": 32,
+            "spd": 2
+          },
+          "moves": [
+            "spiritshackle",
+            "leafblade",
+            "shadowsneak",
+            "protect"
+          ],
+          "roles": [
+            "physical-attacker",
+            "priority"
+          ]
+        }
       ]
     }
   ]

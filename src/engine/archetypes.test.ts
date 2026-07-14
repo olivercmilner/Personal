@@ -24,8 +24,8 @@ const myTeam = [
   mk('whimsicott', ['tailwind', 'moonblast', 'encore', 'protect'], 'Timid', { spa: 32, spe: 32, hp: 2 }, 'Prankster', 'Focus Sash'),
   mk('kingambit', ['kowtowcleave', 'suckerpunch', 'ironhead', 'protect'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Defiant'),
   mk('incineroar', ['fakeout', 'flareblitz', 'partingshot', 'knockoff'], 'Impish', { hp: 32, def: 16, spd: 16, atk: 2 }, 'Intimidate', 'Sitrus Berry'),
-  mk('heatran', ['heatwave', 'earthpower', 'flashcannon', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }, 'Flash Fire'),
-  mk('dragonite', ['extremespeed', 'outrage', 'icespinner', 'protect'], 'Adamant', { atk: 32, spe: 32, hp: 2 }, 'Multiscale', 'Choice Band'),
+  mk('archaludon', ['electroshot', 'flashcannon', 'dragonpulse', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }, 'Stamina'),
+  mk('dragonite', ['extremespeed', 'outrage', 'icespinner', 'protect'], 'Adamant', { atk: 32, spe: 32, hp: 2 }, 'Multiscale', 'Life Orb'),
 ]
 
 const oppFor = (ids: string[]): OpponentMon[] => ids.map((id) => ({ speciesId: id, sets: predictSets(id) }))
@@ -35,7 +35,7 @@ describe('Big Six field-test scenario', () => {
     const sets = predictSets('floetteeternal')
     expect(sets[0].item).toBe('Floettite')
     expect(sets[0].ability).toBe('Fairy Aura')
-    expect(sets[0].formeId).toBe('floetteeternalmega')
+    expect(sets[0].formeId).toBe('floettemega')
     expect(isMegaSet(sets[0])).toBe(true)
   })
 
@@ -118,7 +118,7 @@ describe('mega exclusivity', () => {
 
 describe('insights', () => {
   it('warns that Intimidate feeds a likely Contrary Mega Staraptor', () => {
-    const opponents = oppFor(['staraptor', 'grimmsnarl', 'archaludon', 'sylveon', 'gastrodon', 'sneasler'])
+    const opponents = oppFor(['staraptor', 'grimmsnarl', 'archaludon', 'sylveon', 'milotic', 'sneasler'])
     const { penalties, notes } = statDropPenalties(myTeam, opponents)
     const incin = myTeam.findIndex((b) => b.speciesId === 'incineroar')
     expect(penalties[incin]).toBeGreaterThan(0)

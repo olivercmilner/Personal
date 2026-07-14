@@ -1,13 +1,12 @@
 import type { MetaEntry, MetaSet, PokemonBuild, PredictedSet, SpeciesData, StatName } from '../types'
-import { CUSTOM_ITEMS, getSpecies, ITEMS, toId } from '../data'
+import { getSpecies, SPECIES, toId } from '../data'
 import metaJson from '../data/meta-sets.json'
 import { EMPTY_POINTS } from './stats'
 
-/** Every Mega Stone id: classic stones from Showdown data + Champions/Z-A customs. */
-export const MEGA_STONE_IDS: Set<string> = new Set([
-  ...ITEMS.filter((i) => /this item allows it to Mega Evolve/i.test(i.shortDesc ?? '')).map((i) => i.id),
-  ...CUSTOM_ITEMS.map((i) => i.id),
-])
+/** Every Mega Stone in Champions, derived from the Mega formes' requiredItem. */
+export const MEGA_STONE_IDS: Set<string> = new Set(
+  SPECIES.filter((s) => s.requiredItem).map((s) => toId(s.requiredItem!)),
+)
 
 /** Does this predicted/curated set Mega Evolve? (stone, Mega forme, or role tag) */
 export function isMegaSet(set: Pick<MetaSet, 'item' | 'formeId' | 'roles'>): boolean {
@@ -23,18 +22,9 @@ export function isMegaBuild(build: PokemonBuild): boolean {
 }
 
 /** Mega Stone item id -> the Mega forme species id it produces. */
-export const STONE_TO_MEGA: Map<string, string> = (() => {
-  const map = new Map<string, string>()
-  for (const item of CUSTOM_ITEMS) if (item.megaFor) map.set(item.id, item.megaFor)
-  for (const item of ITEMS) {
-    const m = item.shortDesc?.match(/^If held by an? (.+?), this item allows it to Mega Evolve/)
-    if (!m) continue
-    const suffix = / X$/.test(item.name) ? 'x' : / Y$/.test(item.name) ? 'y' : ''
-    const megaId = toId(m[1]) + 'mega' + suffix
-    if (getSpecies(megaId)) map.set(item.id, megaId)
-  }
-  return map
-})()
+export const STONE_TO_MEGA: Map<string, string> = new Map(
+  SPECIES.filter((s) => s.requiredItem).map((s) => [toId(s.requiredItem!), s.id]),
+)
 
 /**
  * The Mega forme a build transforms into in battle: base species holding
@@ -174,6 +164,42 @@ export function archetypeSet(species: SpeciesData): PredictedSet {
     probability: 1,
     source: 'archetype',
   }
+}
+
+/**
+ * Champions enforces item clause: no two team members can hold the same
+ * item. Predicted top sets are chosen greedily (most confident first) so
+ * that no item repeats across the opponent's six — a mon whose preferred
+ * item is already claimed is re-predicted on its next-best set, inheriting
+ * the displaced set's probability so the display stays ordered.
+ */
+export function applyItemClause<T extends { speciesId: string; sets: PredictedSet[] }>(
+  opponents: T[],
+): T[] {
+  const claimed = new Set<string>()
+  const resolved = new Map<string, PredictedSet[]>()
+  const order = [...opponents].sort(
+    (a, b) =>
+      (b.sets[0]?.probability ?? 0) - (a.sets[0]?.probability ?? 0) ||
+      a.speciesId.localeCompare(b.speciesId),
+  )
+  for (const o of order) {
+    const sets = [...o.sets]
+    const freeIdx = sets.findIndex((s) => !s.item || !claimed.has(toId(s.item)))
+    if (freeIdx > 0) {
+      const [promoted] = sets.splice(freeIdx, 1)
+      // The clause genuinely shifts likelihood mass onto the promoted set.
+      const displaced = sets[0]
+      sets.unshift({ ...promoted, probability: displaced.probability })
+      sets[1] = { ...displaced, probability: promoted.probability }
+    } else if (freeIdx === -1 && sets.length > 0) {
+      sets[0] = { ...sets[0], item: '', name: `${sets[0].name} (item claimed by teammate)` }
+    }
+    const top = sets[0]
+    if (top?.item) claimed.add(toId(top.item))
+    resolved.set(o.speciesId, sets)
+  }
+  return opponents.map((o) => ({ ...o, sets: resolved.get(o.speciesId) ?? o.sets }))
 }
 
 /** Prior probability that this species is brought to a given game. */

@@ -325,14 +325,36 @@ function explain(
     let bestI = rec.bring[0]
     for (const i of rec.bring) if (matrix[i][j].score > matrix[bestI][j].score) bestI = i
     const cell = matrix[bestI][j]
+    // Heaviest hit available in the bring, regardless of overall score —
+    // a KO that loses the speed race is still a KO worth naming.
+    let killCell = matrix[rec.bring[0]][j]
+    for (const i of rec.bring)
+      if (matrix[i][j].offense.dmgPct[1] > killCell.offense.dmgPct[1]) killCell = matrix[i][j]
+
     if (cell.score > 0.05) {
       reasons.push(
         `${name(cell.mine)} answers ${name(cell.theirs)}: ${cell.offense.bestMove} does ${cell.offense.dmgPct[0]}–${cell.offense.dmgPct[1]}%${cell.speed === 'faster' ? ' while faster' : ''}.`,
       )
-    } else {
+    } else if (killCell.offense.dmgPct[1] >= 100) {
       reasons.push(
-        `Watch ${name(opponents[j].speciesId)} — nothing in this four beats it cleanly (best: ${name(cell.mine)}, ${cell.offense.bestMove} ${cell.offense.dmgPct[0]}–${cell.offense.dmgPct[1]}%).`,
+        `${name(killCell.mine)} can KO ${name(killCell.theirs)} (${killCell.offense.bestMove} ${killCell.offense.dmgPct[0]}–${killCell.offense.dmgPct[1]}%) but ${killCell.speed === 'slower' ? 'moves second — expect to trade a hit for it' : `eats ${killCell.defense.bestMove} (${killCell.defense.dmgPct[0]}–${killCell.defense.dmgPct[1]}%) in return`}.`,
       )
+    } else {
+      // Nothing brought handles it — check whether the bench does.
+      let benchAnswer: MatchupCell | null = null
+      for (const i of rec.bench) {
+        const b = matrix[i][j]
+        if (!benchAnswer || b.score > benchAnswer.score) benchAnswer = b
+      }
+      if (benchAnswer && (benchAnswer.score > cell.score + 0.15 || benchAnswer.offense.dmgPct[1] >= 100)) {
+        reasons.push(
+          `Watch ${name(opponents[j].speciesId)} — this four lacks a clean answer, but benched ${name(benchAnswer.mine)} has one (${benchAnswer.offense.bestMove} ${benchAnswer.offense.dmgPct[0]}–${benchAnswer.offense.dmgPct[1]}%) if you'd rather cover it.`,
+        )
+      } else {
+        reasons.push(
+          `Watch ${name(opponents[j].speciesId)} — nothing on the team beats it cleanly (best: ${name(cell.mine)}, ${cell.offense.bestMove} ${cell.offense.dmgPct[0]}–${cell.offense.dmgPct[1]}%).`,
+        )
+      }
     }
   }
 
