@@ -42,19 +42,19 @@ All data lives in your browser (localStorage). No accounts, no server.
 
 ## Champions-specific modelling
 
-- Lv50, 66 stat points, 32 per stat, +1 stat per point, applied after the
-  stat alignment multiplier (`src/engine/stats.ts`)
+- Lv50, 66 stat points, 32 per stat, added to the baseline before the
+  stat-alignment multiplier — matching Showdown's champions-mod formula
+  (`src/engine/stats.ts`)
 - Stat alignments = natures minus the redundant neutrals (Serious only)
-- All 29 new-generation Mega Evolutions (the Legends: Z-A roster — Mega
-  Delphox, Chesnaught, Greninja, Dragonite, Starmie, … — plus the
-  Champions-exclusive Mega Staraptor and Mega Raichu X/Y) are bundled as
-  custom species with community-documented stats
-  (`src/data/custom-species.json`), and their Mega Stones as custom held
-  items (`src/data/custom-items.json`). A few stone names for the newest
-  Megas follow the standard "-ite" pattern where the official name hasn't
-  been documented yet — correct them in that file if the in-game name
-  differs. To use a Mega on your own team, add the Mega forme as the
-  species (e.g. "Delphox-Mega") holding its stone.
+- Species, items, and moves are generated from Pokemon Showdown's
+  `champions` mod (the community's authoritative implementation of the
+  game) by `scripts/generate-champions-data.ts` — the datasets contain
+  EXACTLY the current Champions roster (~310 species incl. every Mega),
+  the items actually purchasable in-game, and the available moves with
+  Champions' rebalanced base powers. Run `npm run generate-data` after
+  each regulation update to refresh. Mega Stones map to their formes via
+  the official `requiredItem` data; a base species holding its stone
+  battles as the Mega automatically.
 - Meta sets for the top ~50 Reg M-B Pokemon live in
   `src/data/meta-sets.json` — edit this file (or add overrides in-app) as the
   meta shifts
@@ -66,7 +66,7 @@ npm install
 npm run dev            # local dev server
 npm test               # engine + dataset integrity tests
 npm run build          # production build (dist/)
-npm run generate-data  # regenerate species/moves/items from @pkmn/dex
+npm run generate-data  # regenerate species/items/moves from Showdown's champions mod
 ```
 
 Engine tuning knobs are in one place: `WEIGHTS` in `src/engine/optimize.ts`.

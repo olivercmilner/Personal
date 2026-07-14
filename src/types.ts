@@ -12,6 +12,8 @@ export interface SpeciesData {
   baseSpecies?: string
   forme?: string
   weightkg: number
+  /** For Mega formes: the Mega Stone that produces this forme */
+  requiredItem?: string
 }
 
 export interface MoveData {

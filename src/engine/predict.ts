@@ -1,13 +1,12 @@
 import type { MetaEntry, MetaSet, PokemonBuild, PredictedSet, SpeciesData, StatName } from '../types'
-import { CUSTOM_ITEMS, getSpecies, ITEMS, toId } from '../data'
+import { getSpecies, SPECIES, toId } from '../data'
 import metaJson from '../data/meta-sets.json'
 import { EMPTY_POINTS } from './stats'
 
-/** Every Mega Stone id: classic stones from Showdown data + Champions/Z-A customs. */
-export const MEGA_STONE_IDS: Set<string> = new Set([
-  ...ITEMS.filter((i) => /this item allows it to Mega Evolve/i.test(i.shortDesc ?? '')).map((i) => i.id),
-  ...CUSTOM_ITEMS.map((i) => i.id),
-])
+/** Every Mega Stone in Champions, derived from the Mega formes' requiredItem. */
+export const MEGA_STONE_IDS: Set<string> = new Set(
+  SPECIES.filter((s) => s.requiredItem).map((s) => toId(s.requiredItem!)),
+)
 
 /** Does this predicted/curated set Mega Evolve? (stone, Mega forme, or role tag) */
 export function isMegaSet(set: Pick<MetaSet, 'item' | 'formeId' | 'roles'>): boolean {
@@ -23,18 +22,9 @@ export function isMegaBuild(build: PokemonBuild): boolean {
 }
 
 /** Mega Stone item id -> the Mega forme species id it produces. */
-export const STONE_TO_MEGA: Map<string, string> = (() => {
-  const map = new Map<string, string>()
-  for (const item of CUSTOM_ITEMS) if (item.megaFor) map.set(item.id, item.megaFor)
-  for (const item of ITEMS) {
-    const m = item.shortDesc?.match(/^If held by an? (.+?), this item allows it to Mega Evolve/)
-    if (!m) continue
-    const suffix = / X$/.test(item.name) ? 'x' : / Y$/.test(item.name) ? 'y' : ''
-    const megaId = toId(m[1]) + 'mega' + suffix
-    if (getSpecies(megaId)) map.set(item.id, megaId)
-  }
-  return map
-})()
+export const STONE_TO_MEGA: Map<string, string> = new Map(
+  SPECIES.filter((s) => s.requiredItem).map((s) => [toId(s.requiredItem!), s.id]),
+)
 
 /**
  * The Mega forme a build transforms into in battle: base species holding

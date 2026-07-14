@@ -4,10 +4,11 @@ import { getNature, NATURES } from './natures'
 import { validateSpread } from '../engine/stats'
 import { EMPTY_POINTS } from '../engine/stats'
 import { BUNDLED_META } from '../engine/predict'
+import { ARCHETYPES } from '../engine/archetypes'
 
 describe('bundled meta dataset integrity', () => {
   it('has entries', () => {
-    expect(BUNDLED_META.entries.length).toBeGreaterThanOrEqual(45)
+    expect(BUNDLED_META.entries.length).toBeGreaterThanOrEqual(40)
   })
 
   for (const entry of BUNDLED_META.entries) {
@@ -43,4 +44,13 @@ describe('bundled meta dataset integrity', () => {
       })
     })
   }
+})
+
+describe('team archetypes match the exact Champions roster', () => {
+  it('every archetype member, core and rate key is a roster species', () => {
+    for (const a of ARCHETYPES) {
+      const ids = [...a.members, ...a.core, ...Object.keys(a.bringRates), ...Object.keys(a.leadRates)]
+      for (const id of ids) expect(getSpecies(id), `${a.id}: ${id}`).toBeDefined()
+    }
+  })
 })

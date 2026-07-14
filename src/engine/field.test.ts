@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { PokemonBuild } from '../types'
-import { getSpecies, itemsById, searchItems, toId, UNAVAILABLE_ITEM_IDS } from '../data'
+import { getSpecies, itemsById, searchItems, toId } from '../data'
 import { EMPTY_POINTS } from './stats'
 import { applyItemClause, predictSets, megaTargetForBuild, STONE_TO_MEGA } from './predict'
 import { recommendBrings } from './optimize'
@@ -103,7 +103,7 @@ describe('auto-Mega and sash mechanics', () => {
 
   it('flags sash survival: no guaranteed-1 KO vs likely Focus Sash holder', () => {
     const team = [
-      mk('heatran', ['heatwave', 'flashcannon', 'earthpower', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }, 'Flash Fire'),
+      mk('archaludon', ['electroshot', 'flashcannon', 'dragonpulse', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }, 'Stamina'),
       mk('garchomp', ['earthquake', 'dragonclaw', 'rockslide', 'protect'], 'Jolly', { atk: 32, spe: 32, hp: 2 }),
       mk('kingambit', ['kowtowcleave', 'suckerpunch', 'ironhead', 'protect'], 'Adamant', { atk: 32, hp: 32 }),
       mk('dragonite', ['extremespeed', 'icespinner', 'firepunch', 'protect'], 'Adamant', { atk: 32, spe: 32 }),
@@ -112,9 +112,8 @@ describe('auto-Mega and sash mechanics', () => {
     const opponents = oppFor(['whimsicott', 'garchomp', 'kingambit', 'basculegion'])
     const matrix = computeMatrix(team, opponents, NEUTRAL_CONTEXT)
     const whimsCol = opponents.findIndex((o) => o.speciesId === 'whimsicott')
-    const heatranRow = 0
-    const cell = matrix[heatranRow][whimsCol]
-    // Heat Wave/Flash Cannon massively overkills Whimsicott, but the sash
+    const cell = matrix[0][whimsCol]
+    // Electro Shot/Flash Cannon massively overkills Whimsicott, but the sash
     // set (~83% likely) floors its KO at 2 — the aggregate is the
     // probability-weighted mix, well above a clean OHKO's 1.0.
     expect(cell.offense.dmgPct[0]).toBeGreaterThan(100)
@@ -125,7 +124,8 @@ describe('auto-Mega and sash mechanics', () => {
 
 describe('v3.1 fixes', () => {
   it('unavailable items are gone from the item pool and search', () => {
-    for (const id of UNAVAILABLE_ITEM_IDS) expect(itemsById.get(id), id).toBeUndefined()
+    for (const id of ['loadeddice', 'choiceband', 'choicespecs', 'assaultvest', 'covertcloak', 'ejectbutton'])
+      expect(itemsById.get(id), id).toBeUndefined()
     expect(searchItems('loaded')).toHaveLength(0)
     expect(searchItems('choice').map((i) => i.name)).toContain('Choice Scarf')
     expect(searchItems('choice').map((i) => i.name)).not.toContain('Choice Band')
@@ -156,7 +156,7 @@ describe('v3.1 fixes', () => {
       mk('blastoise', ['waterpulse', 'darkpulse', 'aurasphere', 'protect'], 'Modest', { hp: 32, spa: 32, spd: 2 }, 'Torrent', 'Blastoisinite'),
       mk('whimsicott', ['tailwind', 'moonblast', 'encore', 'protect'], 'Timid', { spa: 32, spe: 32, hp: 2 }, 'Prankster', 'Focus Sash'),
       mk('kingambit', ['kowtowcleave', 'suckerpunch', 'ironhead', 'protect'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Defiant'),
-      mk('rillaboom', ['fakeout', 'woodhammer', 'grassyglide', 'uturn'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Grassy Surge', 'Miracle Seed'),
+      mk('sneasler', ['fakeout', 'direclaw', 'closecombat', 'uturn'], 'Jolly', { atk: 32, spe: 32, hp: 2 }, 'Unburden'),
       mk('incineroar', ['fakeout', 'flareblitz', 'partingshot', 'knockoff'], 'Impish', { hp: 32, def: 16, spd: 16, atk: 2 }, 'Intimidate', 'Sitrus Berry'),
       mk('dragonite', ['extremespeed', 'dragonclaw', 'icespinner', 'firepunch'], 'Adamant', { atk: 32, hp: 32, spd: 2 }, 'Multiscale', 'Life Orb'),
     ]

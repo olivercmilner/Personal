@@ -9,7 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
-    "generate-data": "tsx scripts/generate-data.ts"
+    "generate-data": "tsx scripts/generate-champions-data.ts"
   },
   "dependencies": {
     "@smogon/calc": "^0.11.0",
@@ -19,11 +19,11 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "@pkmn/dex": "^0.10.11",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "esbuild": "^0.28.1",
     "oxlint": "^1.71.0",
     "tsx": "^4.23.0",
     "typescript": "~6.0.2",

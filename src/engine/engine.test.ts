@@ -18,8 +18,8 @@ describe('Champions stat formula', () => {
     expect(championStat('atk', 130, 32, 'Serious')).toBe(182)
   })
   it('applies nature before points', () => {
-    // Adamant: floor(150 * 1.1) = 165, then +32
-    expect(championStat('atk', 130, 32, 'Adamant')).toBe(197)
+    // Adamant: floor((150 + 32) * 1.1) = floor(200.2)
+    expect(championStat('atk', 130, 32, 'Adamant')).toBe(200)
     expect(championStat('spa', 80, 0, 'Adamant')).toBe(90) // floor(100*0.9)
   })
   it('computes HP as base + 75 + points', () => {
@@ -55,15 +55,15 @@ describe('damage calc integration', () => {
   it('picks the best move and reports sane doubles damage', () => {
     const atk = combatantFromBuild(chompBuild)
     const def = combatantFromBuild({
-      speciesId: 'heatran',
-      moves: ['heatwave'],
-      ability: 'Flash Fire',
+      speciesId: 'aggron',
+      moves: ['heavyslam'],
+      ability: 'Sturdy',
       item: '',
       nature: 'Modest',
       points: { ...EMPTY_POINTS, hp: 32, spa: 32 },
     })
     const result = bestAttack(atk, buildCalcPokemon(atk), def, buildCalcPokemon(def), buildField(NEUTRAL_CONTEXT))
-    // Ground vs Fire/Steel is 4x: EQ should be the pick and OHKO territory.
+    // Ground vs Rock/Steel is 4x: EQ should be the pick and OHKO territory.
     expect(result.bestMove).toBe('Earthquake')
     expect(result.dmgPct[1]).toBeGreaterThan(100)
     expect(result.koTurns).toBeLessThanOrEqual(1.5)
@@ -79,7 +79,7 @@ describe('damage calc integration', () => {
       points: { ...EMPTY_POINTS, spa: 32 },
     })
     const poke = buildCalcPokemon(mega)
-    expect(poke.stats.spa).toBe(Math.floor((122 + 20) * 1.1) + 32)
+    expect(poke.stats.spa).toBe(Math.floor((122 + 20 + 32) * 1.1))
   })
 
   it('koTurns classification', () => {
@@ -99,7 +99,7 @@ describe('prediction', () => {
     expect(set.moves.length).toBeGreaterThan(0)
   })
   it('predictSets falls back to archetype when no meta entry exists', () => {
-    const sets = predictSets('smeargle')
+    const sets = predictSets('watchog')
     expect(sets).toHaveLength(1)
     expect(sets[0].source).toBe('archetype')
   })
@@ -119,11 +119,11 @@ describe('matrix + optimizer end to end', () => {
     mk('garchomp', ['earthquake', 'dragonclaw', 'rockslide', 'protect'], 'Jolly', { atk: 32, spe: 32, hp: 2 }),
     mk('whimsicott', ['tailwind', 'moonblast', 'encore', 'protect'], 'Timid', { spa: 32, spe: 32, hp: 2 }),
     mk('kingambit', ['kowtowcleave', 'suckerpunch', 'ironhead', 'protect'], 'Adamant', { atk: 32, hp: 32, spd: 2 }),
-    mk('rillaboom', ['fakeout', 'woodhammer', 'uturn', 'grassyglide'], 'Adamant', { atk: 32, hp: 32, spd: 2 }),
-    mk('heatran', ['heatwave', 'earthpower', 'flashcannon', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }),
+    mk('sneasler', ['fakeout', 'direclaw', 'closecombat', 'protect'], 'Jolly', { atk: 32, spe: 32, hp: 2 }),
+    mk('archaludon', ['electroshot', 'flashcannon', 'dragonpulse', 'protect'], 'Modest', { spa: 32, hp: 32, spd: 2 }),
     mk('dragonite', ['extremespeed', 'outrage', 'icespinner', 'protect'], 'Adamant', { atk: 32, spe: 32, hp: 2 }),
   ]
-  const oppSpecies = ['charizard', 'gholdengo', 'urshifurapidstrike', 'amoonguss', 'landorus', 'chienpao']
+  const oppSpecies = ['charizard', 'gholdengo', 'basculegion', 'sinistcha', 'staraptor', 'weavile']
   const opponents: OpponentMon[] = oppSpecies.map((id) => ({ speciesId: id, sets: predictSets(id) }))
 
   it('computes a full 6x6 matrix with sane cells', () => {
@@ -135,9 +135,9 @@ describe('matrix + optimizer end to end', () => {
         expect(cell.score).toBeGreaterThanOrEqual(-1)
         expect(cell.score).toBeLessThanOrEqual(1)
       }
-    // Heatran (Fire/Steel) should be strong into Chien-Pao (Dark/Ice) offensively
-    const heatranVsChienPao = matrix[4][5]
-    expect(heatranVsChienPao.offense.dmgPct[1]).toBeGreaterThan(50)
+    // Kingambit (Dark STAB) should be strong into Sinistcha (Grass/Ghost) offensively
+    const kingambitVsSinistcha = matrix[2][3]
+    expect(kingambitVsSinistcha.offense.dmgPct[1]).toBeGreaterThan(50)
   })
 
   it('recommends 4 with 2 leads and explains itself', () => {

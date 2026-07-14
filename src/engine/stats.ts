@@ -3,11 +3,11 @@ import { MAX_POINTS_PER_STAT, TOTAL_POINTS } from '../types'
 import { natureMultiplier } from '../data/natures'
 
 /**
- * Champions stat formula at Lv50. The game rolls IVs/EVs into a fixed
- * baseline (equivalent to 31 IV / 0 EV) and each allocated point adds
- * exactly +1 to the final stat:
+ * Champions stat formula at Lv50, matching Pokemon Showdown's champions-mod
+ * implementation (statModify in data/mods/champions/scripts.ts): points are
+ * added to the baseline BEFORE the stat-alignment multiplier applies:
  *   HP    = base + 75 + points
- *   other = floor((base + 20) * nature) + points
+ *   other = floor((base + 20 + points) * nature)
  */
 export function championStat(
   stat: StatName,
@@ -19,7 +19,7 @@ export function championStat(
     if (base === 1) return 1 // Shedinja
     return base + 75 + points
   }
-  return Math.floor((base + 20) * natureMultiplier(nature, stat)) + points
+  return Math.floor((base + 20 + points) * natureMultiplier(nature, stat))
 }
 
 export function championStats(

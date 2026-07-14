@@ -2,37 +2,14 @@ import type { ItemData, MoveData, SpeciesData } from '../types'
 import speciesJson from './generated/species.json'
 import movesJson from './generated/moves.json'
 import itemsJson from './generated/items.json'
-import customSpeciesJson from './custom-species.json'
-import customItemsJson from './custom-items.json'
 
-/**
- * Items introduced by Legends: Z-A / Champions that Showdown data doesn't
- * know about — the new Mega Stones. Each entry's `megaFor` names the custom
- * Mega forme it enables (used by tests and future mega-resolution logic).
- */
-export interface CustomItemData extends ItemData {
-  megaFor?: string
-}
-export const CUSTOM_ITEMS = customItemsJson as CustomItemData[]
-
-/**
- * Items confirmed NOT (yet) purchasable in Champions — they never appear in
- * recorded ladder usage and community item lists mark them absent. Excluded
- * from the item pool entirely; revisit as the game's item shop grows.
- */
-export const UNAVAILABLE_ITEM_IDS = new Set([
-  'loadeddice', 'choiceband', 'choicespecs', 'assaultvest', 'safetygoggles',
-  'covertcloak', 'clearamulet', 'powerherb', 'eviolite',
-])
-
-export const SPECIES = [
-  ...(speciesJson as SpeciesData[]),
-  ...(customSpeciesJson as SpeciesData[]),
-]
+// All three datasets are generated from Pokemon Showdown's `champions` mod
+// (the authoritative implementation of the game) by
+// scripts/generate-champions-data.ts — they contain EXACTLY the species,
+// items, and moves available in Pokemon Champions, nothing more.
+export const SPECIES = speciesJson as SpeciesData[]
 export const MOVES = movesJson as MoveData[]
-export const ITEMS = [...(itemsJson as ItemData[]), ...CUSTOM_ITEMS].filter(
-  (i) => !UNAVAILABLE_ITEM_IDS.has(i.id),
-)
+export const ITEMS = itemsJson as ItemData[]
 
 export const speciesById = new Map(SPECIES.map((s) => [s.id, s]))
 export const movesById = new Map(MOVES.map((m) => [m.id, m]))
